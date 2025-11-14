@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Heart, Users, BookOpen, Star, ArrowRight, Gift, HandHeart, Globe } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
-export default function Home() {
+export default function TestHomepage() {
   const stats = [
     { number: '500+', label: 'Students Helped', icon: Users },
     { number: '50+', label: 'School Bags Donated', icon: BookOpen },
@@ -36,10 +36,32 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{
+      '--test-primary-50': '#eff6ff',
+      '--test-primary-100': '#dbeafe', 
+      '--test-primary-200': '#bfdbfe',
+      '--test-primary-300': '#93c5fd',
+      '--test-primary-400': '#60a5fa',
+      '--test-primary-500': '#3b82f6', // Main blue
+      '--test-primary-600': '#2563eb', // Darker blue
+      '--test-primary-700': '#1d4ed8',
+      '--test-primary-800': '#1e40af',
+      '--test-primary-900': '#1e3a8a',
+      '--test-gold-400': '#fbbf24',
+      '--test-gold-500': '#f59e0b', // Main gold
+      '--test-gold-600': '#d97706', // Darker gold
+      '--test-gradient-primary': 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      '--test-gradient-hero': 'linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%)',
+      '--test-gradient-accent': 'linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%)'
+    } as React.CSSProperties}>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100">
-        <div className="absolute inset-0 gradient-hero opacity-10"></div>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{
+        background: 'linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #fef3c7 100%)'
+      }}>
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%)',
+          opacity: 0.1
+        }}></div>
         <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -50,7 +72,12 @@ export default function Home() {
           >
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
               Beacon of{' '}
-              <span className="text-gradient">Blessings</span>
+              <span style={{
+                background: 'linear-gradient(135deg, #3b82f6 0%, #f59e0b 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>Blessings</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto leading-relaxed">
               Sharing the love of Jesus Christ through educational support and compassionate care for vulnerable communities in Nigeria
@@ -63,11 +90,13 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-12"
           >
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto border border-primary-200 shadow-lg">
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto border shadow-lg" style={{
+              borderColor: '#bfdbfe'
+            }}>
               <blockquote className="text-lg text-gray-800 italic mb-3">
                 &ldquo;For I was hungry and you gave me something to eat, I was thirsty and you gave me something to drink, I was a stranger and you invited me in.&rdquo;
               </blockquote>
-              <cite className="text-primary-600 font-semibold">Matthew 25:35</cite>
+              <cite style={{ color: '#2563eb' }} className="font-semibold">Matthew 25:35</cite>
             </div>
           </motion.div>
 
@@ -77,19 +106,41 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <Button href="/donate" size="lg" icon={Heart} className="text-lg">
-              Donate Now
-            </Button>
-            <Button href="/projects" variant="outline" size="lg" icon={ArrowRight} iconPosition="right">
-              See Our Impact
-            </Button>
+            <button 
+              className="text-lg px-8 py-4 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-2"
+              style={{
+                background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
+              }}
+            >
+              <Heart className="w-5 h-5" />
+              <span>Donate Now</span>
+            </button>
+            <button 
+              className="text-lg px-8 py-4 font-semibold rounded-full border-2 transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 hover:bg-blue-50"
+              style={{
+                borderColor: '#3b82f6',
+                color: '#2563eb'
+              }}
+            >
+              <span>See Our Impact</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
           </motion.div>
         </div>
 
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-primary-400/10 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-primary-300/10 rounded-full blur-xl"></div>
-        <div className="absolute top-1/2 right-20 w-16 h-16 bg-primary-500/10 rounded-full blur-xl"></div>
+        <div className="absolute top-20 left-10 w-20 h-20 rounded-full blur-xl" style={{
+          backgroundColor: '#60a5fa',
+          opacity: 0.3
+        }}></div>
+        <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full blur-xl" style={{
+          backgroundColor: '#fbbf24',
+          opacity: 0.3
+        }}></div>
+        <div className="absolute top-1/2 right-20 w-16 h-16 rounded-full blur-xl" style={{
+          backgroundColor: '#3b82f6',
+          opacity: 0.3
+        }}></div>
       </section>
 
       {/* Impact Stats Section */}
@@ -116,12 +167,21 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center p-8 bg-gradient-to-br from-primary-50 to-white rounded-2xl border border-primary-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                className="text-center p-8 rounded-2xl border hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                style={{
+                  background: 'linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)',
+                  borderColor: '#bfdbfe'
+                }}
               >
-                <div className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div 
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
+                  }}
+                >
                   <stat.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-bold text-primary-600 mb-2">{stat.number}</h3>
+                <h3 className="text-3xl font-bold mb-2" style={{ color: '#2563eb' }}>{stat.number}</h3>
                 <p className="text-gray-700 font-medium">{stat.label}</p>
               </motion.div>
             ))}
@@ -130,7 +190,9 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-white">
+      <section className="py-20" style={{
+        background: 'linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #fef3c7 100%)'
+      }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -155,9 +217,9 @@ export default function Home() {
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Founders</h3>
               <div className="space-y-6">
                 {founders.map((founder, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-lg border border-primary-100">
-                    <h4 className="text-lg font-bold text-primary-600 mb-1">{founder.name}</h4>
-                    <p className="text-primary-500 font-medium mb-3">{founder.role}</p>
+                  <div key={index} className="bg-white rounded-xl p-6 shadow-lg border" style={{ borderColor: '#bfdbfe' }}>
+                    <h4 className="text-lg font-bold mb-1" style={{ color: '#2563eb' }}>{founder.name}</h4>
+                    <p style={{ color: '#f59e0b' }} className="font-medium mb-3">{founder.role}</p>
                     <p className="text-gray-600">{founder.description}</p>
                   </div>
                 ))}
@@ -169,12 +231,13 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-xl border border-primary-200"
+              className="bg-white rounded-2xl p-8 shadow-xl border"
+              style={{ borderColor: '#bfdbfe' }}
             >
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Vision & Mission</h3>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-lg font-semibold text-primary-600 mb-3 flex items-center">
+                  <h4 className="text-lg font-semibold mb-3 flex items-center" style={{ color: '#2563eb' }}>
                     <Globe className="w-5 h-5 mr-2" />
                     Vision
                   </h4>
@@ -183,7 +246,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-primary-600 mb-3 flex items-center">
+                  <h4 className="text-lg font-semibold mb-3 flex items-center" style={{ color: '#f59e0b' }}>
                     <HandHeart className="w-5 h-5 mr-2" />
                     Mission
                   </h4>
@@ -221,31 +284,46 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-primary-50 rounded-2xl shadow-xl border border-primary-200 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                className="rounded-2xl shadow-xl border overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                style={{
+                  background: 'linear-gradient(135deg, #ffffff 0%, #eff6ff 100%)',
+                  borderColor: '#bfdbfe'
+                }}
               >
                 <div className="p-8">
                   <div className="flex items-start justify-between mb-6">
                     <div>
                       <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
+                        style={{
+                          backgroundColor: '#dbeafe',
+                          color: '#1e40af'
+                        }}
+                      >
                         {project.status}
                       </span>
                     </div>
-                    <Gift className="w-8 h-8 text-primary-500" />
+                    <Gift className="w-8 h-8" style={{ color: '#f59e0b' }} />
                   </div>
                   
                   <p className="text-gray-700 mb-4 leading-relaxed">{project.description}</p>
                   
-                  <div className="bg-primary-100 rounded-lg p-4 mb-6">
-                    <p className="text-primary-800 font-semibold flex items-center">
+                  <div className="rounded-lg p-4 mb-6" style={{ backgroundColor: '#fef3c7' }}>
+                    <p className="font-semibold flex items-center" style={{ color: '#92400e' }}>
                       <Star className="w-5 h-5 mr-2" />
                       Impact: {project.impact}
                     </p>
                   </div>
 
-                  <Button href="/projects" variant="primary" icon={ArrowRight} iconPosition="right">
-                    Learn More
-                  </Button>
+                  <button 
+                    className="px-6 py-3 text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
+                    style={{
+                      background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
+                    }}
+                  >
+                    <span>Learn More</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -254,7 +332,9 @@ export default function Home() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 gradient-hero text-white">
+      <section className="py-20 text-white" style={{
+        background: 'linear-gradient(135deg, #1e40af 0%, #1d4ed8 50%, #3b82f6 100%)'
+      }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -263,37 +343,35 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-bold mb-6">Join Us in Making a Difference</h2>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 leading-relaxed">
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8 leading-relaxed">
               Every donation, no matter the size, helps us reach more children and families in need. 
               Together, we can be the hands and feet of Jesus in our communities.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button 
-                href="/donate" 
-                variant="secondary" 
-                size="lg" 
-                icon={Heart}
-                className="bg-white text-primary-600 hover:bg-white/90"
+              <button 
+                className="px-8 py-4 text-lg font-semibold rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+                style={{
+                  background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                  color: '#1e40af'
+                }}
               >
-                Make a Donation
-              </Button>
-              <Button 
-                href="/contact" 
-                variant="outline" 
-                size="lg" 
-                icon={Users}
-                className="border-white text-white hover:bg-white/10"
+                <Heart className="w-5 h-5" />
+                <span>Make a Donation</span>
+              </button>
+              <button 
+                className="px-8 py-4 text-lg font-semibold rounded-full border-2 border-white text-white hover:bg-white/10 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
               >
-                Get Involved
-              </Button>
+                <Users className="w-5 h-5" />
+                <span>Get Involved</span>
+              </button>
             </div>
 
             <div className="mt-12 p-6 bg-white/10 backdrop-blur-sm rounded-xl max-w-2xl mx-auto border border-white/20">
               <blockquote className="text-lg italic mb-3">
                 &ldquo;Whoever is kind to the poor lends to the Lord, and he will reward them for what they have done.&rdquo;
               </blockquote>
-              <cite className="text-white/80 font-medium">Proverbs 19:17</cite>
+              <cite className="text-blue-200 font-medium">Proverbs 19:17</cite>
             </div>
           </motion.div>
         </div>
