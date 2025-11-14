@@ -3,6 +3,11 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Chatbot from "@/components/ui/Chatbot";
+import SkipToContent from "@/components/ui/SkipToContent";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import { OrganizationStructuredData, DonationStructuredData } from "@/components/seo/StructuredData";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Beacon of Blessings Charity Initiative - Sharing God's Love Through Service",
@@ -61,12 +66,18 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#22c55e" />
+        <OrganizationStructuredData />
+        <DonationStructuredData />
       </head>
       <body
         className="antialiased min-h-screen flex flex-col"
       >
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
+        <Analytics />
+        <SpeedInsights />
+        <SkipToContent />
         <Header />
-        <main className="flex-1 pt-20">
+        <main id="main-content" className="flex-1 pt-20">
           {children}
         </main>
         <Footer />

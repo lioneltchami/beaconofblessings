@@ -114,10 +114,34 @@ body {
   transition: all 0.2s ease-in-out;
 }
 
-/* Focus states for accessibility */
+/* Accessibility Utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Enhanced focus states for accessibility */
 *:focus {
   outline: 2px solid var(--primary-500);
   outline-offset: 2px;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--primary-500);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Remove focus outline for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Custom scrollbar */
