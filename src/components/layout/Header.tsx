@@ -1,17 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Heart } from 'lucide-react'
 
-const Header = () => {
+const Header = memo(() => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Projects', href: '/projects' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Gallery', href: '/gallery' },
     { name: 'Contact', href: '/contact' },
   ]
@@ -19,11 +20,11 @@ const Header = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
-    <header className="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-primary-100 shadow-sm">
+    <header role="banner" className="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-primary-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
+          <Link href="/" className="flex items-center space-x-3 group" aria-label="Beacon of Blessings Charity Initiative - Home">
             <div className="relative">
               <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
                 <Heart className="w-7 h-7 text-white" />
@@ -41,7 +42,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-8" aria-label="Primary navigation">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -69,7 +70,9 @@ const Header = () => {
           <button
             onClick={toggleMenu}
             className="md:hidden p-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors"
-            aria-label="Toggle menu"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -80,13 +83,14 @@ const Header = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
             className="md:hidden bg-white border-t border-primary-100 shadow-lg"
           >
-            <div className="px-4 py-6 space-y-4">
+            <nav className="px-4 py-6 space-y-4" aria-label="Mobile navigation">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -107,12 +111,14 @@ const Header = () => {
                   <span>Donate Now</span>
                 </Link>
               </div>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
   )
-}
+})
+
+Header.displayName = 'Header'
 
 export default Header

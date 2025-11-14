@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { rateLimit, getClientIp } from '@/lib/rate-limit'
 
 // Lazy Stripe initialization helper
 function getStripeClient() {
@@ -50,6 +51,24 @@ function validatePaymentRequest(data: PaymentIntentRequest): { valid: boolean; e
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting (5 payment attempts per minute per IP)
+    const clientIp = getClientIp(request.headers)
+    const rateLimitResult = rateLimit(clientIp, { maxRequests: 5, windowMs: 60000 })
+
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': '5',
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': rateLimitResult.resetTime.toString(),
+          }
+        }
+      )
+    }
+
     // Initialize Stripe client
     const stripe = getStripeClient()
 

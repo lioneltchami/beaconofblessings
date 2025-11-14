@@ -1,9 +1,10 @@
 'use client'
 
+import { memo } from 'react'
 import Link from 'next/link'
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
 
-const Footer = () => {
+const Footer = memo(() => {
   const currentYear = new Date().getFullYear()
 
   const navigation = {
@@ -62,13 +63,13 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white">
+    <footer role="contentinfo" className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Organization Info */}
           <div>
-            <Link href="/" className="flex items-center space-x-3 mb-3">
+            <Link href="/" className="flex items-center space-x-3 mb-3" aria-label="Beacon of Blessings Charity Initiative - Home">
               <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center">
                 <Heart className="w-5 h-5 text-primary-300" />
               </div>
@@ -89,24 +90,26 @@ const Footer = () => {
             </p>
 
             {/* Social Media */}
-            <div className="flex space-x-3">
-              {socialMedia.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center text-primary-300 hover:text-white hover:bg-white/20 transition-all duration-300"
-                  aria-label={item.name}
-                >
-                  <item.icon className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
+            <nav aria-label="Social media">
+              <div className="flex space-x-3">
+                {socialMedia.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center text-primary-300 hover:text-white hover:bg-white/20 transition-all duration-300"
+                    aria-label={`Follow us on ${item.name}`}
+                  >
+                    <item.icon className="w-4 h-4" aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </nav>
           </div>
 
           {/* Quick Links */}
-          <div>
+          <nav aria-label="Quick links">
             <h3 className="text-lg font-bold text-white mb-3">Quick Links</h3>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {navigation.main.map((item) => (
@@ -119,19 +122,20 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </nav>
 
           {/* Contact Info */}
           <div>
             <h3 className="text-lg font-bold text-white mb-3">Contact Us</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2" aria-label="Contact information">
               {contactInfo.map((item, index) => (
                 <li key={index}>
                   <a
                     href={item.href}
                     className="flex items-center space-x-2 text-primary-200 hover:text-white transition-colors duration-300 group"
+                    aria-label={`Contact us at ${item.text}`}
                   >
-                    <item.icon className="w-4 h-4 text-primary-400 group-hover:text-primary-300 transition-colors" />
+                    <item.icon className="w-4 h-4 text-primary-400 group-hover:text-primary-300 transition-colors" aria-hidden="true" />
                     <span className="text-sm">{item.text}</span>
                   </a>
                 </li>
@@ -148,18 +152,20 @@ const Footer = () => {
             <div className="text-primary-200 text-sm">
               &copy; {currentYear} Beacon of Blessings Charity Initiative. All rights reserved.
             </div>
-            
-            <div className="flex space-x-6 text-sm">
-              {navigation.legal.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-primary-200 hover:text-white transition-colors duration-300"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
+
+            <nav aria-label="Legal">
+              <div className="flex space-x-6 text-sm">
+                {navigation.legal.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-primary-200 hover:text-white transition-colors duration-300"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </nav>
 
             <div className="text-primary-300 text-sm flex items-center space-x-2">
               <span>Made with</span>
@@ -171,6 +177,8 @@ const Footer = () => {
       </div>
     </footer>
   )
-}
+})
+
+Footer.displayName = 'Footer'
 
 export default Footer
