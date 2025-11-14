@@ -109,9 +109,20 @@ body {
   background-clip: text;
 }
 
-/* Smooth transitions for modern feel */
-* {
-  transition: all 0.2s ease-in-out;
+/* Smooth transitions for interactive elements only */
+a,
+button,
+input,
+select,
+textarea,
+[role="button"],
+[role="link"] {
+  transition: color 0.2s ease-in-out,
+              background-color 0.2s ease-in-out,
+              border-color 0.2s ease-in-out,
+              transform 0.2s ease-in-out,
+              box-shadow 0.2s ease-in-out,
+              opacity 0.2s ease-in-out;
 }
 
 /* Accessibility Utilities */
