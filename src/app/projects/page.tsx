@@ -1,8 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Users, Gift, Calendar, MapPin, Star, Heart, Target, CheckCircle, Clock, Award } from 'lucide-react'
-import Button from '@/components/ui/Button'
+import { Users, Gift, Calendar, MapPin, Star, Target, CheckCircle, Clock, Award } from 'lucide-react'
 
 export default function ProjectsPage() {
   const completedProjects = [
