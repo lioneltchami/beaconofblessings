@@ -1,9 +1,10 @@
 'use client'
 
+import { memo } from 'react'
 import Link from 'next/link'
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
 
-const Footer = () => {
+const Footer = memo(() => {
   const currentYear = new Date().getFullYear()
 
   const navigation = {
@@ -176,6 +177,8 @@ const Footer = () => {
       </div>
     </footer>
   )
-}
+})
+
+Footer.displayName = 'Footer'
 
 export default Footer
