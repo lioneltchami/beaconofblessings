@@ -1,8 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Heart, Users, Globe, HandHeart, Star, Target, Eye, Shield } from 'lucide-react'
-import Button from '@/components/ui/Button'
+import { Heart, Globe, HandHeart, Star, Target, Eye, Shield } from 'lucide-react'
 
 export default function AboutPage() {
   const founders = [
