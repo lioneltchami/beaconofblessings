@@ -481,7 +481,7 @@ function Chatbot() {
                         placeholder="Ask me anything..."
                         aria-label="Type your message"
                         disabled={isTyping}
-                        className="flex-1 px-4 py-2.5 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 text-sm disabled:bg-gray-50 disabled:cursor-not-allowed"
+                        className="flex-1 px-4 py-2.5 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 text-sm text-gray-900 placeholder:text-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed disabled:text-gray-400"
                       />
                       <button
                         onClick={sendMessage}
