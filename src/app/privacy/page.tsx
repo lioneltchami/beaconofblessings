@@ -13,23 +13,17 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section
-        className="relative py-20 md:py-28"
-        style={{
-          background:
-            "linear-gradient(135deg, var(--bob-purple-950) 0%, var(--bob-purple-800) 50%, var(--bob-purple-700) 100%)",
-        }}
-      >
+      <section className="relative bg-[#134E4A] py-20 md:py-28">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Privacy Policy
           </h1>
-          <p className="mt-4 text-purple-200">Last updated: {lastUpdated}</p>
+          <p className="mt-4 text-[#F0FDFA]/70">Last updated: {lastUpdated}</p>
         </div>
       </section>
 
       {/* Content */}
-      <section className="py-16 md:py-24">
+      <section className="bg-[#FFFDF7] py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-4">
           <div className="prose prose-neutral max-w-none space-y-8 text-foreground">
             <p className="text-lg text-muted-foreground">
@@ -39,8 +33,7 @@ export default function PrivacyPolicyPage() {
               safeguard your information when you visit our website{" "}
               <a
                 href={siteConfig.url}
-                className="font-medium hover:underline"
-                style={{ color: "var(--bob-purple-700)" }}
+                className="font-medium text-primary hover:underline"
               >
                 {siteConfig.url}
               </a>
@@ -50,7 +43,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Information We Collect
               </h2>
               <p className="mb-3 text-muted-foreground">
@@ -87,7 +80,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 How We Use Your Information
               </h2>
               <ul className="list-inside list-disc space-y-2 text-muted-foreground">
@@ -109,7 +102,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Cookies
               </h2>
               <p className="text-muted-foreground">
@@ -124,7 +117,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Third-Party Services
               </h2>
               <p className="text-muted-foreground">
@@ -140,7 +133,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Data Security
               </h2>
               <p className="text-muted-foreground">
@@ -155,7 +148,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Your Rights
               </h2>
               <p className="mb-3 text-muted-foreground">
@@ -181,8 +174,7 @@ export default function PrivacyPolicyPage() {
                 To exercise any of these rights, please contact us at{" "}
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="font-medium hover:underline"
-                  style={{ color: "var(--bob-purple-700)" }}
+                  className="font-medium text-primary hover:underline"
                 >
                   {siteConfig.email}
                 </a>
@@ -193,7 +185,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Children&apos;s Privacy
               </h2>
               <p className="text-muted-foreground">
@@ -207,7 +199,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Changes to This Policy
               </h2>
               <p className="text-muted-foreground">
@@ -221,21 +213,20 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="mb-3 text-2xl font-bold tracking-tight">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
                 Contact Us
               </h2>
               <p className="text-muted-foreground">
                 If you have questions or concerns about this Privacy Policy,
                 please contact us at:
               </p>
-              <div className="mt-3 rounded-lg border bg-muted/50 p-4 text-sm">
+              <div className="mt-3 rounded-lg border bg-[#F0FDFA] p-4 text-sm">
                 <p className="font-semibold">{siteConfig.name}</p>
                 <p className="text-muted-foreground">
                   Email:{" "}
                   <a
                     href={`mailto:${siteConfig.email}`}
-                    className="font-medium hover:underline"
-                    style={{ color: "var(--bob-purple-700)" }}
+                    className="font-medium text-primary hover:underline"
                   >
                     {siteConfig.email}
                   </a>

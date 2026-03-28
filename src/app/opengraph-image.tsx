@@ -23,11 +23,11 @@ export default function OGImage() {
         width: "100%",
         height: "100%",
         background:
-          "linear-gradient(135deg, #581c87 0%, #7e22ce 40%, #9333ea 100%)",
+          "linear-gradient(135deg, #134E4A 0%, #0F766E 40%, #14B8A6 100%)",
         position: "relative",
       }}
     >
-      {/* Gold accent bar at bottom */}
+      {/* Marigold accent bar at bottom */}
       <div
         style={{
           position: "absolute",
@@ -35,7 +35,7 @@ export default function OGImage() {
           left: 0,
           right: 0,
           height: 8,
-          background: "linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24)",
+          background: "linear-gradient(90deg, #EAB308, #FDE047, #EAB308)",
         }}
       />
 
@@ -82,7 +82,7 @@ export default function OGImage() {
           style={{
             fontSize: 28,
             fontWeight: 500,
-            color: "#fcd34d",
+            color: "#EAB308",
             marginBottom: 24,
           }}
         >

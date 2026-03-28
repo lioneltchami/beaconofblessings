@@ -42,14 +42,8 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-xl border bg-card p-8 text-center">
-        <div
-          className="flex h-14 w-14 items-center justify-center rounded-full"
-          style={{ backgroundColor: "var(--bob-purple-100)" }}
-        >
-          <CheckCircle2
-            className="h-7 w-7"
-            style={{ color: "var(--bob-purple-600)" }}
-          />
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#0F766E]/10">
+          <CheckCircle2 className="h-7 w-7 text-[#0F766E]" />
         </div>
         <h3 className="text-xl font-semibold">Message Sent!</h3>
         <p className="text-muted-foreground">
@@ -134,11 +128,7 @@ export function ContactForm() {
         type="submit"
         size="lg"
         disabled={status === "submitting"}
-        className="w-full"
-        style={{
-          backgroundColor: "var(--bob-purple-600)",
-          color: "#fff",
-        }}
+        className="w-full bg-[#0F766E] text-white hover:bg-[#134E4A]"
       >
         {status === "submitting" ? (
           <>

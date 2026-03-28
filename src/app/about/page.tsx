@@ -48,40 +48,33 @@ export default async function AboutPage() {
 
   return (
     <main className="flex flex-col">
-      {/* Hero */}
-      <section
-        className="relative py-20 sm:py-28"
-        style={{
-          background: `linear-gradient(135deg, var(--bob-purple-900) 0%, var(--bob-purple-700) 50%, var(--bob-purple-800) 100%)`,
-        }}
-      >
+      {/* Hero -- teal bg with marigold accent line */}
+      <section className="relative bg-[#134E4A] py-20 sm:py-28">
+        {/* Marigold accent stripe */}
+        <div
+          className="absolute left-0 top-0 h-1.5 w-full bg-[#EAB308]"
+          aria-hidden="true"
+        />
         <div className="mx-auto max-w-3xl px-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             About {siteConfig.name}
           </h1>
-          <p
-            className="mt-6 text-lg italic leading-relaxed"
-            style={{ color: "var(--bob-gold-300)" }}
-          >
-            &ldquo;The Spirit of the Lord is on me, because he has anointed me
-            to proclaim good news to the poor.&rdquo;
-          </p>
-          <p
-            className="mt-2 text-sm font-medium"
-            style={{ color: "var(--bob-gold-400)" }}
-          >
-            &mdash; Luke 4:18
-          </p>
+          <div className="mx-auto mt-6 max-w-xl border-l-4 border-[#EAB308] pl-4 text-left">
+            <p className="text-lg italic leading-relaxed text-[#FDE047]">
+              &ldquo;The Spirit of the Lord is on me, because he has anointed me
+              to proclaim good news to the poor.&rdquo;
+            </p>
+            <p className="mt-2 text-sm font-medium text-[#EAB308]">
+              &mdash; Luke 4:18
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Our Story */}
-      <section className="py-16 sm:py-20">
+      <section className="bg-[#FFFDF7] py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-4">
-          <h2
-            className="text-3xl font-bold tracking-tight"
-            style={{ color: "var(--bob-purple-900)" }}
-          >
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A]">
             Our Story
           </h2>
           <Separator className="my-6" />
@@ -109,21 +102,12 @@ export default async function AboutPage() {
       </section>
 
       {/* Vision & Mission */}
-      <section
-        className="py-16 sm:py-20"
-        style={{ backgroundColor: "var(--bob-purple-50)" }}
-      >
+      <section className="bg-[#F0FDFA] py-16 sm:py-20">
         <div className="mx-auto grid max-w-5xl gap-8 px-4 md:grid-cols-2">
-          <Card>
+          <Card className="card-interactive border-t-4 border-primary">
             <CardHeader>
-              <div
-                className="mb-2 flex h-10 w-10 items-center justify-center rounded-full"
-                style={{ backgroundColor: "var(--bob-purple-100)" }}
-              >
-                <GraduationCap
-                  className="h-5 w-5"
-                  style={{ color: "var(--bob-purple-600)" }}
-                />
+              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                <GraduationCap className="h-5 w-5 text-primary" />
               </div>
               <CardTitle className="text-xl">Our Vision</CardTitle>
             </CardHeader>
@@ -135,16 +119,10 @@ export default async function AboutPage() {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="card-interactive border-t-4 border-[#EAB308]">
             <CardHeader>
-              <div
-                className="mb-2 flex h-10 w-10 items-center justify-center rounded-full"
-                style={{ backgroundColor: "var(--bob-gold-100)" }}
-              >
-                <Rocket
-                  className="h-5 w-5"
-                  style={{ color: "var(--bob-gold-600)" }}
-                />
+              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-[#EAB308]/10">
+                <Rocket className="h-5 w-5 text-[#A16207]" />
               </div>
               <CardTitle className="text-xl">Our Mission</CardTitle>
             </CardHeader>
@@ -160,12 +138,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Meet Our Founders */}
-      <section className="py-16 sm:py-20">
+      <section className="bg-[#FFFDF7] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
-          <h2
-            className="text-center text-3xl font-bold tracking-tight"
-            style={{ color: "var(--bob-purple-900)" }}
-          >
+          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#134E4A]">
             Meet Our Founders
           </h2>
           <p className="mt-3 text-center text-muted-foreground">
@@ -174,24 +149,18 @@ export default async function AboutPage() {
           <Separator className="mx-auto my-8 max-w-xs" />
           <div className="grid gap-8 sm:grid-cols-2">
             {founders.map((founder) => (
-              <Card key={founder.name}>
+              <Card key={founder.name} className="card-interactive">
                 <CardHeader>
                   <div className="flex items-center gap-4">
                     <div
-                      className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white"
-                      style={{
-                        background: `linear-gradient(135deg, var(--bob-purple-600), var(--bob-purple-800))`,
-                      }}
+                      className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#134E4A] to-[#14B8A6] text-lg font-bold text-white"
                       aria-hidden="true"
                     >
                       {founder.initials}
                     </div>
                     <div>
                       <CardTitle className="text-lg">{founder.name}</CardTitle>
-                      <p
-                        className="text-sm font-medium"
-                        style={{ color: "var(--bob-gold-600)" }}
-                      >
+                      <p className="text-sm font-medium text-[#A16207]">
                         {founder.role}
                       </p>
                     </div>
@@ -207,15 +176,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section
-        className="py-16 sm:py-20"
-        style={{ backgroundColor: "var(--bob-purple-50)" }}
-      >
+      <section className="bg-[#F0FDFA] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
-          <h2
-            className="text-center text-3xl font-bold tracking-tight"
-            style={{ color: "var(--bob-purple-900)" }}
-          >
+          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#134E4A]">
             Core Values
           </h2>
           <p className="mt-3 text-center text-muted-foreground">
@@ -226,27 +189,21 @@ export default async function AboutPage() {
             {coreValues.map((value, index) => {
               const Icon = valueIcons[index];
               return (
-                <Card key={value.title}>
+                <Card
+                  key={value.title}
+                  className="card-interactive border-l-4 border-[#EAB308]"
+                >
                   <CardHeader>
                     <div className="flex items-center gap-3">
-                      <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
-                        style={{ backgroundColor: "var(--bob-gold-100)" }}
-                      >
-                        <Icon
-                          className="h-4 w-4"
-                          style={{ color: "var(--bob-gold-600)" }}
-                        />
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EAB308]/10">
+                        <Icon className="h-4 w-4 text-[#A16207]" />
                       </div>
                       <CardTitle>{value.title}</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground">{value.description}</p>
-                    <p
-                      className="mt-3 text-sm font-medium italic"
-                      style={{ color: "var(--bob-purple-600)" }}
-                    >
+                    <p className="mt-3 text-sm font-medium italic text-primary">
                       {value.verse}
                     </p>
                   </CardContent>
@@ -258,12 +215,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Journey Timeline */}
-      <section className="py-16 sm:py-20">
+      <section className="bg-[#FFFDF7] py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-4">
-          <h2
-            className="text-center text-3xl font-bold tracking-tight"
-            style={{ color: "var(--bob-purple-900)" }}
-          >
+          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#134E4A]">
             Our Journey
           </h2>
           <Separator className="mx-auto my-8 max-w-xs" />
@@ -271,22 +225,13 @@ export default async function AboutPage() {
             {milestones.map((milestone) => (
               <div key={milestone.title} className="relative">
                 <div
-                  className="absolute -left-8 top-1 h-6 w-6 rounded-full border-2 border-white"
-                  style={{
-                    background: `linear-gradient(135deg, var(--bob-purple-500), var(--bob-gold-500))`,
-                  }}
+                  className="absolute -left-8 top-1 h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-[#0F766E] to-[#EAB308]"
                   aria-hidden="true"
                 />
-                <p
-                  className="text-sm font-bold"
-                  style={{ color: "var(--bob-gold-600)" }}
-                >
+                <p className="text-sm font-bold text-[#A16207]">
                   {milestone.year}
                 </p>
-                <h3
-                  className="text-lg font-semibold"
-                  style={{ color: "var(--bob-purple-800)" }}
-                >
+                <h3 className="font-heading text-lg font-semibold text-[#134E4A]">
                   {milestone.title}
                 </h3>
                 <p className="mt-1 text-muted-foreground">
@@ -299,20 +244,12 @@ export default async function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section
-        className="py-16 sm:py-20"
-        style={{
-          background: `linear-gradient(135deg, var(--bob-purple-900) 0%, var(--bob-purple-700) 100%)`,
-        }}
-      >
+      <section className="bg-gradient-to-br from-[#134E4A] via-[#0F766E] to-[#14B8A6] py-16 sm:py-20">
         <div className="mx-auto max-w-2xl px-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-white">
             Join Our Mission
           </h2>
-          <p
-            className="mt-4 text-lg"
-            style={{ color: "var(--bob-purple-200)" }}
-          >
+          <p className="mt-4 text-lg text-[#F0FDFA]/80">
             Together, we can illuminate more futures. Whether you volunteer,
             donate, or spread the word, every contribution matters.
           </p>
@@ -320,6 +257,7 @@ export default async function AboutPage() {
             <Button
               size="lg"
               variant="outline"
+              className="border-white/30 text-white hover:bg-white/10"
               render={<Link href="/contact" />}
             >
               Get In Touch

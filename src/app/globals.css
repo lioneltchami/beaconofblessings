@@ -9,7 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-heading);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,109 +48,212 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ==========================================================================
+   "Rooted Grace" Light Theme
+   Forest Teal + Marigold + Terracotta
+   ========================================================================== */
+
 :root {
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.205 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
-	--chart-1: oklch(0.87 0 0);
-	--chart-2: oklch(0.556 0 0);
-	--chart-3: oklch(0.439 0 0);
-	--chart-4: oklch(0.371 0 0);
-	--chart-5: oklch(0.269 0 0);
-	--radius: 0.625rem;
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.145 0 0);
-	--sidebar-primary: oklch(0.205 0 0);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.97 0 0);
-	--sidebar-accent-foreground: oklch(0.205 0 0);
-	--sidebar-border: oklch(0.922 0 0);
-	--sidebar-ring: oklch(0.708 0 0);
+  --background: #fffdf7;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #0f766e;
+  --primary-foreground: #ffffff;
+  --secondary: #f0fdfa;
+  --secondary-foreground: #134e4a;
+  --muted: #f5f0eb;
+  --muted-foreground: #525252;
+  --accent: #eab308;
+  --accent-foreground: #1a1a1a;
+  --destructive: #dc2626;
+  --border: #e5e1dc;
+  --input: #e5e1dc;
+  --ring: #14b8a6;
+  --chart-1: #0f766e;
+  --chart-2: #eab308;
+  --chart-3: #c2410c;
+  --chart-4: #14b8a6;
+  --chart-5: #fb923c;
+  --radius: 0.625rem;
+  --sidebar: #f0fdfa;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #0f766e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0fdfa;
+  --sidebar-accent-foreground: #134e4a;
+  --sidebar-border: #e5e1dc;
+  --sidebar-ring: #14b8a6;
 }
+
+/* ==========================================================================
+   "Rooted Grace" Dark Theme
+   ========================================================================== */
 
 .dark {
-	--background: oklch(0.145 0 0);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.205 0 0);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.205 0 0);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.922 0 0);
-	--primary-foreground: oklch(0.205 0 0);
-	--secondary: oklch(0.269 0 0);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.269 0 0);
-	--muted-foreground: oklch(0.708 0 0);
-	--accent: oklch(0.269 0 0);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
-	--chart-1: oklch(0.87 0 0);
-	--chart-2: oklch(0.556 0 0);
-	--chart-3: oklch(0.439 0 0);
-	--chart-4: oklch(0.371 0 0);
-	--chart-5: oklch(0.269 0 0);
-	--sidebar: oklch(0.205 0 0);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.269 0 0);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.556 0 0);
+  --background: #0c1917;
+  --foreground: #f0fdfa;
+  --card: #132622;
+  --card-foreground: #f0fdfa;
+  --popover: #132622;
+  --popover-foreground: #f0fdfa;
+  --primary: #14b8a6;
+  --primary-foreground: #042f2e;
+  --secondary: #1a3a34;
+  --secondary-foreground: #ccfbf1;
+  --muted: #1a2e2a;
+  --muted-foreground: #a8a29e;
+  --accent: #facc15;
+  --accent-foreground: #1a1a1a;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #2dd4bf;
+  --chart-1: #14b8a6;
+  --chart-2: #facc15;
+  --chart-3: #fb923c;
+  --chart-4: #2dd4bf;
+  --chart-5: #fde047;
+  --sidebar: #132622;
+  --sidebar-foreground: #f0fdfa;
+  --sidebar-primary: #14b8a6;
+  --sidebar-primary-foreground: #042f2e;
+  --sidebar-accent: #1a3a34;
+  --sidebar-accent-foreground: #ccfbf1;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #2dd4bf;
 }
 
-/* -- Beacon of Blessings Brand Tokens ----------- */
+/* ==========================================================================
+   Brand Tokens — "Rooted Grace" palette
+   ========================================================================== */
+
 :root {
-	--bob-purple-50: #faf5ff;
-	--bob-purple-100: #f3e8ff;
-	--bob-purple-200: #e9d5ff;
-	--bob-purple-300: #d8b4fe;
-	--bob-purple-400: #c084fc;
-	--bob-purple-500: #a855f7;
-	--bob-purple-600: #9333ea;
-	--bob-purple-700: #7e22ce;
-	--bob-purple-800: #6b21a8;
-	--bob-purple-900: #581c87;
-	--bob-purple-950: #3b0764;
+  /* Primary: Forest Teal */
+  --brand-primary: #0f766e;
+  --brand-primary-light: #14b8a6;
+  --brand-primary-dark: #134e4a;
+  --brand-primary-50: #f0fdfa;
 
-	--bob-gold-50: #fffbeb;
-	--bob-gold-100: #fef3c7;
-	--bob-gold-200: #fde68a;
-	--bob-gold-300: #fcd34d;
-	--bob-gold-400: #fbbf24;
-	--bob-gold-500: #f59e0b;
-	--bob-gold-600: #d97706;
-	--bob-gold-700: #b45309;
-	--bob-gold-800: #92400e;
-	--bob-gold-900: #78350f;
+  /* Accent: Marigold */
+  --brand-accent: #eab308;
+  --brand-accent-light: #fde047;
+  --brand-accent-dark: #a16207;
+
+  /* Terracotta: Secondary warm accent */
+  --brand-terracotta: #c2410c;
+  --brand-terracotta-light: #fb923c;
+
+  /* Warm neutrals */
+  --brand-cream: #fffdf7;
+  --brand-warm-gray: #f5f0eb;
+
+  /* Legacy aliases — maps old bob-* tokens to the new palette.
+	   This prevents broken references in components that still
+	   use the old variable names during the migration. */
+  --bob-purple-50: var(--brand-primary-50);
+  --bob-purple-100: #ccfbf1;
+  --bob-purple-200: #99f6e4;
+  --bob-purple-300: #5eead4;
+  --bob-purple-400: #2dd4bf;
+  --bob-purple-500: var(--brand-primary-light);
+  --bob-purple-600: #0d9488;
+  --bob-purple-700: var(--brand-primary);
+  --bob-purple-800: var(--brand-primary-dark);
+  --bob-purple-900: #042f2e;
+  --bob-purple-950: #021a19;
+
+  --bob-gold-50: #fffbeb;
+  --bob-gold-100: #fef3c7;
+  --bob-gold-200: #fde68a;
+  --bob-gold-300: #fde047;
+  --bob-gold-400: #facc15;
+  --bob-gold-500: var(--brand-accent);
+  --bob-gold-600: #ca8a04;
+  --bob-gold-700: var(--brand-accent-dark);
+  --bob-gold-800: #854d0e;
+  --bob-gold-900: #713f12;
 }
+
+/* ==========================================================================
+   Base layer
+   ========================================================================== */
 
 @layer base {
-	* {
-		@apply border-border outline-ring/50;
-	}
-	body {
-		@apply bg-background text-foreground;
-	}
-	html {
-		@apply font-sans;
-	}
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ==========================================================================
+   Utility: Card hover lift
+   ========================================================================== */
+
+.card-interactive {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Utility: Scroll-triggered fade-in (pair with Intersection Observer)
+   ========================================================================== */
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children — add delay-100 through delay-500 alongside fade-in-up */
+.fade-in-up.delay-100 {
+  transition-delay: 100ms;
+}
+.fade-in-up.delay-200 {
+  transition-delay: 200ms;
+}
+.fade-in-up.delay-300 {
+  transition-delay: 300ms;
+}
+.fade-in-up.delay-400 {
+  transition-delay: 400ms;
+}
+.fade-in-up.delay-500 {
+  transition-delay: 500ms;
+}
+
+/* ==========================================================================
+   Utility: Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .card-interactive {
+    transition: none;
+  }
+  .card-interactive:hover {
+    transform: none;
+  }
+  .fade-in-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

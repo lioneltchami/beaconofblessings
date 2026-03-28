@@ -55,16 +55,22 @@ describe("DonateForm", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the submit / proceed to payment button", () => {
+  it("renders the submit button with amount included in label", () => {
     render(<DonateForm />);
+    // Default selected amount is $50, so button reads "Give $50 Securely"
     expect(
-      screen.getByRole("button", { name: /proceed to secure payment/i }),
+      screen.getByRole("button", { name: /give \$50 securely/i }),
     ).toBeInTheDocument();
   });
 
   it("renders the secure payment trust badge", () => {
     render(<DonateForm />);
-    expect(screen.getByText(/secure payment via stripe/i)).toBeInTheDocument();
+    expect(screen.getByText(/secure payment/i)).toBeInTheDocument();
+  });
+
+  it("renders the Powered by Stripe trust badge", () => {
+    render(<DonateForm />);
+    expect(screen.getByText(/powered by stripe/i)).toBeInTheDocument();
   });
 
   it("renders the tax-deductibility notice", () => {
@@ -102,17 +108,23 @@ describe("DonateForm", () => {
 
   it("renders the impact description for each preset", () => {
     render(<DonateForm />);
-    expect(screen.getByText(/supplies for 1 student/i)).toBeInTheDocument();
-    expect(screen.getByText(/textbooks for 5 students/i)).toBeInTheDocument();
+    // Use getAllByText because the $50 impact text also appears in the dynamic
+    // impact preview panel (default selection is $50).
     expect(
-      screen.getByText(/full school kit for 10 students/i),
-    ).toBeInTheDocument();
+      screen.getAllByText(/supplies for 1 student/i).length,
+    ).toBeGreaterThan(0);
     expect(
-      screen.getByText(/sponsor a classroom for a term/i),
-    ).toBeInTheDocument();
+      screen.getAllByText(/textbooks for 5 students/i).length,
+    ).toBeGreaterThan(0);
     expect(
-      screen.getByText(/fund a community learning centre/i),
-    ).toBeInTheDocument();
+      screen.getAllByText(/full school kit for 10 students/i).length,
+    ).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText(/sponsor a classroom for a term/i).length,
+    ).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText(/fund a community learning centre/i).length,
+    ).toBeGreaterThan(0);
   });
 
   it("renders the donation frequency label", () => {

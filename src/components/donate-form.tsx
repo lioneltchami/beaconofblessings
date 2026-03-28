@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, Lock } from "lucide-react";
+import { Loader2, Lock, Shield } from "lucide-react";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { createCheckoutSession } from "@/app/actions/checkout";
@@ -18,15 +18,28 @@ const presets = [
   { amount: 500, impact: "Fund a community learning centre" },
 ] as const;
 
-function SubmitButton() {
+function getImpactText(amount: number): string {
+  if (amount <= 0) return "";
+  if (amount < 25) return `Your $${amount} helps provide basic school supplies`;
+  if (amount < 50)
+    return `Your $${amount} provides supplies for ${Math.floor(amount / 25)} student${Math.floor(amount / 25) > 1 ? "s" : ""}`;
+  if (amount < 100)
+    return `Your $${amount} provides textbooks for ${Math.floor(amount / 10)} students`;
+  if (amount < 250)
+    return `Your $${amount} provides full school kits for ${Math.floor(amount / 10)} students`;
+  if (amount < 500)
+    return `Your $${amount} sponsors ${Math.floor(amount / 250)} classroom${Math.floor(amount / 250) > 1 ? "s" : ""} for a term`;
+  return `Your $${amount} funds ${Math.floor(amount / 500)} community learning centre${Math.floor(amount / 500) > 1 ? "s" : ""}`;
+}
+
+function SubmitButton({ amount }: { amount: number }) {
   const { pending } = useFormStatus();
 
   return (
     <Button
       type="submit"
-      disabled={pending}
-      className="h-12 w-full gap-2 text-base font-semibold text-white"
-      style={{ backgroundColor: "var(--bob-gold-500)" }}
+      disabled={pending || amount <= 0}
+      className="h-12 w-full gap-2 rounded-full bg-[#EAB308] text-base font-semibold text-gray-900 hover:bg-[#FDE047] hover:shadow-[0_0_12px_rgba(234,179,8,0.4)]"
     >
       {pending ? (
         <>
@@ -36,7 +49,7 @@ function SubmitButton() {
       ) : (
         <>
           <Lock className="h-4 w-4" />
-          Proceed to Secure Payment
+          {amount > 0 ? `Give $${amount} Securely` : "Select an Amount"}
         </>
       )}
     </Button>
@@ -73,14 +86,9 @@ export function DonateForm() {
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "one-time"
-                    ? "text-white"
+                    ? "bg-[#0F766E] text-white"
                     : "text-muted-foreground hover:text-foreground",
                 )}
-                style={
-                  frequency === "one-time"
-                    ? { backgroundColor: "var(--bob-purple-600)" }
-                    : undefined
-                }
               >
                 One-time
               </button>
@@ -90,14 +98,9 @@ export function DonateForm() {
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "monthly"
-                    ? "text-white"
+                    ? "bg-[#0F766E] text-white"
                     : "text-muted-foreground hover:text-foreground",
                 )}
-                style={
-                  frequency === "monthly"
-                    ? { backgroundColor: "var(--bob-purple-600)" }
-                    : undefined
-                }
               >
                 Monthly
               </button>
@@ -122,26 +125,17 @@ export function DonateForm() {
                   className={cn(
                     "rounded-lg border-2 p-4 text-left transition-all",
                     !isCustom && selectedAmount === amount
-                      ? "border-transparent ring-2"
+                      ? "border-[#0F766E] bg-[#0F766E]/5 ring-2 ring-[#EAB308]/30"
                       : "border-border hover:border-muted-foreground/30",
                   )}
-                  style={
-                    !isCustom && selectedAmount === amount
-                      ? {
-                          backgroundColor: "var(--bob-purple-50)",
-                          borderColor: "var(--bob-purple-500)",
-                          boxShadow: "0 0 0 2px var(--bob-purple-200)",
-                        }
-                      : undefined
-                  }
                 >
                   <span
-                    className="text-xl font-bold"
-                    style={
+                    className={cn(
+                      "text-xl font-bold",
                       !isCustom && selectedAmount === amount
-                        ? { color: "var(--bob-purple-700)" }
-                        : undefined
-                    }
+                        ? "text-[#0F766E]"
+                        : undefined,
+                    )}
                   >
                     ${amount}
                   </span>
@@ -158,24 +152,15 @@ export function DonateForm() {
                 className={cn(
                   "rounded-lg border-2 p-4 text-left transition-all",
                   isCustom
-                    ? "border-transparent ring-2"
+                    ? "border-[#0F766E] bg-[#0F766E]/5 ring-2 ring-[#EAB308]/30"
                     : "border-border hover:border-muted-foreground/30",
                 )}
-                style={
-                  isCustom
-                    ? {
-                        backgroundColor: "var(--bob-purple-50)",
-                        borderColor: "var(--bob-purple-500)",
-                        boxShadow: "0 0 0 2px var(--bob-purple-200)",
-                      }
-                    : undefined
-                }
               >
                 <span
-                  className="text-xl font-bold"
-                  style={
-                    isCustom ? { color: "var(--bob-purple-700)" } : undefined
-                  }
+                  className={cn(
+                    "text-xl font-bold",
+                    isCustom ? "text-[#0F766E]" : undefined,
+                  )}
                 >
                   Custom
                 </span>
@@ -212,6 +197,13 @@ export function DonateForm() {
               </div>
             )}
           </div>
+
+          {/* Impact preview */}
+          {finalAmount > 0 && (
+            <div className="rounded-lg border border-[#0F766E]/20 bg-[#0F766E]/5 px-4 py-3 text-center text-sm font-medium text-[#0F766E]">
+              {getImpactText(finalAmount)}
+            </div>
+          )}
 
           {/* Donor Info (Optional) */}
           <div>
@@ -251,12 +243,18 @@ export function DonateForm() {
 
           {/* Submit */}
           <div className="space-y-4">
-            <SubmitButton />
+            <SubmitButton amount={finalAmount} />
 
             {/* Trust badges */}
-            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-              <Lock className="h-3.5 w-3.5" />
-              <span>Secure payment via Stripe</span>
+            <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1.5">
+                <Lock className="h-3.5 w-3.5 text-[#0F766E]" />
+                Secure payment
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Shield className="h-3.5 w-3.5 text-[#0F766E]" />
+                Powered by Stripe
+              </span>
             </div>
 
             <p className="text-center text-xs text-muted-foreground">
@@ -268,10 +266,7 @@ export function DonateForm() {
               &ldquo;Give, and it will be given to you. A good measure, pressed
               down, shaken together and running over, will be poured into your
               lap.&rdquo;
-              <cite
-                className="mt-1 block text-xs font-medium not-italic"
-                style={{ color: "var(--bob-purple-500)" }}
-              >
+              <cite className="mt-1 block text-xs font-medium not-italic text-[#0F766E]">
                 &mdash; Luke 6:38
               </cite>
             </blockquote>

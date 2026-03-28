@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
 import {
-  Mail,
-  Phone,
-  MapPin,
   Clock,
-  Heart,
-  Users,
   Handshake,
+  Heart,
+  Mail,
+  MapPin,
+  Phone,
   Share2,
+  Users,
 } from "lucide-react";
+import type { Metadata } from "next";
+import { ContactForm } from "@/components/contact-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ContactForm } from "@/components/contact-form";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -74,19 +74,18 @@ const getInvolved = [
 export default function ContactPage() {
   return (
     <div className="flex flex-col">
-      {/* Hero */}
-      <section
-        className="relative py-20 md:py-28"
-        style={{
-          background:
-            "linear-gradient(135deg, var(--bob-purple-950) 0%, var(--bob-purple-800) 50%, var(--bob-purple-700) 100%)",
-        }}
-      >
+      {/* Hero -- split layout: teal left info, form right implied */}
+      <section className="relative bg-[#134E4A] py-20 md:py-28">
+        {/* Marigold accent bar at bottom */}
+        <div
+          className="absolute bottom-0 left-0 h-1 w-full bg-[#EAB308]"
+          aria-hidden="true"
+        />
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Contact Us
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-purple-200">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-[#F0FDFA]/80">
             We would love to hear from you. Whether you have a question about
             our programs, want to volunteer, or are interested in partnering
             with us, we are here to help.
@@ -95,11 +94,13 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info + Form */}
-      <section className="py-16 md:py-24">
+      <section className="bg-[#FFFDF7] py-16 md:py-24">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-5">
           {/* Left column -- contact info */}
           <div className="flex flex-col gap-6 lg:col-span-2">
-            <h2 className="text-2xl font-bold tracking-tight">Get in Touch</h2>
+            <h2 className="font-heading text-2xl font-bold tracking-tight text-[#134E4A]">
+              Get in Touch
+            </h2>
             <p className="text-muted-foreground">
               Reach out to us through any of the channels below and we will
               respond within 24-48 hours.
@@ -107,18 +108,10 @@ export default function ContactPage() {
 
             <div className="flex flex-col gap-4">
               {contactInfo.map((item) => (
-                <Card key={item.label}>
+                <Card key={item.label} className="card-interactive">
                   <CardContent className="flex items-start gap-4">
-                    <div
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
-                      style={{
-                        backgroundColor: "var(--bob-purple-100)",
-                      }}
-                    >
-                      <item.icon
-                        className="h-5 w-5"
-                        style={{ color: "var(--bob-purple-600)" }}
-                      />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                      <item.icon className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">
@@ -127,8 +120,7 @@ export default function ContactPage() {
                       {item.href ? (
                         <a
                           href={item.href}
-                          className="font-medium hover:underline"
-                          style={{ color: "var(--bob-purple-700)" }}
+                          className="font-medium text-primary hover:underline"
                         >
                           {item.value}
                         </a>
@@ -144,9 +136,9 @@ export default function ContactPage() {
 
           {/* Right column -- form */}
           <div className="lg:col-span-3">
-            <Card className="p-0">
+            <Card className="border-t-4 border-primary p-0">
               <CardContent className="p-6 md:p-8">
-                <h2 className="mb-1 text-2xl font-bold tracking-tight">
+                <h2 className="font-heading mb-1 text-2xl font-bold tracking-tight text-[#134E4A]">
                   Send Us a Message
                 </h2>
                 <p className="mb-6 text-muted-foreground">
@@ -162,10 +154,12 @@ export default function ContactPage() {
       <Separator />
 
       {/* Get Involved */}
-      <section className="py-16 md:py-24">
+      <section className="bg-[#F5F0EB] py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold tracking-tight">Get Involved</h2>
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A]">
+              Get Involved
+            </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
               There are many ways to support our mission of illuminating futures
               through education.
@@ -174,20 +168,17 @@ export default function ContactPage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {getInvolved.map((item) => (
-              <Card key={item.title} className="text-center">
+              <Card
+                key={item.title}
+                className="card-interactive border-t-4 border-[#EAB308] text-center"
+              >
                 <CardContent className="flex flex-col items-center gap-3">
-                  <div
-                    className="flex h-12 w-12 items-center justify-center rounded-full"
-                    style={{
-                      backgroundColor: "var(--bob-gold-100)",
-                    }}
-                  >
-                    <item.icon
-                      className="h-6 w-6"
-                      style={{ color: "var(--bob-gold-600)" }}
-                    />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#EAB308]/10">
+                    <item.icon className="h-6 w-6 text-[#A16207]" />
                   </div>
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
+                  <h3 className="font-heading text-lg font-semibold">
+                    {item.title}
+                  </h3>
                   <p className="text-sm text-muted-foreground">
                     {item.description}
                   </p>

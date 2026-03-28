@@ -30,19 +30,11 @@ export default async function BlogPage() {
   const posts = await getBlogPosts();
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="px-4 py-16 sm:py-24">
+    <main className="min-h-screen bg-[#FFFDF7]">
+      {/* Hero Section -- lighter hero with teal heading */}
+      <section className="bg-[#F0FDFA] px-4 py-16 sm:py-24">
         <div className="mx-auto max-w-4xl text-center">
-          <h1
-            className="text-4xl font-bold tracking-tight sm:text-5xl"
-            style={{
-              backgroundImage: `linear-gradient(135deg, var(--bob-purple-700), var(--bob-purple-500), var(--bob-gold-500))`,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-[#134E4A] sm:text-5xl">
             Our Blog
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
@@ -62,23 +54,10 @@ export default async function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group block transition-transform hover:-translate-y-1"
             >
-              <Card
-                className="h-full transition-shadow group-hover:ring-2"
-                style={
-                  {
-                    "--tw-ring-color": "var(--bob-purple-300)",
-                  } as React.CSSProperties
-                }
-              >
+              <Card className="h-full border-t-4 border-primary transition-shadow group-hover:ring-2 group-hover:ring-primary/30">
                 <CardHeader>
                   <div className="mb-2">
-                    <span
-                      className="inline-flex h-5 items-center rounded-full px-2 text-xs font-medium"
-                      style={{
-                        backgroundColor: "var(--bob-purple-100)",
-                        color: "var(--bob-purple-700)",
-                      }}
-                    >
+                    <span className="inline-flex h-5 items-center rounded-full bg-primary/10 px-2 text-xs font-medium text-primary">
                       {post.category}
                     </span>
                   </div>
@@ -108,10 +87,7 @@ export default async function BlogPage() {
                 </CardContent>
 
                 <CardFooter>
-                  <span
-                    className="inline-flex items-center gap-1 text-sm font-medium transition-colors"
-                    style={{ color: "var(--bob-purple-600)" }}
-                  >
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors">
                     Read More
                     <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                   </span>

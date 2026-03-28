@@ -19,23 +19,14 @@ export default async function DonateSuccessPage({
   const { session_id } = await searchParams;
 
   return (
-    <section className="px-6 py-20 sm:py-28">
+    <section className="bg-[#FFFDF7] px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-lg text-center">
-        {/* Success icon */}
-        <div
-          className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
-          style={{
-            background:
-              "linear-gradient(135deg, var(--bob-purple-500), var(--bob-gold-500))",
-          }}
-        >
+        {/* Success icon -- teal gradient */}
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#0F766E] to-[#14B8A6]">
           <Heart className="h-10 w-10 text-white" fill="white" />
         </div>
 
-        <h1
-          className="text-3xl font-bold tracking-tight sm:text-4xl"
-          style={{ color: "var(--bob-purple-900)" }}
-        >
+        <h1 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A] sm:text-4xl">
           Thank You for Your Generosity!
         </h1>
 
@@ -44,16 +35,10 @@ export default async function DonateSuccessPage({
           the lives of students in Nigeria.
         </p>
 
-        <Card className="mt-8">
+        <Card className="mt-8 border-t-4 border-primary">
           <CardContent className="space-y-3 pt-2">
-            <div
-              className="rounded-lg p-4"
-              style={{ backgroundColor: "var(--bob-purple-50)" }}
-            >
-              <p
-                className="text-sm font-medium"
-                style={{ color: "var(--bob-purple-700)" }}
-              >
+            <div className="rounded-lg bg-[#F0FDFA] p-4">
+              <p className="text-sm font-medium text-primary">
                 A confirmation email will be sent to you shortly with the
                 details of your donation.
               </p>
@@ -65,17 +50,16 @@ export default async function DonateSuccessPage({
               </p>
             )}
 
-            <blockquote className="text-sm italic text-muted-foreground">
-              &ldquo;Each of you should give what you have decided in your heart
-              to give, not reluctantly or under compulsion, for God loves a
-              cheerful giver.&rdquo;
-              <cite
-                className="mt-1 block text-xs font-medium not-italic"
-                style={{ color: "var(--bob-purple-500)" }}
-              >
-                &mdash; 2 Corinthians 9:7
-              </cite>
-            </blockquote>
+            <div className="border-l-4 border-[#EAB308] pl-4 text-left">
+              <blockquote className="text-sm italic text-muted-foreground">
+                &ldquo;Each of you should give what you have decided in your
+                heart to give, not reluctantly or under compulsion, for God
+                loves a cheerful giver.&rdquo;
+                <cite className="mt-1 block text-xs font-medium not-italic text-[#A16207]">
+                  &mdash; 2 Corinthians 9:7
+                </cite>
+              </blockquote>
+            </div>
           </CardContent>
         </Card>
 
@@ -84,9 +68,8 @@ export default async function DonateSuccessPage({
             href="/"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "gap-2 px-6 font-semibold text-white",
+              "gap-2 bg-primary px-6 font-semibold text-white hover:bg-[#134E4A]",
             )}
-            style={{ backgroundColor: "var(--bob-purple-600)" }}
           >
             <Home className="h-4 w-4" />
             Back to Home

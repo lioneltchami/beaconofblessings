@@ -14,23 +14,14 @@ export const metadata: Metadata = {
 
 export default function DonateCancelPage() {
   return (
-    <section className="px-6 py-20 sm:py-28">
+    <section className="bg-[#FFFDF7] px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-lg text-center">
-        {/* Icon */}
-        <div
-          className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
-          style={{ backgroundColor: "var(--bob-purple-100)" }}
-        >
-          <RotateCcw
-            className="h-10 w-10"
-            style={{ color: "var(--bob-purple-500)" }}
-          />
+        {/* Icon -- terracotta accent for cancelled state */}
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#C2410C]/10">
+          <RotateCcw className="h-10 w-10 text-[#C2410C]" />
         </div>
 
-        <h1
-          className="text-3xl font-bold tracking-tight sm:text-4xl"
-          style={{ color: "var(--bob-purple-900)" }}
-        >
+        <h1 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A] sm:text-4xl">
           Donation Cancelled
         </h1>
 
@@ -39,16 +30,10 @@ export default function DonateCancelPage() {
           whenever you are ready.
         </p>
 
-        <Card className="mt-8">
+        <Card className="mt-8 border-t-4 border-[#C2410C]">
           <CardContent className="space-y-3 pt-2">
-            <div
-              className="rounded-lg p-4"
-              style={{ backgroundColor: "var(--bob-purple-50)" }}
-            >
-              <p
-                className="text-sm font-medium"
-                style={{ color: "var(--bob-purple-700)" }}
-              >
+            <div className="rounded-lg bg-[#C2410C]/5 p-4">
+              <p className="text-sm font-medium text-[#C2410C]">
                 No charges were made to your account. If you experienced any
                 issues, please do not hesitate to reach out.
               </p>
@@ -57,8 +42,7 @@ export default function DonateCancelPage() {
               Contact us at{" "}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="underline underline-offset-2"
-                style={{ color: "var(--bob-purple-600)" }}
+                className="text-primary underline underline-offset-2"
               >
                 {siteConfig.email}
               </a>{" "}
@@ -72,9 +56,8 @@ export default function DonateCancelPage() {
             href="/donate"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "gap-2 px-6 font-semibold text-white",
+              "gap-2 bg-[#EAB308] px-6 font-semibold text-[#1A1A1A] hover:bg-[#A16207] hover:text-white",
             )}
-            style={{ backgroundColor: "var(--bob-gold-500)" }}
           >
             <ArrowRight className="h-4 w-4" />
             Try Again
