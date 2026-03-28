@@ -9,10 +9,12 @@
  * 4. Set SANITY_PROJECT_ID and SANITY_DATASET in .env.local
  */
 
+export { album } from "./album";
 export { blogPost } from "./blog-post";
 export { coreValue } from "./core-value";
 export { founder } from "./founder";
 export { galleryItem } from "./gallery-item";
 export { impactStat } from "./impact-stat";
 export { project } from "./project";
+export { resource } from "./resource";
 export { siteConfig } from "./site-config";

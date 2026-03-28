@@ -4,15 +4,16 @@ import Link from "next/link";
 import { ResourceList } from "@/components/resource-list";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { resources } from "@/data/resources";
 import { siteConfig } from "@/data/site";
+import { getResources } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: `Resources & Documents | ${siteConfig.name}`,
   description: `Access official registration documents, annual reports, project reports, and organizational policies from ${siteConfig.name}. We believe in full transparency.`,
 };
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  const resources = await getResources();
   return (
     <main className="flex flex-col">
       {/* Hero */}

@@ -1,23 +1,30 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import GalleryPage from "@/app/gallery/page";
 import { albums } from "@/data/albums";
 
+vi.mock("@/lib/sanity/queries", () => ({
+	getAlbums: vi.fn(() => Promise.resolve([...albums])),
+}));
+
 describe("GalleryPage", () => {
-	it("renders Gallery heading", () => {
-		render(<GalleryPage />);
+	it("renders Gallery heading", async () => {
+		const result = await GalleryPage();
+		render(result);
 		expect(
 			screen.getByRole("heading", { level: 1, name: /gallery/i }),
 		).toBeInTheDocument();
 	});
 
-	it("renders the album filter buttons", () => {
-		render(<GalleryPage />);
+	it("renders the album filter buttons", async () => {
+		const result = await GalleryPage();
+		render(result);
 		expect(screen.getByRole("button", { name: /all/i })).toBeInTheDocument();
 	});
 
-	it("renders all album titles", () => {
-		render(<GalleryPage />);
+	it("renders all album titles", async () => {
+		const result = await GalleryPage();
+		render(result);
 		for (const album of albums) {
 			expect(screen.getByText(album.title)).toBeInTheDocument();
 		}

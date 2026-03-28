@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GalleryGrid } from "@/components/gallery-grid";
 import { buttonVariants } from "@/components/ui/button-variants";
-import { albums } from "@/data/albums";
 import { siteConfig } from "@/data/site";
+import { getAlbums } from "@/lib/sanity/queries";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -12,7 +12,8 @@ export const metadata: Metadata = {
   description: `See the visual journey of ${siteConfig.name} Charity Initiative -- moments of impact, community engagement, and educational transformation across Nigeria.`,
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const albums = await getAlbums();
   return (
     <main className="flex flex-col">
       {/* Hero */}
