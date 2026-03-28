@@ -1,16 +1,16 @@
+import { ArrowRight, Calendar, Clock, User } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Calendar, Clock, User } from "lucide-react";
-import { getBlogPosts } from "@/data/blog-posts";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { getBlogPosts } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -26,8 +26,8 @@ function formatDate(dateString: string) {
   });
 }
 
-export default function BlogPage() {
-  const posts = getBlogPosts();
+export default async function BlogPage() {
+  const posts = await getBlogPosts();
 
   return (
     <main className="min-h-screen">

@@ -11,8 +11,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { founders } from "@/data/founders";
-import { coreValues, siteConfig } from "@/data/site";
+import { siteConfig } from "@/data/site";
+import { getCoreValues, getFounders } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: `About Us | ${siteConfig.name}`,
@@ -42,7 +42,10 @@ const milestones = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const founders = await getFounders();
+  const coreValues = await getCoreValues();
+
   return (
     <main className="flex flex-col">
       {/* Hero */}

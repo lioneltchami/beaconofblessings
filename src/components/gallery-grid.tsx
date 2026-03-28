@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { Camera } from "lucide-react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  galleryCategories,
-  galleryItems,
   type GalleryCategory,
+  type GalleryItem,
+  galleryCategories,
 } from "@/data/gallery";
 import { cn } from "@/lib/utils";
 
@@ -22,13 +22,17 @@ const categoryGradients: Record<Exclude<GalleryCategory, "all">, string> = {
     "linear-gradient(135deg, var(--bob-gold-400) 0%, var(--bob-purple-600) 100%)",
 };
 
-export function GalleryGrid() {
+interface GalleryGridProps {
+  items: GalleryItem[];
+}
+
+export function GalleryGrid({ items }: GalleryGridProps) {
   const [selected, setSelected] = useState<GalleryCategory>("all");
 
   const filtered =
     selected === "all"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === selected);
+      ? items
+      : items.filter((item) => item.category === selected);
 
   return (
     <div>
