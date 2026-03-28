@@ -1,72 +1,68 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { GalleryGrid } from "@/components/gallery-grid";
-import { galleryCategories, galleryItems } from "@/data/gallery";
+import { albumCategories, albums } from "@/data/albums";
 
 describe("GalleryGrid", () => {
   it("renders all category filter buttons", () => {
-    render(<GalleryGrid items={galleryItems} />);
-    for (const cat of galleryCategories) {
+    render(<GalleryGrid albums={albums} />);
+    for (const cat of albumCategories) {
       expect(
         screen.getByRole("button", { name: cat.label }),
       ).toBeInTheDocument();
     }
   });
 
-  it("renders all gallery items by title on initial load", () => {
-    render(<GalleryGrid items={galleryItems} />);
-    for (const item of galleryItems) {
-      expect(screen.getByText(item.title)).toBeInTheDocument();
+  it("renders all album titles on initial load", () => {
+    render(<GalleryGrid albums={albums} />);
+    for (const album of albums) {
+      expect(screen.getByText(album.title)).toBeInTheDocument();
     }
   });
 
-  it("filters items when a category button is clicked", () => {
-    render(<GalleryGrid items={galleryItems} />);
+  it("renders album photo counts", () => {
+    render(<GalleryGrid albums={albums} />);
+    // Some albums may share the same photo count, so use getAllByText
+    const uniqueCounts = [...new Set(albums.map((a) => a.photoCount))];
+    for (const count of uniqueCounts) {
+      expect(screen.getAllByText(`${count} photos`).length).toBeGreaterThan(0);
+    }
+  });
 
-    // Click "Education" filter
+  it("filters albums when a category button is clicked", () => {
+    render(<GalleryGrid albums={albums} />);
+    const educationAlbums = albums.filter((a) => a.category === "Education");
+    const nonEducationAlbums = albums.filter((a) => a.category !== "Education");
+
     fireEvent.click(screen.getByRole("button", { name: "Education" }));
 
-    const educationItems = galleryItems.filter(
-      (item) => item.category === "education",
-    );
-    const nonEducationItems = galleryItems.filter(
-      (item) => item.category !== "education",
-    );
-
-    for (const item of educationItems) {
-      expect(screen.getByText(item.title)).toBeInTheDocument();
+    for (const album of educationAlbums) {
+      expect(screen.getByText(album.title)).toBeInTheDocument();
     }
-    for (const item of nonEducationItems) {
-      expect(screen.queryByText(item.title)).not.toBeInTheDocument();
+    for (const album of nonEducationAlbums) {
+      expect(screen.queryByText(album.title)).not.toBeInTheDocument();
     }
   });
 
-  it("clicking All shows all items again after filtering", () => {
-    render(<GalleryGrid items={galleryItems} />);
-
-    // First narrow down to a single category
-    fireEvent.click(screen.getByRole("button", { name: "Our Team" }));
-
-    // Then reset to All
+  it("clicking All shows all albums again after filtering", () => {
+    render(<GalleryGrid albums={albums} />);
+    fireEvent.click(screen.getByRole("button", { name: "Education" }));
     fireEvent.click(screen.getByRole("button", { name: "All" }));
 
-    for (const item of galleryItems) {
-      expect(screen.getByText(item.title)).toBeInTheDocument();
+    for (const album of albums) {
+      expect(screen.getByText(album.title)).toBeInTheDocument();
     }
   });
 
   it("marks the active filter button with aria-pressed=true", () => {
-    render(<GalleryGrid items={galleryItems} />);
-
-    // Initially "All" is active
+    render(<GalleryGrid albums={albums} />);
     expect(screen.getByRole("button", { name: "All" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Events" }));
-
-    expect(screen.getByRole("button", { name: "Events" })).toHaveAttribute(
+    fireEvent.click(screen.getByRole("button", { name: "Community" }));
+    expect(screen.getByRole("button", { name: "Community" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
