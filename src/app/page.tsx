@@ -1,303 +1,103 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import { Heart, Users, BookOpen, Star, ArrowRight, Gift, HandHeart, Globe } from 'lucide-react'
-import Button from '@/components/ui/Button'
+import Image from "next/image";
 
 export default function Home() {
-  const stats = [
-    { number: '500+', label: 'Students Helped', icon: Users },
-    { number: '50+', label: 'School Bags Donated', icon: BookOpen },
-    { number: '1', label: 'Project Completed', icon: Star },
-    { number: '100%', label: 'Community Focused', icon: Heart },
-  ]
-
-  const projects = [
-    {
-      title: 'School Supplies Drive 2024',
-      description: 'Our inaugural project provided school bags, books, and supplies to over 500 students in need across Lagos communities.',
-      impact: '500 students equipped for education',
-      status: 'Completed',
-      image: '/images/projects/school-supplies.jpg'
-    }
-  ]
-
-  const founders = [
-    {
-      name: 'Lionel Tchami',
-      role: 'Co-Founder & Director',
-      description: 'Passionate about education and making a difference in vulnerable communities.',
-    },
-    {
-      name: 'Grace Kure',
-      role: 'Co-Founder & Nigeria Operations Lead',
-      description: 'Based in Nigeria, Grace leads our on-ground operations and community engagement.',
-    }
-  ]
-
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100">
-        <div className="absolute inset-0 gradient-hero opacity-10"></div>
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
-              Beacon of{' '}
-              <span className="text-gradient">Blessings</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto leading-relaxed">
-              Sharing the love of Jesus Christ through educational support and compassionate care for vulnerable communities in Nigeria
-            </p>
-          </motion.div>
+    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        <Image
+          className="dark:invert"
+          src="/next.svg"
+          alt="Next.js logo"
+          width={180}
+          height={38}
+          priority
+        />
+        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
+          <li className="mb-2 tracking-[-.01em]">
+            Get started by editing{" "}
+            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
+              src/app/page.tsx
+            </code>
+            .
+          </li>
+          <li className="tracking-[-.01em]">
+            Save and see your changes instantly.
+          </li>
+        </ol>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-12"
+        <div className="flex gap-4 items-center flex-col sm:flex-row">
+          <a
+            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto border border-primary-200 shadow-lg">
-              <blockquote className="text-lg text-gray-800 italic mb-3">
-                &ldquo;For I was hungry and you gave me something to eat, I was thirsty and you gave me something to drink, I was a stranger and you invited me in.&rdquo;
-              </blockquote>
-              <cite className="text-primary-600 font-semibold">Matthew 25:35</cite>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            <Image
+              className="dark:invert"
+              src="/vercel.svg"
+              alt="Vercel logomark"
+              width={20}
+              height={20}
+            />
+            Deploy now
+          </a>
+          <a
+            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <Button href="/donate" size="lg" icon={Heart} className="text-lg">
-              Donate Now
-            </Button>
-            <Button href="/projects" variant="outline" size="lg" icon={ArrowRight} iconPosition="right">
-              See Our Impact
-            </Button>
-          </motion.div>
+            Read our docs
+          </a>
         </div>
-
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-primary-400/10 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-primary-300/10 rounded-full blur-xl"></div>
-        <div className="absolute top-1/2 right-20 w-16 h-16 bg-primary-500/10 rounded-full blur-xl"></div>
-      </section>
-
-      {/* Impact Stats Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Impact</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Together, we&apos;re making a meaningful difference in communities across Nigeria
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-8 bg-gradient-to-br from-primary-50 to-white rounded-2xl border border-primary-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <stat.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold text-primary-600 mb-2">{stat.number}</h3>
-                <p className="text-gray-700 font-medium">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">About Our Mission</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Founded by Lionel Tchami and Grace Kure, Beacon of Blessings Charity Initiative was born from a heart to serve the less privileged and share God&apos;s love through practical action.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Founders</h3>
-              <div className="space-y-6">
-                {founders.map((founder, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-lg border border-primary-100">
-                    <h4 className="text-lg font-bold text-primary-600 mb-1">{founder.name}</h4>
-                    <p className="text-primary-500 font-medium mb-3">{founder.role}</p>
-                    <p className="text-gray-600">{founder.description}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-xl border border-primary-200"
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Vision & Mission</h3>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-lg font-semibold text-primary-600 mb-3 flex items-center">
-                    <Globe className="w-5 h-5 mr-2" />
-                    Vision
-                  </h4>
-                  <p className="text-gray-700">
-                    To be a beacon of hope and transformation, illuminating the path to education and opportunity for vulnerable communities across Nigeria.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-primary-600 mb-3 flex items-center">
-                    <HandHeart className="w-5 h-5 mr-2" />
-                    Mission
-                  </h4>
-                  <p className="text-gray-700">
-                    To share the love of Jesus Christ through practical support, focusing on educational resources, school supplies, and compassionate care for those in need.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Recent Projects Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Recent Projects</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              See how your support is making a real difference in communities across Nigeria
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-primary-50 rounded-2xl shadow-xl border border-primary-200 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
-                        {project.status}
-                      </span>
-                    </div>
-                    <Gift className="w-8 h-8 text-primary-500" />
-                  </div>
-                  
-                  <p className="text-gray-700 mb-4 leading-relaxed">{project.description}</p>
-                  
-                  <div className="bg-primary-100 rounded-lg p-4 mb-6">
-                    <p className="text-primary-800 font-semibold flex items-center">
-                      <Star className="w-5 h-5 mr-2" />
-                      Impact: {project.impact}
-                    </p>
-                  </div>
-
-                  <Button href="/projects" variant="primary" icon={ArrowRight} iconPosition="right">
-                    Learn More
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="py-20 gradient-hero text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-6">Join Us in Making a Difference</h2>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Every donation, no matter the size, helps us reach more children and families in need. 
-              Together, we can be the hands and feet of Jesus in our communities.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button 
-                href="/donate" 
-                variant="secondary" 
-                size="lg" 
-                icon={Heart}
-                className="bg-white text-primary-600 hover:bg-white/90"
-              >
-                Make a Donation
-              </Button>
-              <Button 
-                href="/contact" 
-                variant="outline" 
-                size="lg" 
-                icon={Users}
-                className="border-white text-white hover:bg-white/10"
-              >
-                Get Involved
-              </Button>
-            </div>
-
-            <div className="mt-12 p-6 bg-white/10 backdrop-blur-sm rounded-xl max-w-2xl mx-auto border border-white/20">
-              <blockquote className="text-lg italic mb-3">
-                &ldquo;Whoever is kind to the poor lends to the Lord, and he will reward them for what they have done.&rdquo;
-              </blockquote>
-              <cite className="text-white/80 font-medium">Proverbs 19:17</cite>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      </main>
+      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/file.svg"
+            alt="File icon"
+            width={16}
+            height={16}
+          />
+          Learn
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/window.svg"
+            alt="Window icon"
+            width={16}
+            height={16}
+          />
+          Examples
+        </a>
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            aria-hidden
+            src="/globe.svg"
+            alt="Globe icon"
+            width={16}
+            height={16}
+          />
+          Go to nextjs.org →
+        </a>
+      </footer>
     </div>
-  )
+  );
 }
