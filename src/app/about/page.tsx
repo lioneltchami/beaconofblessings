@@ -49,22 +49,22 @@ export default async function AboutPage() {
   return (
     <main className="flex flex-col">
       {/* Hero -- teal bg with marigold accent line */}
-      <section className="relative bg-[#134E4A] py-20 sm:py-28">
+      <section className="relative bg-[#8B3A24] py-20 sm:py-28">
         {/* Marigold accent stripe */}
         <div
-          className="absolute left-0 top-0 h-1.5 w-full bg-[#EAB308]"
+          className="absolute left-0 top-0 h-1.5 w-full bg-[#E8A825]"
           aria-hidden="true"
         />
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             About {siteConfig.name}
           </h1>
-          <div className="mx-auto mt-6 max-w-xl border-l-4 border-[#EAB308] pl-4 text-left">
-            <p className="text-lg italic leading-relaxed text-[#FDE047]">
+          <div className="mx-auto mt-6 max-w-xl border-l-4 border-[#E8A825] pl-4 text-left">
+            <p className="text-lg italic leading-relaxed text-[#F5D060]">
               &ldquo;The Spirit of the Lord is on me, because he has anointed me
               to proclaim good news to the poor.&rdquo;
             </p>
-            <p className="mt-2 text-sm font-medium text-[#EAB308]">
+            <p className="mt-2 text-sm font-medium text-[#E8A825]">
               &mdash; Luke 4:18
             </p>
           </div>
@@ -72,9 +72,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="bg-[#FFFDF7] py-16 sm:py-20">
+      <section className="bg-[#FAF6F1] py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-4">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A]">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24]">
             Our Story
           </h2>
           <Separator className="my-6" />
@@ -102,7 +102,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Vision & Mission */}
-      <section className="bg-[#F0FDFA] py-16 sm:py-20">
+      <section className="bg-[#FDF2EE] py-16 sm:py-20">
         <div className="mx-auto grid max-w-5xl gap-8 px-4 md:grid-cols-2">
           <Card className="card-interactive border-t-4 border-primary">
             <CardHeader>
@@ -119,10 +119,10 @@ export default async function AboutPage() {
               </p>
             </CardContent>
           </Card>
-          <Card className="card-interactive border-t-4 border-[#EAB308]">
+          <Card className="card-interactive border-t-4 border-[#E8A825]">
             <CardHeader>
-              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-[#EAB308]/10">
-                <Rocket className="h-5 w-5 text-[#A16207]" />
+              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-[#E8A825]/10">
+                <Rocket className="h-5 w-5 text-[#B8861E]" />
               </div>
               <CardTitle className="text-xl">Our Mission</CardTitle>
             </CardHeader>
@@ -138,9 +138,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Meet Our Founders */}
-      <section className="bg-[#FFFDF7] py-16 sm:py-20">
+      <section className="bg-[#FAF6F1] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#134E4A]">
+          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#8B3A24]">
             Meet Our Founders
           </h2>
           <p className="mt-3 text-center text-muted-foreground">
@@ -153,14 +153,14 @@ export default async function AboutPage() {
                 <CardHeader>
                   <div className="flex items-center gap-4">
                     <div
-                      className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#134E4A] to-[#14B8A6] text-lg font-bold text-white"
+                      className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#8B3A24] to-[#D4795F] text-lg font-bold text-white"
                       aria-hidden="true"
                     >
                       {founder.initials}
                     </div>
                     <div>
                       <CardTitle className="text-lg">{founder.name}</CardTitle>
-                      <p className="text-sm font-medium text-[#A16207]">
+                      <p className="text-sm font-medium text-[#B8861E]">
                         {founder.role}
                       </p>
                     </div>
@@ -176,9 +176,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section className="bg-[#F0FDFA] py-16 sm:py-20">
+      <section className="bg-[#FDF2EE] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#134E4A]">
+          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#8B3A24]">
             Core Values
           </h2>
           <p className="mt-3 text-center text-muted-foreground">
@@ -191,12 +191,12 @@ export default async function AboutPage() {
               return (
                 <Card
                   key={value.title}
-                  className="card-interactive border-l-4 border-[#EAB308]"
+                  className="card-interactive border-l-4 border-[#E8A825]"
                 >
                   <CardHeader>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EAB308]/10">
-                        <Icon className="h-4 w-4 text-[#A16207]" />
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8A825]/10">
+                        <Icon className="h-4 w-4 text-[#B8861E]" />
                       </div>
                       <CardTitle>{value.title}</CardTitle>
                     </div>
@@ -215,9 +215,9 @@ export default async function AboutPage() {
       </section>
 
       {/* Journey Timeline */}
-      <section className="bg-[#FFFDF7] py-16 sm:py-20">
+      <section className="bg-[#FAF6F1] py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-4">
-          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#134E4A]">
+          <h2 className="font-heading text-center text-3xl font-bold tracking-tight text-[#8B3A24]">
             Our Journey
           </h2>
           <Separator className="mx-auto my-8 max-w-xs" />
@@ -225,13 +225,13 @@ export default async function AboutPage() {
             {milestones.map((milestone) => (
               <div key={milestone.title} className="relative">
                 <div
-                  className="absolute -left-8 top-1 h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-[#0F766E] to-[#EAB308]"
+                  className="absolute -left-8 top-1 h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-[#C05A3C] to-[#E8A825]"
                   aria-hidden="true"
                 />
-                <p className="text-sm font-bold text-[#A16207]">
+                <p className="text-sm font-bold text-[#B8861E]">
                   {milestone.year}
                 </p>
-                <h3 className="font-heading text-lg font-semibold text-[#134E4A]">
+                <h3 className="font-heading text-lg font-semibold text-[#8B3A24]">
                   {milestone.title}
                 </h3>
                 <p className="mt-1 text-muted-foreground">
@@ -244,12 +244,12 @@ export default async function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-br from-[#134E4A] via-[#0F766E] to-[#14B8A6] py-16 sm:py-20">
+      <section className="bg-gradient-to-br from-[#8B3A24] via-[#C05A3C] to-[#D4795F] py-16 sm:py-20">
         <div className="mx-auto max-w-2xl px-4 text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-white">
             Join Our Mission
           </h2>
-          <p className="mt-4 text-lg text-[#F0FDFA]/80">
+          <p className="mt-4 text-lg text-[#FDF2EE]/80">
             Together, we can illuminate more futures. Whether you volunteer,
             donate, or spread the word, every contribution matters.
           </p>

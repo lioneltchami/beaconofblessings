@@ -14,14 +14,14 @@ export const metadata: Metadata = {
 
 export default function DonateCancelPage() {
   return (
-    <section className="bg-[#FFFDF7] px-6 py-20 sm:py-28">
+    <section className="bg-[#FAF6F1] px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-lg text-center">
         {/* Icon -- terracotta accent for cancelled state */}
-        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#C2410C]/10">
-          <RotateCcw className="h-10 w-10 text-[#C2410C]" />
+        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#2D3A6E]/10">
+          <RotateCcw className="h-10 w-10 text-[#2D3A6E]" />
         </div>
 
-        <h1 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A] sm:text-4xl">
+        <h1 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24] sm:text-4xl">
           Donation Cancelled
         </h1>
 
@@ -30,10 +30,10 @@ export default function DonateCancelPage() {
           whenever you are ready.
         </p>
 
-        <Card className="mt-8 border-t-4 border-[#C2410C]">
+        <Card className="mt-8 border-t-4 border-[#2D3A6E]">
           <CardContent className="space-y-3 pt-2">
-            <div className="rounded-lg bg-[#C2410C]/5 p-4">
-              <p className="text-sm font-medium text-[#C2410C]">
+            <div className="rounded-lg bg-[#2D3A6E]/5 p-4">
+              <p className="text-sm font-medium text-[#2D3A6E]">
                 No charges were made to your account. If you experienced any
                 issues, please do not hesitate to reach out.
               </p>
@@ -56,7 +56,7 @@ export default function DonateCancelPage() {
             href="/donate"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "gap-2 bg-[#EAB308] px-6 font-semibold text-[#1A1A1A] hover:bg-[#A16207] hover:text-white",
+              "gap-2 bg-[#E8A825] px-6 font-semibold text-[#2C1810] hover:bg-[#B8861E] hover:text-white",
             )}
           >
             <ArrowRight className="h-4 w-4" />

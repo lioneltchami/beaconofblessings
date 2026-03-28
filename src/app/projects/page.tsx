@@ -38,17 +38,17 @@ export default async function ProjectsPage() {
   return (
     <main className="flex flex-col">
       {/* Hero -- gradient with stats overlay feel */}
-      <section className="relative bg-gradient-to-br from-[#134E4A] via-[#0F766E] to-[#14B8A6] py-20 sm:py-28">
+      <section className="relative bg-gradient-to-br from-[#8B3A24] via-[#C05A3C] to-[#D4795F] py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Our Projects
           </h1>
-          <div className="mx-auto mt-6 max-w-lg border-l-4 border-[#EAB308] pl-4 text-left">
-            <p className="text-lg italic leading-relaxed text-[#FDE047]">
+          <div className="mx-auto mt-6 max-w-lg border-l-4 border-[#E8A825] pl-4 text-left">
+            <p className="text-lg italic leading-relaxed text-[#F5D060]">
               &ldquo;Faith by itself, if it is not accompanied by action, is
               dead.&rdquo;
             </p>
-            <p className="mt-2 text-sm font-medium text-[#EAB308]">
+            <p className="mt-2 text-sm font-medium text-[#E8A825]">
               &mdash; James 2:17
             </p>
           </div>
@@ -56,14 +56,14 @@ export default async function ProjectsPage() {
       </section>
 
       {/* Impact Stats */}
-      <section className="bg-[#F0FDFA] py-12 sm:py-16">
+      <section className="bg-[#FDF2EE] py-12 sm:py-16">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 md:grid-cols-4">
           {impactStats.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <stat.icon className="h-6 w-6 text-primary" />
               </div>
-              <p className="text-2xl font-bold text-[#134E4A] sm:text-3xl">
+              <p className="text-2xl font-bold text-[#8B3A24] sm:text-3xl">
                 {stat.value}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
@@ -73,9 +73,9 @@ export default async function ProjectsPage() {
       </section>
 
       {/* Completed Projects */}
-      <section className="bg-[#FFFDF7] py-16 sm:py-20">
+      <section className="bg-[#FAF6F1] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A]">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24]">
             Completed Projects
           </h2>
           <p className="mt-2 text-muted-foreground">
@@ -111,7 +111,7 @@ export default async function ProjectsPage() {
                 <CardContent>
                   <p className="text-muted-foreground">{project.description}</p>
                   <Separator className="my-5" />
-                  <h4 className="mb-3 text-sm font-semibold text-[#134E4A]">
+                  <h4 className="mb-3 text-sm font-semibold text-[#8B3A24]">
                     Impact
                   </h4>
                   <ul className="space-y-2">
@@ -133,9 +133,9 @@ export default async function ProjectsPage() {
       </section>
 
       {/* Upcoming Projects */}
-      <section className="bg-[#F5F0EB] py-16 sm:py-20">
+      <section className="bg-[#F5EFE6] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A]">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24]">
             Upcoming Projects
           </h2>
           <p className="mt-2 text-muted-foreground">
@@ -146,12 +146,12 @@ export default async function ProjectsPage() {
             {upcomingProjects.map((project) => (
               <Card
                 key={project.slug}
-                className="card-interactive border-t-4 border-[#EAB308]"
+                className="card-interactive border-t-4 border-[#E8A825]"
               >
                 <CardHeader>
                   <div className="flex items-start justify-between gap-2">
                     <CardTitle className="text-lg">{project.title}</CardTitle>
-                    <Badge className="shrink-0 border-[#EAB308]/30 bg-[#EAB308]/10 text-[#A16207]">
+                    <Badge className="shrink-0 border-[#E8A825]/30 bg-[#E8A825]/10 text-[#B8861E]">
                       Upcoming
                     </Badge>
                   </div>
@@ -174,7 +174,7 @@ export default async function ProjectsPage() {
                         key={item}
                         className="flex items-start gap-2 text-sm text-muted-foreground"
                       >
-                        <Heart className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#EAB308]" />
+                        <Heart className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#E8A825]" />
                         {item}
                       </li>
                     ))}
@@ -187,19 +187,19 @@ export default async function ProjectsPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-br from-[#134E4A] via-[#0F766E] to-[#14B8A6] py-16 sm:py-20">
+      <section className="bg-gradient-to-br from-[#8B3A24] via-[#C05A3C] to-[#D4795F] py-16 sm:py-20">
         <div className="mx-auto max-w-2xl px-4 text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-white">
             Support Our Next Project
           </h2>
-          <p className="mt-4 text-lg text-[#F0FDFA]/80">
+          <p className="mt-4 text-lg text-[#FDF2EE]/80">
             Your contribution helps us bring education to more communities.
             Every gift, no matter the size, makes a difference.
           </p>
           <div className="mt-8">
             <Button
               size="lg"
-              className="bg-[#EAB308] text-[#1A1A1A] hover:bg-[#A16207] hover:text-white"
+              className="bg-[#E8A825] text-[#2C1810] hover:bg-[#B8861E] hover:text-white"
               render={<Link href="/donate" />}
             >
               Donate Now

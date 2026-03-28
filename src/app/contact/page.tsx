@@ -75,17 +75,17 @@ export default function ContactPage() {
   return (
     <div className="flex flex-col">
       {/* Hero -- split layout: teal left info, form right implied */}
-      <section className="relative bg-[#134E4A] py-20 md:py-28">
+      <section className="relative bg-[#8B3A24] py-20 md:py-28">
         {/* Marigold accent bar at bottom */}
         <div
-          className="absolute bottom-0 left-0 h-1 w-full bg-[#EAB308]"
+          className="absolute bottom-0 left-0 h-1 w-full bg-[#E8A825]"
           aria-hidden="true"
         />
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Contact Us
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-[#F0FDFA]/80">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-[#FDF2EE]/80">
             We would love to hear from you. Whether you have a question about
             our programs, want to volunteer, or are interested in partnering
             with us, we are here to help.
@@ -94,11 +94,11 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info + Form */}
-      <section className="bg-[#FFFDF7] py-16 md:py-24">
+      <section className="bg-[#FAF6F1] py-16 md:py-24">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-5">
           {/* Left column -- contact info */}
           <div className="flex flex-col gap-6 lg:col-span-2">
-            <h2 className="font-heading text-2xl font-bold tracking-tight text-[#134E4A]">
+            <h2 className="font-heading text-2xl font-bold tracking-tight text-[#8B3A24]">
               Get in Touch
             </h2>
             <p className="text-muted-foreground">
@@ -138,7 +138,7 @@ export default function ContactPage() {
           <div className="lg:col-span-3">
             <Card className="border-t-4 border-primary p-0">
               <CardContent className="p-6 md:p-8">
-                <h2 className="font-heading mb-1 text-2xl font-bold tracking-tight text-[#134E4A]">
+                <h2 className="font-heading mb-1 text-2xl font-bold tracking-tight text-[#8B3A24]">
                   Send Us a Message
                 </h2>
                 <p className="mb-6 text-muted-foreground">
@@ -154,10 +154,10 @@ export default function ContactPage() {
       <Separator />
 
       {/* Get Involved */}
-      <section className="bg-[#F5F0EB] py-16 md:py-24">
+      <section className="bg-[#F5EFE6] py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-12 text-center">
-            <h2 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A]">
+            <h2 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24]">
               Get Involved
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
@@ -170,11 +170,11 @@ export default function ContactPage() {
             {getInvolved.map((item) => (
               <Card
                 key={item.title}
-                className="card-interactive border-t-4 border-[#EAB308] text-center"
+                className="card-interactive border-t-4 border-[#E8A825] text-center"
               >
                 <CardContent className="flex flex-col items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#EAB308]/10">
-                    <item.icon className="h-6 w-6 text-[#A16207]" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E8A825]/10">
+                    <item.icon className="h-6 w-6 text-[#B8861E]" />
                   </div>
                   <h3 className="font-heading text-lg font-semibold">
                     {item.title}

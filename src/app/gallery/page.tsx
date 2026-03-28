@@ -19,7 +19,7 @@ export default async function GalleryPage() {
   return (
     <main className="flex flex-col">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#134E4A] via-[#0F766E] to-[#14B8A6] py-20 sm:py-28">
+      <section className="relative bg-gradient-to-br from-[#8B3A24] via-[#C05A3C] to-[#D4795F] py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
             <Camera className="h-7 w-7 text-white" />
@@ -27,29 +27,29 @@ export default async function GalleryPage() {
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Gallery
           </h1>
-          <p className="mt-4 text-lg leading-relaxed text-[#FDE047]">
+          <p className="mt-4 text-lg leading-relaxed text-[#F5D060]">
             Our visual journey of making a difference
           </p>
-          <p className="mt-3 text-sm text-[#F0FDFA]/70">
+          <p className="mt-3 text-sm text-[#FDF2EE]/70">
             Photos coming soon — we are documenting our ongoing work
           </p>
         </div>
       </section>
 
       {/* Gallery Grid */}
-      <section className="bg-[#FFFDF7] px-4 py-16 sm:py-20">
+      <section className="bg-[#FAF6F1] px-4 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <GalleryGrid items={galleryItems} />
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-[#134E4A] py-16 sm:py-20">
+      <section className="bg-[#8B3A24] py-16 sm:py-20">
         <div className="mx-auto max-w-2xl px-4 text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-white">
             See Our Work Firsthand
           </h2>
-          <p className="mt-4 text-lg text-[#F0FDFA]/80">
+          <p className="mt-4 text-lg text-[#FDF2EE]/80">
             Want to witness the impact in person? Join our team of volunteers
             and help us illuminate more futures.
           </p>

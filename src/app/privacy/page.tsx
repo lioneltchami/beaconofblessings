@@ -13,17 +13,17 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="relative bg-[#134E4A] py-20 md:py-28">
+      <section className="relative bg-[#8B3A24] py-20 md:py-28">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Privacy Policy
           </h1>
-          <p className="mt-4 text-[#F0FDFA]/70">Last updated: {lastUpdated}</p>
+          <p className="mt-4 text-[#FDF2EE]/70">Last updated: {lastUpdated}</p>
         </div>
       </section>
 
       {/* Content */}
-      <section className="bg-[#FFFDF7] py-16 md:py-24">
+      <section className="bg-[#FAF6F1] py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-4">
           <div className="prose prose-neutral max-w-none space-y-8 text-foreground">
             <p className="text-lg text-muted-foreground">
@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Information We Collect
               </h2>
               <p className="mb-3 text-muted-foreground">
@@ -80,7 +80,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 How We Use Your Information
               </h2>
               <ul className="list-inside list-disc space-y-2 text-muted-foreground">
@@ -102,7 +102,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Cookies
               </h2>
               <p className="text-muted-foreground">
@@ -117,7 +117,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Third-Party Services
               </h2>
               <p className="text-muted-foreground">
@@ -133,7 +133,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Data Security
               </h2>
               <p className="text-muted-foreground">
@@ -148,7 +148,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Your Rights
               </h2>
               <p className="mb-3 text-muted-foreground">
@@ -185,7 +185,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Children&apos;s Privacy
               </h2>
               <p className="text-muted-foreground">
@@ -199,7 +199,7 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Changes to This Policy
               </h2>
               <p className="text-muted-foreground">
@@ -213,14 +213,14 @@ export default function PrivacyPolicyPage() {
             <Separator />
 
             <section>
-              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#134E4A]">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Contact Us
               </h2>
               <p className="text-muted-foreground">
                 If you have questions or concerns about this Privacy Policy,
                 please contact us at:
               </p>
-              <div className="mt-3 rounded-lg border bg-[#F0FDFA] p-4 text-sm">
+              <div className="mt-3 rounded-lg border bg-[#FDF2EE] p-4 text-sm">
                 <p className="font-semibold">{siteConfig.name}</p>
                 <p className="text-muted-foreground">
                   Email:{" "}

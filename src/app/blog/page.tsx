@@ -30,11 +30,11 @@ export default async function BlogPage() {
   const posts = await getBlogPosts();
 
   return (
-    <main className="min-h-screen bg-[#FFFDF7]">
+    <main className="min-h-screen bg-[#FAF6F1]">
       {/* Hero Section -- lighter hero with teal heading */}
-      <section className="bg-[#F0FDFA] px-4 py-16 sm:py-24">
+      <section className="bg-[#FDF2EE] px-4 py-16 sm:py-24">
         <div className="mx-auto max-w-4xl text-center">
-          <h1 className="font-heading text-4xl font-bold tracking-tight text-[#134E4A] sm:text-5xl">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-[#8B3A24] sm:text-5xl">
             Our Blog
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">

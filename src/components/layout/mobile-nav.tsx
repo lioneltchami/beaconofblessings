@@ -32,10 +32,10 @@ export function MobileNav() {
         <Menu className="size-5" />
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-72 bg-[#FFFDF7]">
+      <SheetContent side="right" className="w-72 bg-[#FAF6F1]">
         <SheetHeader>
           <SheetTitle className="text-left">
-            <span className="font-heading text-lg font-bold text-[#0F766E]">
+            <span className="font-heading text-lg font-bold text-[#C05A3C]">
               {siteConfig.name}
             </span>
           </SheetTitle>
@@ -51,7 +51,7 @@ export function MobileNav() {
               render={
                 <Link
                   href={link.href}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-[#0F766E] transition-colors hover:bg-[#0F766E]/10"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-[#C05A3C] transition-colors hover:bg-[#C05A3C]/10"
                 />
               }
             >
@@ -64,7 +64,7 @@ export function MobileNav() {
               render={
                 <Link
                   href="/donate"
-                  className="inline-flex h-9 w-full items-center justify-center rounded-full bg-[#EAB308] px-4 text-sm font-semibold text-gray-900 transition-all hover:bg-[#FDE047] hover:shadow-[0_0_12px_rgba(234,179,8,0.4)]"
+                  className="inline-flex h-9 w-full items-center justify-center rounded-full bg-[#E8A825] px-4 text-sm font-semibold text-gray-900 transition-all hover:bg-[#F5D060] hover:shadow-[0_0_12px_rgba(234,179,8,0.4)]"
                 />
               }
             >

@@ -60,7 +60,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				<meta name="theme-color" content="#0F766E" />
+				<meta name="theme-color" content="#C05A3C" />
 			</head>
 			<body
 				className={`${inter.variable} ${dmSerif.variable} min-h-screen bg-background font-sans antialiased`}

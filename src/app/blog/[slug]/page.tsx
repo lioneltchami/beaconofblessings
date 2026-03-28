@@ -53,9 +53,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const paragraphs = post.content.split("\n\n");
 
   return (
-    <main className="min-h-screen bg-[#FFFDF7]">
+    <main className="min-h-screen bg-[#FAF6F1]">
       {/* Hero / Header */}
-      <section className="bg-[#F0FDFA] px-4 py-12 sm:py-20">
+      <section className="bg-[#FDF2EE] px-4 py-12 sm:py-20">
         <div className="mx-auto max-w-3xl">
           <Link
             href="/blog"
@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </span>
           </div>
 
-          <h1 className="font-heading text-3xl font-bold tracking-tight text-[#134E4A] sm:text-4xl lg:text-5xl">
+          <h1 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24] sm:text-4xl lg:text-5xl">
             {post.title}
           </h1>
 
@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           )}
 
           {/* CTA */}
-          <div className="mt-12 rounded-xl bg-[#F0FDFA] p-8 text-center">
+          <div className="mt-12 rounded-xl bg-[#FDF2EE] p-8 text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
               <Heart className="size-6 text-primary" />
             </div>
@@ -132,7 +132,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </p>
             <Link
               href="/donate"
-              className="mt-4 inline-flex h-9 items-center justify-center rounded-lg bg-[#EAB308] px-4 text-sm font-medium text-[#1A1A1A] transition-colors hover:bg-[#A16207] hover:text-white"
+              className="mt-4 inline-flex h-9 items-center justify-center rounded-lg bg-[#E8A825] px-4 text-sm font-medium text-[#2C1810] transition-colors hover:bg-[#B8861E] hover:text-white"
             >
               Donate Now
             </Link>

@@ -7,9 +7,9 @@ export function Footer() {
   return (
     <footer className="text-white">
       {/* Marigold accent stripe */}
-      <div className="h-1 bg-[#EAB308]" />
+      <div className="h-1 bg-[#E8A825]" />
 
-      <div className="bg-[#134E4A]">
+      <div className="bg-[#8B3A24]">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           {/* Main grid */}
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -18,7 +18,7 @@ export function Footer() {
               <h2 className="font-heading text-xl font-bold text-white">
                 {siteConfig.name}
               </h2>
-              <p className="text-sm leading-relaxed text-teal-200/70">
+              <p className="text-sm leading-relaxed text-orange-200/70">
                 {siteConfig.description}
               </p>
 
@@ -31,7 +31,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={link.label}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#0F766E]/40 px-3 py-2 text-xs font-medium text-teal-200/60 transition-colors hover:text-[#EAB308]"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#C05A3C]/40 px-3 py-2 text-xs font-medium text-orange-200/60 transition-colors hover:text-[#E8A825]"
                   >
                     <ExternalLink className="size-3" />
                     {link.label}
@@ -51,7 +51,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-teal-200 transition-colors hover:text-white"
+                        className="text-sm text-orange-200 transition-colors hover:text-white"
                       >
                         {link.label}
                       </Link>
@@ -60,7 +60,7 @@ export function Footer() {
                   <li>
                     <Link
                       href="/donate"
-                      className="text-sm font-medium text-[#EAB308] transition-colors hover:text-[#FDE047]"
+                      className="text-sm font-medium text-[#E8A825] transition-colors hover:text-[#F5D060]"
                     >
                       Donate Now
                     </Link>
@@ -76,31 +76,31 @@ export function Footer() {
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <Mail className="mt-0.5 size-4 shrink-0 text-teal-200/40" />
+                  <Mail className="mt-0.5 size-4 shrink-0 text-orange-200/40" />
                   <a
                     href={`mailto:${siteConfig.email}`}
-                    className="text-sm text-teal-200 transition-colors hover:text-white"
+                    className="text-sm text-orange-200 transition-colors hover:text-white"
                   >
                     {siteConfig.email}
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Phone className="mt-0.5 size-4 shrink-0 text-teal-200/40" />
+                  <Phone className="mt-0.5 size-4 shrink-0 text-orange-200/40" />
                   <a
                     href={`tel:${siteConfig.phone.replace(/[\s()]/g, "")}`}
-                    className="text-sm text-teal-200 transition-colors hover:text-white"
+                    className="text-sm text-orange-200 transition-colors hover:text-white"
                   >
                     {siteConfig.phone}
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 size-4 shrink-0 text-teal-200/40" />
-                  <span className="text-sm text-teal-200">
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-orange-200/40" />
+                  <span className="text-sm text-orange-200">
                     {siteConfig.address}
                   </span>
                 </li>
               </ul>
-              <p className="text-xs text-teal-200/40">
+              <p className="text-xs text-orange-200/40">
                 {siteConfig.officeHours}
               </p>
             </div>
@@ -112,7 +112,7 @@ export function Footer() {
       </div>
 
       {/* Copyright area with darker teal */}
-      <div className="bg-[#0F4845]">
+      <div className="bg-[#6B2A18]">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-4 sm:flex-row sm:px-6 lg:px-8">
           <p className="text-xs text-white/50">
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights

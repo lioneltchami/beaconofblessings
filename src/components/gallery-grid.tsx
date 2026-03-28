@@ -11,11 +11,11 @@ import {
 import { cn } from "@/lib/utils";
 
 const categoryGradients: Record<Exclude<GalleryCategory, "all">, string> = {
-  education: "linear-gradient(135deg, #0F766E 0%, #134E4A 100%)",
-  community: "linear-gradient(135deg, #0F766E 0%, #EAB308 100%)",
-  events: "linear-gradient(135deg, #EAB308 0%, #A16207 100%)",
-  team: "linear-gradient(135deg, #14B8A6 0%, #0F766E 100%)",
-  impact: "linear-gradient(135deg, #C2410C 0%, #EAB308 100%)",
+  education: "linear-gradient(135deg, #C05A3C 0%, #8B3A24 100%)",
+  community: "linear-gradient(135deg, #C05A3C 0%, #E8A825 100%)",
+  events: "linear-gradient(135deg, #E8A825 0%, #B8861E 100%)",
+  team: "linear-gradient(135deg, #D4795F 0%, #C05A3C 100%)",
+  impact: "linear-gradient(135deg, #2D3A6E 0%, #E8A825 100%)",
 };
 
 interface GalleryGridProps {
@@ -47,7 +47,7 @@ export function GalleryGrid({ items }: GalleryGridProps) {
               className={cn(
                 "rounded-full px-4 py-1.5 text-sm font-medium transition-all",
                 isActive
-                  ? "bg-[#0F766E] text-white shadow-sm"
+                  ? "bg-[#C05A3C] text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200",
               )}
               aria-pressed={isActive}
@@ -76,7 +76,7 @@ export function GalleryGrid({ items }: GalleryGridProps) {
 
             <CardHeader>
               <div className="flex items-center justify-between gap-2">
-                <span className="inline-flex items-center rounded-full bg-[#0F766E]/10 px-2.5 py-0.5 text-xs font-medium text-[#0F766E]">
+                <span className="inline-flex items-center rounded-full bg-[#C05A3C]/10 px-2.5 py-0.5 text-xs font-medium text-[#C05A3C]">
                   {
                     galleryCategories.find((c) => c.value === item.category)
                       ?.label

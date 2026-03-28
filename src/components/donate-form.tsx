@@ -39,7 +39,7 @@ function SubmitButton({ amount }: { amount: number }) {
     <Button
       type="submit"
       disabled={pending || amount <= 0}
-      className="h-12 w-full gap-2 rounded-full bg-[#EAB308] text-base font-semibold text-gray-900 hover:bg-[#FDE047] hover:shadow-[0_0_12px_rgba(234,179,8,0.4)]"
+      className="h-12 w-full gap-2 rounded-full bg-[#E8A825] text-base font-semibold text-gray-900 hover:bg-[#F5D060] hover:shadow-[0_0_12px_rgba(234,179,8,0.4)]"
     >
       {pending ? (
         <>
@@ -86,7 +86,7 @@ export function DonateForm() {
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "one-time"
-                    ? "bg-[#0F766E] text-white"
+                    ? "bg-[#C05A3C] text-white"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
@@ -98,7 +98,7 @@ export function DonateForm() {
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "monthly"
-                    ? "bg-[#0F766E] text-white"
+                    ? "bg-[#C05A3C] text-white"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
@@ -125,7 +125,7 @@ export function DonateForm() {
                   className={cn(
                     "rounded-lg border-2 p-4 text-left transition-all",
                     !isCustom && selectedAmount === amount
-                      ? "border-[#0F766E] bg-[#0F766E]/5 ring-2 ring-[#EAB308]/30"
+                      ? "border-[#C05A3C] bg-[#C05A3C]/5 ring-2 ring-[#E8A825]/30"
                       : "border-border hover:border-muted-foreground/30",
                   )}
                 >
@@ -133,7 +133,7 @@ export function DonateForm() {
                     className={cn(
                       "text-xl font-bold",
                       !isCustom && selectedAmount === amount
-                        ? "text-[#0F766E]"
+                        ? "text-[#C05A3C]"
                         : undefined,
                     )}
                   >
@@ -152,14 +152,14 @@ export function DonateForm() {
                 className={cn(
                   "rounded-lg border-2 p-4 text-left transition-all",
                   isCustom
-                    ? "border-[#0F766E] bg-[#0F766E]/5 ring-2 ring-[#EAB308]/30"
+                    ? "border-[#C05A3C] bg-[#C05A3C]/5 ring-2 ring-[#E8A825]/30"
                     : "border-border hover:border-muted-foreground/30",
                 )}
               >
                 <span
                   className={cn(
                     "text-xl font-bold",
-                    isCustom ? "text-[#0F766E]" : undefined,
+                    isCustom ? "text-[#C05A3C]" : undefined,
                   )}
                 >
                   Custom
@@ -200,7 +200,7 @@ export function DonateForm() {
 
           {/* Impact preview */}
           {finalAmount > 0 && (
-            <div className="rounded-lg border border-[#0F766E]/20 bg-[#0F766E]/5 px-4 py-3 text-center text-sm font-medium text-[#0F766E]">
+            <div className="rounded-lg border border-[#C05A3C]/20 bg-[#C05A3C]/5 px-4 py-3 text-center text-sm font-medium text-[#C05A3C]">
               {getImpactText(finalAmount)}
             </div>
           )}
@@ -248,11 +248,11 @@ export function DonateForm() {
             {/* Trust badges */}
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
               <span className="flex items-center gap-1.5">
-                <Lock className="h-3.5 w-3.5 text-[#0F766E]" />
+                <Lock className="h-3.5 w-3.5 text-[#C05A3C]" />
                 Secure payment
               </span>
               <span className="flex items-center gap-1.5">
-                <Shield className="h-3.5 w-3.5 text-[#0F766E]" />
+                <Shield className="h-3.5 w-3.5 text-[#C05A3C]" />
                 Powered by Stripe
               </span>
             </div>
@@ -266,7 +266,7 @@ export function DonateForm() {
               &ldquo;Give, and it will be given to you. A good measure, pressed
               down, shaken together and running over, will be poured into your
               lap.&rdquo;
-              <cite className="mt-1 block text-xs font-medium not-italic text-[#0F766E]">
+              <cite className="mt-1 block text-xs font-medium not-italic text-[#C05A3C]">
                 &mdash; Luke 6:38
               </cite>
             </blockquote>

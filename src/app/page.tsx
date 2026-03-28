@@ -31,21 +31,21 @@ export default async function HomePage() {
   return (
     <main>
       {/* ── Section 1: Hero ──────────────────────────────── */}
-      <section className="relative isolate flex min-h-[85vh] items-center overflow-hidden bg-gradient-to-br from-[#134E4A] via-[#0F766E] to-[#0D9488] px-6 py-24 sm:py-32 lg:py-40">
+      <section className="relative isolate flex min-h-[85vh] items-center overflow-hidden bg-gradient-to-br from-[#8B3A24] via-[#C05A3C] to-[#D4795F] px-6 py-24 sm:py-32 lg:py-40">
         {/* Teal glow */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 opacity-30"
           style={{
             background:
-              "radial-gradient(ellipse 60% 50% at 50% 0%, #14B8A6, transparent)",
+              "radial-gradient(ellipse 60% 50% at 50% 0%, #D4795F, transparent)",
           }}
         />
 
         {/* Marigold accent line at top */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#EAB308] to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#E8A825] to-transparent"
         />
 
         <div className="mx-auto max-w-4xl text-center">
@@ -53,7 +53,7 @@ export default async function HomePage() {
             Illuminating Futures Through Education
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg font-medium text-[#FDE047] sm:text-xl">
+          <p className="mx-auto mt-6 max-w-xl text-lg font-medium text-[#F5D060] sm:text-xl">
             {siteConfig.tagline}
           </p>
 
@@ -68,7 +68,7 @@ export default async function HomePage() {
               thirsty and you gave me something to drink, I was a stranger and
               you invited me in.&rdquo;
             </blockquote>
-            <cite className="mt-2 block text-xs font-medium not-italic text-[#FDE047]/80">
+            <cite className="mt-2 block text-xs font-medium not-italic text-[#F5D060]/80">
               &mdash; Matthew 25:35
             </cite>
           </div>
@@ -78,7 +78,7 @@ export default async function HomePage() {
               href="/donate"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "gap-2 bg-[#EAB308] px-8 text-base font-semibold text-[#1a1a1a] hover:bg-[#FDE047]",
+                "gap-2 bg-[#E8A825] px-8 text-base font-semibold text-[#2C1810] hover:bg-[#F5D060]",
               )}
             >
               <HandHeart className="h-5 w-5" />
@@ -99,25 +99,25 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 2: Impact Stats ──────────────────────── */}
-      <section className="bg-[#FFFDF7] px-6 py-20 md:py-28">
+      <section className="bg-[#FAF6F1] px-6 py-20 md:py-28">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-heading text-center text-3xl tracking-tight text-foreground sm:text-4xl">
             Our Impact So Far
           </h2>
-          <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-[#EAB308]" />
+          <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-[#E8A825]" />
 
           <div className="mt-14 grid grid-cols-2 gap-8 sm:gap-12 lg:grid-cols-4">
             {impactStats.map((stat, i) => {
               const Icon = statIcons[i] ?? Target;
               return (
                 <div key={stat.label} className="text-center">
-                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#F0FDFA]">
-                    <Icon className="h-6 w-6 text-[#0F766E]" />
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#FDF2EE]">
+                    <Icon className="h-6 w-6 text-[#C05A3C]" />
                   </div>
-                  <p className="font-heading text-5xl tracking-tight text-[#134E4A]">
+                  <p className="font-heading text-5xl tracking-tight text-[#8B3A24]">
                     {stat.value}
                   </p>
-                  <div className="mx-auto mt-2 h-0.5 w-10 rounded-full bg-[#EAB308]" />
+                  <div className="mx-auto mt-2 h-0.5 w-10 rounded-full bg-[#E8A825]" />
                   <p className="mt-3 text-sm text-muted-foreground">
                     {stat.label}
                   </p>
@@ -129,11 +129,11 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 3: Mission ───────────────────────────── */}
-      <section className="bg-[#F5F0EB] px-6 py-20 md:py-28">
+      <section className="bg-[#F5EFE6] px-6 py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
           {/* Left: Text content */}
           <div>
-            <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#0F766E]">
+            <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#C05A3C]">
               Our Mission
             </p>
             <h2 className="font-heading text-3xl tracking-tight text-foreground sm:text-4xl">
@@ -156,7 +156,7 @@ export default async function HomePage() {
               href="/about"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "mt-8 gap-2 border-[#0F766E] text-[#0F766E] hover:bg-[#0F766E]/5",
+                "mt-8 gap-2 border-[#C05A3C] text-[#C05A3C] hover:bg-[#C05A3C]/5",
               )}
             >
               Learn More
@@ -165,25 +165,25 @@ export default async function HomePage() {
           </div>
 
           {/* Right: Styled content card */}
-          <div className="relative overflow-hidden rounded-2xl bg-[#0F766E] p-8 text-white shadow-xl">
+          <div className="relative overflow-hidden rounded-2xl bg-[#C05A3C] p-8 text-white shadow-xl">
             {/* Marigold accent stripe */}
             <div
               aria-hidden="true"
-              className="absolute inset-y-0 left-0 w-1.5 bg-[#EAB308]"
+              className="absolute inset-y-0 left-0 w-1.5 bg-[#E8A825]"
             />
 
             <div className="space-y-6 pl-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10">
-                <Heart className="h-6 w-6 text-[#FDE047]" />
+                <Heart className="h-6 w-6 text-[#F5D060]" />
               </div>
               <h3 className="font-heading text-2xl text-white">
                 Faith in Action
               </h3>
-              <blockquote className="border-l-2 border-[#FDE047]/40 pl-4 text-base italic leading-relaxed text-white/90">
+              <blockquote className="border-l-2 border-[#F5D060]/40 pl-4 text-base italic leading-relaxed text-white/90">
                 &ldquo;Train up a child in the way he should go; even when he is
                 old he will not depart from it.&rdquo;
               </blockquote>
-              <p className="text-sm font-medium text-[#FDE047]">
+              <p className="text-sm font-medium text-[#F5D060]">
                 Proverbs 22:6
               </p>
             </div>
@@ -192,10 +192,10 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 4: Featured Projects ─────────────────── */}
-      <section className="bg-[#F0FDFA] px-6 py-20 md:py-28">
+      <section className="bg-[#FDF2EE] px-6 py-20 md:py-28">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 text-center">
-            <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#0F766E]">
+            <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#C05A3C]">
               What We Do
             </p>
             <h2 className="font-heading text-3xl tracking-tight text-foreground sm:text-4xl">
@@ -212,7 +212,7 @@ export default async function HomePage() {
             {featuredProjects.map((project) => (
               <Card
                 key={project.slug}
-                className="card-interactive flex flex-col border-t-4 border-t-[#0F766E] shadow-md"
+                className="card-interactive flex flex-col border-t-4 border-t-[#C05A3C] shadow-md"
               >
                 <CardHeader>
                   <div className="mb-1 flex items-center gap-2">
@@ -221,7 +221,7 @@ export default async function HomePage() {
                         "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
                         project.status === "completed"
                           ? "bg-emerald-100 text-emerald-700"
-                          : "bg-[#F0FDFA] text-[#0F766E]",
+                          : "bg-[#FDF2EE] text-[#C05A3C]",
                       )}
                     >
                       {project.status === "completed"
@@ -245,7 +245,7 @@ export default async function HomePage() {
                         key={item}
                         className="flex items-start gap-2 text-sm text-muted-foreground"
                       >
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0F766E]" />
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#C05A3C]" />
                         {item}
                       </li>
                     ))}
@@ -257,7 +257,7 @@ export default async function HomePage() {
                     href={`/projects#${project.slug}`}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "sm" }),
-                      "gap-1 text-[#0F766E] hover:text-[#134E4A]",
+                      "gap-1 text-[#C05A3C] hover:text-[#8B3A24]",
                     )}
                   >
                     Learn More
@@ -273,7 +273,7 @@ export default async function HomePage() {
               href="/projects"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "gap-2 border-[#0F766E] px-8 text-[#0F766E] hover:bg-[#0F766E]/5",
+                "gap-2 border-[#C05A3C] px-8 text-[#C05A3C] hover:bg-[#C05A3C]/5",
               )}
             >
               View All Projects
@@ -284,11 +284,11 @@ export default async function HomePage() {
       </section>
 
       {/* ── Section 5: Call to Action ────────────────────── */}
-      <section className="relative isolate overflow-hidden bg-[#134E4A] px-6 py-20 md:py-28">
+      <section className="relative isolate overflow-hidden bg-[#8B3A24] px-6 py-20 md:py-28">
         {/* Marigold accent strip at top */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#EAB308] to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#E8A825] to-transparent"
         />
 
         <div className="mx-auto max-w-3xl text-center">
@@ -304,7 +304,7 @@ export default async function HomePage() {
           <blockquote className="mx-auto mt-8 max-w-md rounded-xl border border-white/10 bg-white/5 px-6 py-4 text-sm italic leading-relaxed text-white/90">
             &ldquo;Whoever is kind to the poor lends to the LORD, and he will
             reward them for what they have done.&rdquo;
-            <cite className="mt-2 block text-xs font-medium not-italic text-[#FDE047]/80">
+            <cite className="mt-2 block text-xs font-medium not-italic text-[#F5D060]/80">
               &mdash; Proverbs 19:17
             </cite>
           </blockquote>
@@ -314,7 +314,7 @@ export default async function HomePage() {
               href="/donate"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "gap-2 bg-[#EAB308] px-8 text-base font-semibold text-[#1a1a1a] hover:bg-[#FDE047]",
+                "gap-2 bg-[#E8A825] px-8 text-base font-semibold text-[#2C1810] hover:bg-[#F5D060]",
               )}
             >
               <Heart className="h-5 w-5" />
