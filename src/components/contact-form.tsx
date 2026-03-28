@@ -1,7 +1,8 @@
 "use client";
 
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
+import { submitContactForm } from "@/app/actions/contact";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,14 +12,31 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 
 export function ContactForm() {
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("submitting");
+    setErrorMessage("");
 
-    // Simulate network delay -- real backend integration in Phase 3
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    setStatus("success");
+    try {
+      const formData = new FormData(e.currentTarget);
+      const result = await submitContactForm(formData);
+
+      if (result.success) {
+        setStatus("success");
+        formRef.current?.reset();
+      } else {
+        setErrorMessage(
+          result.error ?? "Something went wrong. Please try again.",
+        );
+        setStatus("error");
+      }
+    } catch {
+      setErrorMessage("Something went wrong. Please try again.");
+      setStatus("error");
+    }
   }
 
   if (status === "success") {
@@ -50,7 +68,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-2">
         <Label htmlFor="contact-name">
           Name <span className="text-destructive">*</span>
@@ -108,7 +126,7 @@ export function ContactForm() {
       {status === "error" && (
         <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
           <AlertCircle className="h-4 w-4 shrink-0" />
-          Something went wrong. Please try again.
+          {errorMessage || "Something went wrong. Please try again."}
         </div>
       )}
 
