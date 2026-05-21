@@ -27,10 +27,10 @@ export const resourceCategories: {
 		description: "Browse all available documents",
 	},
 	{
-		value: "registration",
-		label: "Registration & Legal",
-		description:
-			"Official registration documents proving our legal status in Nigeria",
+			value: "registration",
+			label: "Registration & Legal",
+			description:
+				"Registration and legal documents will appear here after final verification",
 	},
 	{
 		value: "annual-reports",
@@ -53,30 +53,30 @@ export const resourceCategories: {
 export const resources: Resource[] = [
 	// Registration & Legal
 	{
-		id: "reg-1",
-		title: "Certificate of Incorporation",
-		description:
-			"Official certificate of incorporation as a non-profit organization registered under Nigerian law.",
+			id: "reg-1",
+			title: "Certificate of Incorporation",
+			description:
+				"Pending public posting after final verification of Beacon of Blessings registration records.",
 		category: "registration",
 		fileType: "pdf",
 		fileSize: "1.2 MB",
 		date: "2024-03-15",
 	},
 	{
-		id: "reg-2",
-		title: "CAC Registration Document",
-		description:
-			"Corporate Affairs Commission (CAC) registration document confirming our legal status in Nigeria.",
+			id: "reg-2",
+			title: "CAC Registration Document",
+			description:
+				"Pending public posting of Corporate Affairs Commission registration details.",
 		category: "registration",
 		fileType: "pdf",
 		fileSize: "850 KB",
 		date: "2024-03-15",
 	},
 	{
-		id: "reg-3",
-		title: "Tax Exemption Certificate",
-		description:
-			"Tax exemption status documentation from the Federal Inland Revenue Service (FIRS).",
+			id: "reg-3",
+			title: "Tax Status Guidance",
+			description:
+				"Pending public guidance on donation acknowledgement and jurisdiction-specific deductibility.",
 		category: "registration",
 		fileType: "pdf",
 		fileSize: "620 KB",
@@ -85,10 +85,10 @@ export const resources: Resource[] = [
 
 	// Annual Reports
 	{
-		id: "ar-1",
-		title: "2024 Annual Report",
-		description:
-			"Comprehensive report covering our first year of operations, financial summary, and impact metrics.",
+			id: "ar-1",
+			title: "2024 Annual Report",
+			description:
+				"Planned public report covering launch-year activities, financial summary, and impact metrics.",
 		category: "annual-reports",
 		fileType: "pdf",
 		fileSize: "4.5 MB",
@@ -98,9 +98,9 @@ export const resources: Resource[] = [
 	// Project Reports
 	{
 		id: "pr-1",
-		title: "School Supplies Drive 2024 — Final Report",
-		description:
-			"Detailed report on our inaugural project: beneficiary data, budget allocation, outcomes, and lessons learned.",
+			title: "School Supplies Drive 2024 — Final Report",
+			description:
+				"Planned public report on beneficiary counts, budget allocation, outcomes, and lessons learned.",
 		category: "project-reports",
 		fileType: "pdf",
 		fileSize: "3.2 MB",
@@ -108,9 +108,9 @@ export const resources: Resource[] = [
 	},
 	{
 		id: "pr-2",
-		title: "School Supplies Drive 2024 — Impact Presentation",
-		description:
-			"Presentation summarizing the impact of the School Supplies Drive with photos and testimonials.",
+			title: "School Supplies Drive 2024 — Impact Presentation",
+			description:
+				"Planned public presentation summarizing approved photos, outcomes, and field learning.",
 		category: "project-reports",
 		fileType: "pptx",
 		fileSize: "8.1 MB",

@@ -1,11 +1,18 @@
 import type { MetadataRoute } from "next";
-import { albums } from "@/data/albums";
-import { blogPosts } from "@/data/blog-posts";
+import { getAlbums, getBlogPosts } from "@/lib/sanity/queries";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://beaconofblessings.org";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+function toLastModified(date?: string): Date {
+	if (!date) return new Date();
+	const parsed = new Date(date);
+	return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	const [blogPosts, albums] = await Promise.all([getBlogPosts(), getAlbums()]);
+
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
@@ -30,6 +37,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/programs`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/impact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/transparency`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/gallery`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
     },
     {
       url: `${siteUrl}/blog`,
@@ -65,14 +96,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${siteUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: toLastModified(post.date),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
 
   const albumPages: MetadataRoute.Sitemap = albums.map((album) => ({
     url: `${siteUrl}/gallery/${album.slug}`,
-    lastModified: new Date(),
+    lastModified: toLastModified(album.date),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));

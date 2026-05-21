@@ -76,6 +76,24 @@ describe("AboutPage", () => {
 		).toBeInTheDocument();
 	});
 
+	it("renders founder credibility and leadership responsibility content", async () => {
+		const result = await AboutPage();
+		render(result);
+		expect(document.body).toHaveTextContent(/founder credibility/i);
+		expect(document.body).toHaveTextContent(/leadership/i);
+		expect(document.body).toHaveTextContent(/program priorities/i);
+		expect(document.body).toHaveTextContent(/donor stewardship/i);
+	});
+
+	it("connects the about story to the broader education movement", async () => {
+		const result = await AboutPage();
+		render(result);
+		expect(document.body).toHaveTextContent(
+			/movement to keep nigerian children learning/i,
+		);
+		expect(document.body).toHaveTextContent(/beyond a single distribution/i);
+	});
+
 	it("renders Core Values section heading", async () => {
 		const result = await AboutPage();
 		render(result);

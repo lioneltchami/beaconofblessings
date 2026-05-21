@@ -1,10 +1,21 @@
 "use server";
 
 import { getResend } from "@/lib/resend";
+import {
+	escapeHtml,
+	formatCurrency,
+	formatDonationFrequency,
+} from "@/lib/email-format";
 
 const FROM =
 	process.env.EMAIL_FROM ?? "Beacon of Blessings <onboarding@resend.dev>";
 const ORG_EMAIL = process.env.ORG_EMAIL ?? "info@beaconofblessings.org";
+
+type EmailResult = {
+	success: boolean;
+	id?: string;
+	error?: string;
+};
 
 export async function sendDonationReceipt({
 	donorEmail,
@@ -13,6 +24,8 @@ export async function sendDonationReceipt({
 	currency,
 	donationId,
 	date,
+	frequency = "one-time",
+	programName,
 }: {
 	donorEmail: string;
 	donorName: string;
@@ -20,20 +33,31 @@ export async function sendDonationReceipt({
 	currency: string;
 	donationId: string;
 	date: string;
-}) {
+	frequency?: "one-time" | "monthly";
+	programName?: string;
+}): Promise<EmailResult> {
 	try {
 		const resend = getResend();
+		const safeDonorName = escapeHtml(donorName);
+		const safeDonationId = escapeHtml(donationId);
+		const safeDate = escapeHtml(date);
+		const safeFrequency = escapeHtml(formatDonationFrequency(frequency));
+		const safeAmount = formatCurrency(currency, amount);
+		const safeProgramName = programName ? escapeHtml(programName) : "";
+		const safeSubjectDonationId = donationId.replace(/[\r\n]/g, " ");
 		const { data, error } = await resend.emails.send({
 			from: FROM,
 			to: [donorEmail],
-			subject: `Thank you for your donation — Receipt #${donationId}`,
+			subject: `Thank you for your donation - Receipt #${safeSubjectDonationId}`,
 			html: `
-        <h2>Thank you, ${donorName}!</h2>
-        <p>We have received your generous donation of <strong>${currency} ${amount.toFixed(2)}</strong>.</p>
-        <p><strong>Donation ID:</strong> ${donationId}<br/>
-        <strong>Date:</strong> ${date}</p>
+        <h2>Thank you, ${safeDonorName}!</h2>
+        <p>We have received your generous ${safeFrequency.toLowerCase()} of <strong>${safeAmount}</strong>.</p>
+        ${safeProgramName ? `<p><strong>Program designation:</strong> ${safeProgramName}</p>` : ""}
+        <p><strong>Donation ID:</strong> ${safeDonationId}<br/>
+        <strong>Date:</strong> ${safeDate}</p>
+        <p>Beacon of Blessings Charity Initiative is registered in Nigeria. Please consult your local tax adviser about whether this gift is deductible in your jurisdiction.</p>
         <p>Your contribution is making a real difference in the lives of children in Nigeria. God bless you.</p>
-        <p>With gratitude,<br/>— Beacon of Blessings Charity Initiative</p>
+        <p>With gratitude,<br/>Beacon of Blessings Charity Initiative</p>
       `,
 		});
 
@@ -59,6 +83,8 @@ export async function sendDonationNotification({
 	currency,
 	donationId,
 	date,
+	frequency = "one-time",
+	programName,
 }: {
 	donorName: string;
 	donorEmail: string;
@@ -66,19 +92,32 @@ export async function sendDonationNotification({
 	currency: string;
 	donationId: string;
 	date: string;
-}) {
+	frequency?: "one-time" | "monthly";
+	programName?: string;
+}): Promise<EmailResult> {
 	try {
 		const resend = getResend();
+		const safeDonorName = escapeHtml(donorName);
+		const safeDonorEmail = escapeHtml(donorEmail);
+		const safeDonationId = escapeHtml(donationId);
+		const safeDate = escapeHtml(date);
+		const safeFrequency = escapeHtml(formatDonationFrequency(frequency));
+		const safeAmount = formatCurrency(currency, amount);
+		const safeProgramName = programName ? escapeHtml(programName) : "";
+		const safeSubjectCurrency = currency.toUpperCase().replace(/[\r\n]/g, " ");
+		const safeSubjectDonorName = donorName.replace(/[\r\n]/g, " ");
 		const { data, error } = await resend.emails.send({
 			from: FROM,
 			to: [ORG_EMAIL],
-			subject: `New Donation: ${currency} ${amount.toFixed(2)} from ${donorName}`,
+			subject: `New Donation: ${safeSubjectCurrency} ${amount.toFixed(2)} from ${safeSubjectDonorName}`,
 			html: `
         <h2>New Donation Received</h2>
-        <p><strong>Donor:</strong> ${donorName} (${donorEmail})</p>
-        <p><strong>Amount:</strong> ${currency} ${amount.toFixed(2)}</p>
-        <p><strong>Donation ID:</strong> ${donationId}</p>
-        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Donor:</strong> ${safeDonorName} (${safeDonorEmail})</p>
+        <p><strong>Type:</strong> ${safeFrequency}</p>
+        ${safeProgramName ? `<p><strong>Program:</strong> ${safeProgramName}</p>` : ""}
+        <p><strong>Amount:</strong> ${safeAmount}</p>
+        <p><strong>Donation ID:</strong> ${safeDonationId}</p>
+        <p><strong>Date:</strong> ${safeDate}</p>
       `,
 		});
 
@@ -107,19 +146,24 @@ export async function sendContactNotification({
 	senderEmail: string;
 	subject: string;
 	message: string;
-}) {
+}): Promise<EmailResult> {
 	try {
 		const resend = getResend();
+		const safeSenderName = escapeHtml(senderName);
+		const safeSenderEmail = escapeHtml(senderEmail);
+		const safeSubject = escapeHtml(subject);
+		const safeMessage = escapeHtml(message).replace(/\n/g, "<br/>");
+		const safeEmailSubject = subject.replace(/[\r\n]/g, " ");
 		const { data, error } = await resend.emails.send({
 			from: FROM,
 			to: [ORG_EMAIL],
-			subject: `Contact Form: ${subject}`,
+			subject: `Contact Form: ${safeEmailSubject}`,
 			html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>From:</strong> ${senderName} (${senderEmail})</p>
-        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>From:</strong> ${safeSenderName} (${safeSenderEmail})</p>
+        <p><strong>Subject:</strong> ${safeSubject}</p>
         <hr/>
-        <p>${message.replace(/\n/g, "<br/>")}</p>
+        <p>${safeMessage}</p>
       `,
 			headers: {
 				"X-Entity-Ref-ID": crypto.randomUUID(),

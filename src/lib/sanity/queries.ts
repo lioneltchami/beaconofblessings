@@ -35,6 +35,18 @@ import type {
 	SanityResource,
 } from "./types";
 
+export const SANITY_IMAGE_PROJECTION = `_type, alt, asset->{ _id, url }`;
+
+export const PROJECT_PROJECTION = `{ _id, _type, "slug": slug.current, title, status, date, budget, description, impact, featured, image{ ${SANITY_IMAGE_PROJECTION} } }`;
+
+export const BLOG_POST_PROJECTION = `{ _id, _type, "slug": slug.current, title, excerpt, content, author, date, category, readTime, tags, image{ ${SANITY_IMAGE_PROJECTION} } }`;
+
+export const GALLERY_ITEM_PROJECTION = `{ _id, _type, title, description, category, date, image{ ${SANITY_IMAGE_PROJECTION} } }`;
+
+export const ALBUM_PROJECTION = `{ _id, _type, "slug": slug.current, title, description, category, date, photoCount, photos[]{ id, title, description, image{ ${SANITY_IMAGE_PROJECTION} } }, coverImage{ ${SANITY_IMAGE_PROJECTION} } }`;
+
+export const RESOURCE_PROJECTION = `{ _id, _type, "id": _id, title, description, category, fileType, fileSize, date, "fileUrl": coalesce(fileUrl, file.asset->url), file{ asset->{ url } } }`;
+
 // ── Projects ──────────────────────────────────────
 
 export async function getProjects(): Promise<SanityProject[]> {
@@ -43,7 +55,7 @@ export async function getProjects(): Promise<SanityProject[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "project"] | order(date desc)`,
+		`*[_type == "project"] | order(date desc)${PROJECT_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -55,7 +67,7 @@ export async function getCompletedProjects(): Promise<SanityProject[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "project" && status == "completed"] | order(date desc)`,
+		`*[_type == "project" && status == "completed"] | order(date desc)${PROJECT_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -67,7 +79,7 @@ export async function getUpcomingProjects(): Promise<SanityProject[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "project" && status == "upcoming"] | order(date asc)`,
+		`*[_type == "project" && status == "upcoming"] | order(date asc)${PROJECT_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -79,7 +91,7 @@ export async function getFeaturedProjects(): Promise<SanityProject[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "project" && featured == true] | order(date desc)`,
+		`*[_type == "project" && featured == true] | order(date desc)${PROJECT_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -93,7 +105,7 @@ export async function getBlogPosts(): Promise<SanityBlogPost[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "blogPost"] | order(date desc)`,
+		`*[_type == "blogPost"] | order(date desc)${BLOG_POST_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -108,7 +120,7 @@ export async function getBlogPost(
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "blogPost" && slug == $slug][0]`,
+		`*[_type == "blogPost" && slug.current == $slug][0]${BLOG_POST_PROJECTION}`,
 		{ slug },
 		{ next: { revalidate: 60 } },
 	);
@@ -120,7 +132,7 @@ export async function getBlogSlugs(): Promise<string[]> {
 	}
 	const client = getSanityClient();
 	const results = await client.fetch<Array<{ slug: string }>>(
-		`*[_type == "blogPost"]{ slug }`,
+		`*[_type == "blogPost"]{ "slug": slug.current }`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -149,7 +161,7 @@ export async function getGalleryItems(): Promise<SanityGalleryItem[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "galleryItem"] | order(date desc)`,
+		`*[_type == "galleryItem"] | order(date desc)${GALLERY_ITEM_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -189,7 +201,7 @@ export async function getAlbums(): Promise<SanityAlbum[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "album"] | order(date desc){ _id, _type, "slug": slug.current, title, description, category, date, photoCount, photos, coverImage }`,
+		`*[_type == "album"] | order(date desc)${ALBUM_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);
@@ -202,7 +214,7 @@ export async function getAlbum(slug: string): Promise<SanityAlbum | null> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "album" && slug.current == $slug][0]{ _id, _type, "slug": slug.current, title, description, category, date, photoCount, photos, coverImage }`,
+		`*[_type == "album" && slug.current == $slug][0]${ALBUM_PROJECTION}`,
 		{ slug },
 		{ next: { revalidate: 60 } },
 	);
@@ -229,7 +241,7 @@ export async function getResources(): Promise<SanityResource[]> {
 	}
 	const client = getSanityClient();
 	return client.fetch(
-		`*[_type == "resource"] | order(date desc){ _id, _type, "id": _id, title, description, category, fileType, fileSize, date, fileUrl }`,
+		`*[_type == "resource"] | order(date desc)${RESOURCE_PROJECTION}`,
 		{},
 		{ next: { revalidate: 60 } },
 	);

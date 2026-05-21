@@ -1,10 +1,12 @@
 "use client";
 
 import { Calendar, Camera, ImageIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Album, albumCategories } from "@/data/albums";
+import type { SanityImage } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
 const categoryGradients: Record<string, string> = {
@@ -15,7 +17,11 @@ const categoryGradients: Record<string, string> = {
 };
 
 interface GalleryGridProps {
-	albums: Album[];
+	albums: Array<Album & { coverImage?: SanityImage }>;
+}
+
+function getImageUrl(image?: SanityImage): string | undefined {
+	return image?.asset?.url;
 }
 
 export function GalleryGrid({ albums }: GalleryGridProps) {
@@ -56,27 +62,41 @@ export function GalleryGrid({ albums }: GalleryGridProps) {
 
 			{/* Grid */}
 			<div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				{filtered.map((album) => (
-					<Link
-						key={album.slug}
-						href={`/gallery/${album.slug}`}
-						className="group"
-					>
-						<Card className="flex flex-col transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-							{/* Placeholder cover area */}
-							<div
-								className="flex aspect-[4/3] items-center justify-center rounded-t-xl"
-								style={{
-									background:
-										categoryGradients[album.category] ||
-										categoryGradients.Education,
-								}}
-								aria-hidden="true"
-							>
-								<Camera className="h-10 w-10 text-white/40 transition-transform duration-300 group-hover:scale-110" />
-							</div>
+				{filtered.map((album) => {
+					const coverImageUrl = getImageUrl(album.coverImage);
+					return (
+						<Link
+							key={album.slug}
+							href={`/gallery/${album.slug}`}
+							className="group"
+						>
+							<Card className="flex flex-col transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+								{coverImageUrl ? (
+									<div className="aspect-[4/3] overflow-hidden rounded-t-xl bg-gray-100">
+										<Image
+											src={coverImageUrl}
+											alt={album.coverImage?.alt || album.title}
+											width={640}
+											height={480}
+											sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+											className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+										/>
+									</div>
+								) : (
+									<div
+										className="flex aspect-[4/3] items-center justify-center rounded-t-xl"
+										style={{
+											background:
+												categoryGradients[album.category] ||
+												categoryGradients.Education,
+										}}
+										aria-hidden="true"
+									>
+										<Camera className="h-10 w-10 text-white/40 transition-transform duration-300 group-hover:scale-110" />
+									</div>
+								)}
 
-							<CardHeader>
+								<CardHeader>
 								<div className="flex items-center justify-between gap-2">
 									<span className="inline-flex items-center rounded-full bg-[#C05A3C]/10 px-2.5 py-0.5 text-xs font-medium text-[#C05A3C]">
 										{album.category}
@@ -98,9 +118,10 @@ export function GalleryGrid({ albums }: GalleryGridProps) {
 									{album.date}
 								</div>
 							</CardContent>
-						</Card>
-					</Link>
-				))}
+							</Card>
+						</Link>
+					);
+				})}
 			</div>
 
 			{/* Empty state */}

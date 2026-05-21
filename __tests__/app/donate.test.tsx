@@ -50,7 +50,7 @@ describe("DonatePage", () => {
 		render(<DonatePage />);
 		expect(screen.getByText("Transparent Stewardship")).toBeInTheDocument();
 		expect(screen.getByText("Faith-Driven Mission")).toBeInTheDocument();
-		expect(screen.getByText("Direct Impact")).toBeInTheDocument();
+		expect(screen.getByText("Program-Focused Impact")).toBeInTheDocument();
 	});
 
 	it("renders the DonateForm placeholder", () => {

@@ -16,6 +16,7 @@ import {
   type ResourceCategory,
   resourceCategories,
 } from "@/data/resources";
+import type { SanityResource } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
 const fileTypeIcons: Record<Resource["fileType"], typeof FileText> = {
@@ -49,7 +50,32 @@ function formatDate(dateStr: string): string {
 }
 
 interface ResourceListProps {
-  resources: Resource[];
+  resources: Array<Resource | SanityResource>;
+}
+
+function getResourceUrl(resource: Resource | SanityResource): string | undefined {
+  const fileUrl =
+    "file" in resource ? resource.file?.asset?.url : undefined;
+  return normalizeResourceUrl(fileUrl ?? resource.fileUrl);
+}
+
+function normalizeResourceUrl(url?: string): string | undefined {
+  if (!url) return undefined;
+
+  try {
+    const parsed = new URL(url, "https://beaconofblessings.org");
+    const isSanityFile =
+      parsed.protocol === "https:" &&
+      parsed.hostname === "cdn.sanity.io" &&
+      parsed.pathname.startsWith("/files/");
+    const isSameOrigin =
+      parsed.origin === "https://beaconofblessings.org" &&
+      parsed.pathname.startsWith("/documents/");
+
+    return isSanityFile || isSameOrigin ? parsed.toString() : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export function ResourceList({ resources }: ResourceListProps) {
@@ -99,6 +125,7 @@ export function ResourceList({ resources }: ResourceListProps) {
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((resource) => {
           const Icon = fileTypeIcons[resource.fileType];
+          const fileUrl = getResourceUrl(resource);
           return (
             <Card
               key={resource.id}
@@ -137,13 +164,13 @@ export function ResourceList({ resources }: ResourceListProps) {
                   </span>
                 </div>
 
-                {resource.fileUrl ? (
+                {fileUrl ? (
                   <Button
                     size="sm"
                     className="w-full"
                     render={
                       <a
-                        href={resource.fileUrl}
+                        href={fileUrl}
                         download
                         target="_blank"
                         rel="noopener noreferrer"

@@ -2,23 +2,32 @@ export const siteConfig = {
   name: "Beacon of Blessings",
   tagline: "Illuminating Futures Through Education",
   description:
-    "Beacon of Blessings Charity Initiative transforms lives through educational support for vulnerable communities in Nigeria.",
+    "Beacon of Blessings Charity Initiative helps children in vulnerable Nigerian communities stay in school through supplies, scholarships, digital learning, and local partnerships.",
   url: "https://beaconofblessings.org",
   email: "info@beaconofblessings.org",
   phone: "+234 (0) 812 345 6789",
   address: "Lagos, Nigeria",
   officeHours: "Monday - Friday, 9:00 AM - 5:00 PM WAT",
   founded: 2024,
+  legalName: "Beacon of Blessings Charity Initiative",
+  registrationStatus: "Nigerian registration details pending public posting",
+  serviceArea: "Lagos communities, Nigeria",
 } as const;
 
 export const navLinks = [
-  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Resources", href: "/resources" },
-  { label: "Blog", href: "/blog" },
+  { label: "Programs", href: "/programs" },
+  { label: "Impact", href: "/impact" },
+  { label: "Transparency", href: "/transparency" },
+  { label: "Stories", href: "/blog" },
   { label: "Contact", href: "/contact" },
+] as const;
+
+export const footerTrustLinks = [
+  { label: "Annual Reports", href: "/resources" },
+  { label: "Financials", href: "/transparency#financials" },
+  { label: "Donor Data", href: "/privacy#donor-data" },
+  { label: "Registration Status", href: "/transparency#registration" },
 ] as const;
 
 export const socialLinks = [
@@ -30,8 +39,8 @@ export const socialLinks = [
 export const impactStats = [
   { value: "500+", label: "Students Supported" },
   { value: "5", label: "Communities Reached" },
-  { value: "2,000+", label: "Items Distributed" },
-  { value: "100%", label: "Community Focused" },
+  { value: "4,500+", label: "Learning Items Distributed" },
+  { value: "2024", label: "First Field Project" },
 ] as const;
 
 export const coreValues = [

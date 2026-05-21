@@ -1,7 +1,12 @@
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { navLinks, siteConfig, socialLinks } from "@/data/site";
+import {
+  footerTrustLinks,
+  navLinks,
+  siteConfig,
+  socialLinks,
+} from "@/data/site";
 
 export function Footer() {
   return (
@@ -12,14 +17,17 @@ export function Footer() {
       <div className="bg-[#8B3A24]">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           {/* Main grid */}
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {/* Column 1: Organization info */}
             <div className="space-y-4">
               <h2 className="font-heading text-xl font-bold text-white">
                 {siteConfig.name}
               </h2>
-              <p className="text-sm leading-relaxed text-orange-200/70">
+              <p className="text-sm leading-relaxed text-orange-100/75">
                 {siteConfig.description}
+              </p>
+              <p className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs leading-relaxed text-orange-100/75">
+                {siteConfig.registrationStatus}. Serving {siteConfig.serviceArea}.
               </p>
 
               {/* Social links */}
@@ -62,14 +70,43 @@ export function Footer() {
                       href="/donate"
                       className="text-sm font-medium text-[#E8A825] transition-colors hover:text-[#F5D060]"
                     >
-                      Donate Now
+                      Give Today
                     </Link>
                   </li>
                 </ul>
               </nav>
             </div>
 
-            {/* Column 3: Contact info */}
+            {/* Column 3: Trust links */}
+            <div className="space-y-4">
+              <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-white">
+                Donor Trust
+              </h3>
+              <nav aria-label="Donor trust links">
+                <ul className="space-y-2">
+                  {footerTrustLinks.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-orange-200 transition-colors hover:text-white"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <Link
+                      href="/transparency"
+                      className="text-sm text-orange-200 transition-colors hover:text-white"
+                    >
+                      Where Your Gift Goes
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            {/* Column 4: Contact info */}
             <div className="space-y-4">
               <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-white">
                 Contact Us
@@ -130,6 +167,12 @@ export function Footer() {
               className="text-xs text-white/50 transition-colors hover:text-white/80"
             >
               Terms of Service
+            </Link>
+            <Link
+              href="/transparency"
+              className="text-xs text-white/50 transition-colors hover:text-white/80"
+            >
+              Transparency
             </Link>
           </div>
         </div>

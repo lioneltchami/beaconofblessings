@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2, Lock, Shield } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { createCheckoutSession } from "@/app/actions/checkout";
@@ -8,9 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { getProgramBySlug } from "@/data/programs";
 import { cn } from "@/lib/utils";
 
-const presets = [
+const oneTimePresets = [
   { amount: 25, impact: "Supplies for 1 student" },
   { amount: 50, impact: "Textbooks for 5 students" },
   { amount: 100, impact: "A full school kit for 10 students" },
@@ -18,8 +20,29 @@ const presets = [
   { amount: 500, impact: "Fund a community learning centre" },
 ] as const;
 
-function getImpactText(amount: number): string {
+const monthlyPresets = [
+  { amount: 10, impact: "Monthly notebooks and pencils" },
+  { amount: 25, impact: "Monthly supplies for 1 student" },
+  { amount: 50, impact: "Monthly reading materials" },
+  { amount: 100, impact: "Sustained classroom support" },
+  { amount: 250, impact: "Ongoing community learning support" },
+] as const;
+
+function getImpactText(
+  amount: number,
+  frequency: "one-time" | "monthly",
+): string {
   if (amount <= 0) return "";
+  if (frequency === "monthly") {
+    if (amount < 25) return `Your $${amount}/month keeps essential supplies moving`;
+    if (amount < 50)
+      return `Your $${amount}/month supports supplies for ${Math.floor(amount / 25)} student${Math.floor(amount / 25) > 1 ? "s" : ""}`;
+    if (amount < 100)
+      return `Your $${amount}/month helps keep reading materials available`;
+    if (amount < 250)
+      return `Your $${amount}/month provides steady classroom support`;
+    return `Your $${amount}/month sustains community learning support`;
+  }
   if (amount < 25) return `Your $${amount} helps provide basic school supplies`;
   if (amount < 50)
     return `Your $${amount} provides supplies for ${Math.floor(amount / 25)} student${Math.floor(amount / 25) > 1 ? "s" : ""}`;
@@ -32,8 +55,16 @@ function getImpactText(amount: number): string {
   return `Your $${amount} funds ${Math.floor(amount / 500)} community learning centre${Math.floor(amount / 500) > 1 ? "s" : ""}`;
 }
 
-function SubmitButton({ amount }: { amount: number }) {
+function SubmitButton({
+  amount,
+  frequency,
+}: {
+  amount: number;
+  frequency: "one-time" | "monthly";
+}) {
   const { pending } = useFormStatus();
+  const amountLabel =
+    frequency === "monthly" ? `$${amount} Monthly` : `$${amount}`;
 
   return (
     <Button
@@ -49,7 +80,7 @@ function SubmitButton({ amount }: { amount: number }) {
       ) : (
         <>
           <Lock className="h-4 w-4" />
-          {amount > 0 ? `Give $${amount} Securely` : "Select an Amount"}
+          {amount > 0 ? `Give ${amountLabel} Securely` : "Select an Amount"}
         </>
       )}
     </Button>
@@ -57,6 +88,8 @@ function SubmitButton({ amount }: { amount: number }) {
 }
 
 export function DonateForm() {
+  const searchParams = useSearchParams();
+  const selectedProgram = getProgramBySlug(searchParams.get("program") ?? "");
   const [selectedAmount, setSelectedAmount] = useState<number>(50);
   const [customAmount, setCustomAmount] = useState("");
   const [isCustom, setIsCustom] = useState(false);
@@ -64,13 +97,27 @@ export function DonateForm() {
     "one-time",
   );
 
+  const presets = frequency === "monthly" ? monthlyPresets : oneTimePresets;
   const finalAmount = isCustom ? Number(customAmount) || 0 : selectedAmount;
+
+  function selectFrequency(nextFrequency: "one-time" | "monthly") {
+    setFrequency(nextFrequency);
+    setSelectedAmount(nextFrequency === "monthly" ? 25 : 50);
+    setIsCustom(false);
+    setCustomAmount("");
+  }
 
   return (
     <form action={createCheckoutSession}>
       {/* Hidden fields for the server action */}
       <input type="hidden" name="amount" value={finalAmount} />
       <input type="hidden" name="frequency" value={frequency} />
+      {selectedProgram && (
+        <>
+          <input type="hidden" name="programSlug" value={selectedProgram.slug} />
+          <input type="hidden" name="programName" value={selectedProgram.title} />
+        </>
+      )}
 
       <Card>
         <CardContent className="space-y-8 pt-2">
@@ -79,10 +126,16 @@ export function DonateForm() {
             <Label className="mb-3 text-base font-semibold">
               Donation Frequency
             </Label>
+            {selectedProgram && (
+              <div className="mb-4 rounded-lg border border-[#C05A3C]/20 bg-[#C05A3C]/5 px-4 py-3 text-sm text-[#8B3A24]">
+                <span className="font-semibold">Program designation:</span>{" "}
+                {selectedProgram.title}
+              </div>
+            )}
             <div className="flex rounded-lg border p-1">
               <button
                 type="button"
-                onClick={() => setFrequency("one-time")}
+                onClick={() => selectFrequency("one-time")}
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "one-time"
@@ -94,7 +147,7 @@ export function DonateForm() {
               </button>
               <button
                 type="button"
-                onClick={() => setFrequency("monthly")}
+                onClick={() => selectFrequency("monthly")}
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "monthly"
@@ -201,7 +254,7 @@ export function DonateForm() {
           {/* Impact preview */}
           {finalAmount > 0 && (
             <div className="rounded-lg border border-[#C05A3C]/20 bg-[#C05A3C]/5 px-4 py-3 text-center text-sm font-medium text-[#C05A3C]">
-              {getImpactText(finalAmount)}
+              {getImpactText(finalAmount, frequency)}
             </div>
           )}
 
@@ -243,7 +296,7 @@ export function DonateForm() {
 
           {/* Submit */}
           <div className="space-y-4">
-            <SubmitButton amount={finalAmount} />
+            <SubmitButton amount={finalAmount} frequency={frequency} />
 
             {/* Trust badges */}
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
@@ -258,8 +311,10 @@ export function DonateForm() {
             </div>
 
             <p className="text-center text-xs text-muted-foreground">
-              Donations may not be tax-deductible outside Nigeria. Beacon of
-              Blessings Charity Initiative is registered in Nigeria.
+              Stripe securely processes card details. Beacon of Blessings
+              Charity Initiative is verifying its public registration details;
+              donations may not be tax-deductible outside Nigeria, so please
+              consult your local tax adviser.
             </p>
 
             <blockquote className="text-center text-sm italic text-muted-foreground">

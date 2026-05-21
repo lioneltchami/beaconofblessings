@@ -1,10 +1,18 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DonateForm } from "@/components/donate-form";
+
+const navigationState = vi.hoisted(() => ({
+  searchParams: "",
+}));
 
 // Prevent the form action from triggering a real Stripe redirect.
 vi.mock("@/app/actions/checkout", () => ({
   createCheckoutSession: vi.fn(),
+}));
+
+vi.mock("next/navigation", () => ({
+  useSearchParams: () => new URLSearchParams(navigationState.searchParams),
 }));
 
 // useFormStatus is not supported in jsdom; stub it to always report idle.
@@ -33,11 +41,29 @@ function getPresetButton(amount: number) {
 }
 
 describe("DonateForm", () => {
+  beforeEach(() => {
+    navigationState.searchParams = "";
+  });
+
   it("renders all five preset amount buttons ($25, $50, $100, $250, $500)", () => {
     render(<DonateForm />);
     for (const amount of [25, 50, 100, 250, 500]) {
       expect(getPresetButton(amount)).toBeDefined();
     }
+  });
+
+  it("switches to monthly-specific preset amount buttons", () => {
+    render(<DonateForm />);
+
+    fireEvent.click(screen.getByRole("button", { name: /monthly/i }));
+
+    for (const amount of [10, 25, 50, 100, 250]) {
+      expect(getPresetButton(amount)).toBeDefined();
+    }
+    expect(getPresetButton(500)).toBeUndefined();
+    expect(
+      screen.getByRole("button", { name: /give \$25 monthly securely/i }),
+    ).toBeInTheDocument();
   });
 
   it("renders the Custom amount button", () => {
@@ -78,6 +104,10 @@ describe("DonateForm", () => {
     expect(
       screen.getByText(/donations may not be tax-deductible/i),
     ).toBeInTheDocument();
+    expect(
+      screen.getByText(/verifying its public registration details/i),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/consult your local tax adviser/i)).toBeInTheDocument();
   });
 
   it("shows the custom amount input only after clicking the Custom button", () => {
@@ -136,5 +166,20 @@ describe("DonateForm", () => {
     render(<DonateForm />);
     expect(screen.getByLabelText(/^name$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^email$/i)).toBeInTheDocument();
+  });
+
+  it("renders program designation and hidden fields when a program is selected", () => {
+    navigationState.searchParams = "program=school-readiness-kits";
+
+    const { container } = render(<DonateForm />);
+
+    expect(screen.getByText(/program designation:/i)).toBeInTheDocument();
+    expect(screen.getByText(/school readiness kits/i)).toBeInTheDocument();
+    expect(
+      container.querySelector('input[name="programSlug"]'),
+    ).toHaveAttribute("value", "school-readiness-kits");
+    expect(
+      container.querySelector('input[name="programName"]'),
+    ).toHaveAttribute("value", "School Readiness Kits");
   });
 });

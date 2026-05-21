@@ -6,8 +6,10 @@
 export interface SanityImage {
 	_type: "image";
 	asset: {
-		_ref: string;
-		_type: "reference";
+		_ref?: string;
+		_id?: string;
+		_type?: "reference" | "sanity.imageAsset";
+		url?: string;
 	};
 	alt?: string;
 }
@@ -123,4 +125,9 @@ export interface SanityResource {
 	fileSize: string;
 	date: string;
 	fileUrl?: string;
+	file?: {
+		asset?: {
+			url?: string;
+		};
+	};
 }

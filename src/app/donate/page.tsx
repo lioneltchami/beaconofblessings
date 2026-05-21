@@ -8,6 +8,7 @@ import {
   Users,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { DonateForm } from "@/components/donate-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { siteConfig } from "@/data/site";
@@ -57,9 +58,9 @@ const trustPoints = [
   },
   {
     icon: HandHeart,
-    title: "Direct Impact",
+    title: "Program-Focused Impact",
     description:
-      "Your generosity goes directly to providing educational resources for children.",
+      "Your generosity is tracked with program intent, reporting, and responsible operating controls.",
   },
 ];
 
@@ -137,7 +138,9 @@ export default function DonatePage() {
           <p className="mb-8 text-center text-muted-foreground">
             Every contribution, no matter the size, changes a life.
           </p>
-          <DonateForm />
+          <Suspense fallback={null}>
+            <DonateForm />
+          </Suspense>
         </div>
       </section>
 

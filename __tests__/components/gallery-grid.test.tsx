@@ -29,6 +29,34 @@ describe("GalleryGrid", () => {
     }
   });
 
+  it("renders a real album cover image when Sanity provides one", () => {
+    render(
+      <GalleryGrid
+        albums={[
+          {
+            ...albums[0],
+            coverImage: {
+              _type: "image",
+              alt: "Students holding donated notebooks",
+              asset: {
+                url: "https://cdn.sanity.io/images/project/production/cover.jpg",
+              },
+            },
+          },
+        ]}
+      />,
+    );
+
+    const image = screen.getByRole("img", {
+      name: "Students holding donated notebooks",
+    });
+    expect(image.getAttribute("src")).toContain(
+      encodeURIComponent(
+        "https://cdn.sanity.io/images/project/production/cover.jpg",
+      ),
+    );
+  });
+
   it("filters albums when a category button is clicked", () => {
     render(<GalleryGrid albums={albums} />);
     const educationAlbums = albums.filter((a) => a.category === "Education");

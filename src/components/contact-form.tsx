@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
 import { type FormEvent, useRef, useState } from "react";
 import { submitContactForm } from "@/app/actions/contact";
 import { Button } from "@/components/ui/button";
@@ -41,12 +41,14 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 rounded-xl border bg-card p-8 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#C05A3C]/10">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-[#C05A3C]/15 bg-white/80 p-8 text-center shadow-sm">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#C05A3C]/10 ring-8 ring-[#C05A3C]/5">
           <CheckCircle2 className="h-7 w-7 text-[#C05A3C]" />
         </div>
-        <h3 className="text-xl font-semibold">Message Sent!</h3>
-        <p className="text-muted-foreground">
+        <h3 className="font-heading text-2xl font-semibold text-[#8B3A24]">
+          Message Sent!
+        </h3>
+        <p className="max-w-md leading-7 text-muted-foreground">
           Thank you for reaching out. We will get back to you as soon as
           possible.
         </p>
@@ -63,31 +65,35 @@ export function ContactForm() {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-      <div className="space-y-2">
-        <Label htmlFor="contact-name">
-          Name <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="contact-name"
-          name="name"
-          placeholder="Your full name"
-          required
-          disabled={status === "submitting"}
-        />
-      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="contact-name">
+            Name <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="contact-name"
+            name="name"
+            placeholder="Your full name"
+            autoComplete="name"
+            required
+            disabled={status === "submitting"}
+          />
+        </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="contact-email">
-          Email <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="contact-email"
-          name="email"
-          type="email"
-          placeholder="you@example.com"
-          required
-          disabled={status === "submitting"}
-        />
+        <div className="space-y-2">
+          <Label htmlFor="contact-email">
+            Email <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="contact-email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autoComplete="email"
+            required
+            disabled={status === "submitting"}
+          />
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -97,7 +103,8 @@ export function ContactForm() {
         <Input
           id="contact-subject"
           name="subject"
-          placeholder="How can we help?"
+          placeholder="Donations, volunteering, partnership, or media"
+          autoComplete="off"
           required
           disabled={status === "submitting"}
         />
@@ -110,8 +117,8 @@ export function ContactForm() {
         <Textarea
           id="contact-message"
           name="message"
-          placeholder="Tell us more about your inquiry..."
-          rows={5}
+          placeholder="Tell us what you need, the best way to reply, and any timing details."
+          rows={6}
           required
           disabled={status === "submitting"}
         />
@@ -128,7 +135,7 @@ export function ContactForm() {
         type="submit"
         size="lg"
         disabled={status === "submitting"}
-        className="w-full bg-[#C05A3C] text-white hover:bg-[#8B3A24]"
+        className="w-full rounded-lg bg-[#C05A3C] text-white shadow-sm hover:bg-[#8B3A24]"
       >
         {status === "submitting" ? (
           <>
@@ -136,9 +143,16 @@ export function ContactForm() {
             Sending...
           </>
         ) : (
-          "Send Message"
+          <>
+            <Send className="h-4 w-4" />
+            Send Message
+          </>
         )}
       </Button>
+      <p className="text-center text-xs leading-5 text-muted-foreground">
+        We use your details only to respond to this inquiry. For donor data
+        handling, see our privacy commitments.
+      </p>
     </form>
   );
 }

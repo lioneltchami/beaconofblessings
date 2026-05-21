@@ -35,8 +35,11 @@ export function MobileNav() {
       <SheetContent side="right" className="w-72 bg-[#FAF6F1]">
         <SheetHeader>
           <SheetTitle className="text-left">
-            <span className="font-heading text-lg font-bold text-[#C05A3C]">
+            <span className="font-heading text-lg font-bold text-[#8B3A24]">
               {siteConfig.name}
+            </span>
+            <span className="mt-1 block text-xs font-medium text-[#C05A3C]">
+              Education charity in Nigeria
             </span>
           </SheetTitle>
         </SheetHeader>
@@ -68,7 +71,7 @@ export function MobileNav() {
                 />
               }
             >
-              Donate Now
+              Give Today
             </SheetClose>
           </div>
         </nav>

@@ -9,7 +9,7 @@ import { getResources } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: `Resources & Documents | ${siteConfig.name}`,
-  description: `Access official registration documents, annual reports, project reports, and organizational policies from ${siteConfig.name}. We believe in full transparency.`,
+  description: `Review public resources, document placeholders, reports, and organizational policies from ${siteConfig.name}. We believe in clear transparency.`,
 };
 
 export default async function ResourcesPage() {
@@ -23,14 +23,14 @@ export default async function ResourcesPage() {
           aria-hidden="true"
         />
         <div className="mx-auto max-w-3xl px-4 text-center">
-          <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Resources &amp; Documents
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[#FDF2EE]/80">
-            We believe in full transparency. Below you&apos;ll find our official
-            registration documents, annual reports, project reports, and
-            organizational policies.
-          </p>
+              <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                Resources &amp; Documents
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[#FDF2EE]/80">
+            We believe in clear transparency. Public documents will be linked
+            here as they are verified and approved for posting; unavailable
+            files are marked as coming soon.
+              </p>
         </div>
       </section>
 
@@ -44,15 +44,12 @@ export default async function ResourcesPage() {
               </div>
               <div>
                 <h2 className="font-heading text-xl font-bold text-[#2D3A6E]">
-                  Officially Registered in Nigeria
+                  Registration Status
                 </h2>
                 <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                  {siteConfig.name} Charity Initiative is registered with the
-                  Corporate Affairs Commission (CAC) of Nigeria as a non-profit
-                  organization.
-                </p>
-                <p className="mt-2 text-sm font-semibold text-[#2D3A6E]">
-                  RC: XXXXXXX
+                  Beacon of Blessings will publish verified registration
+                  details and supporting documents here once they are approved
+                  for public posting.
                 </p>
               </div>
             </div>

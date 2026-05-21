@@ -39,8 +39,9 @@ export default async function DonateSuccessPage({
           <CardContent className="space-y-3 pt-2">
             <div className="rounded-lg bg-[#FDF2EE] p-4">
               <p className="text-sm font-medium text-primary">
-                A confirmation email will be sent to you shortly with the
-                details of your donation.
+                Stripe will send payment confirmation details to the email used
+                at checkout. If you started a monthly gift, future receipts will
+                follow each successful invoice payment.
               </p>
             </div>
 

@@ -55,11 +55,24 @@ describe("Footer", () => {
     expect(termsLink).toHaveAttribute("href", "/terms");
   });
 
-  it("renders Donate Now link pointing to /donate", () => {
+  it("renders Give Today link pointing to /donate", () => {
     render(<Footer />);
-    const donateLink = screen.getByRole("link", { name: /donate now/i });
+    const donateLink = screen.getByRole("link", { name: /give today/i });
     expect(donateLink).toBeInTheDocument();
     expect(donateLink).toHaveAttribute("href", "/donate");
+  });
+
+  it("renders donor trust links", () => {
+    render(<Footer />);
+    expect(
+      screen.getByRole("navigation", { name: /donor trust links/i }),
+    ).toBeInTheDocument();
+    const transparencyLinks = screen.getAllByRole("link", {
+      name: /transparency/i,
+    });
+    expect(
+      transparencyLinks.some((link) => link.getAttribute("href") === "/transparency"),
+    ).toBe(true);
   });
 
   it("renders copyright text with the organization name (multiple occurrences allowed)", () => {

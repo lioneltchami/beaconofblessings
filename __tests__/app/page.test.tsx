@@ -20,7 +20,7 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /illuminating futures through education/i,
+        name: /help children stay in school/i,
       }),
     ).toBeInTheDocument();
   });
@@ -31,7 +31,7 @@ describe("HomePage", () => {
     // siteConfig.description is rendered in a <p> below the hero tagline
     expect(
       screen.getByText(
-        /beacon of blessings charity initiative transforms lives/i,
+        /turns faith into practical education support/i,
       ),
     ).toBeInTheDocument();
   });
@@ -49,10 +49,32 @@ describe("HomePage", () => {
     const result = await HomePage();
     render(result);
     expect(
-      screen.getByText(
-        /sharing the love of christ through compassionate service/i,
-      ),
+      screen.getByText(/trust is designed into the journey/i),
     ).toBeInTheDocument();
+  });
+
+  it("frames the homepage mission as a movement, not a one-time campaign", async () => {
+    const result = await HomePage();
+    render(result);
+    expect(document.body).toHaveTextContent(
+      /movement to keep nigerian children learning/i,
+    );
+  });
+
+  it("shows donor proof points before asking for a gift", async () => {
+    const result = await HomePage();
+    render(result);
+    expect(document.body).toHaveTextContent(/donor proof/i);
+    expect(document.body).toHaveTextContent(/receipts/i);
+    expect(document.body).toHaveTextContent(/field photos/i);
+    expect(document.body).toHaveTextContent(/public impact updates/i);
+  });
+
+  it("keeps the homepage as a gateway rather than duplicating about-page depth", async () => {
+    const result = await HomePage();
+    render(result);
+    expect(document.body).not.toHaveTextContent(/founder and leadership preview/i);
+    expect(document.body).not.toHaveTextContent(/2026 impact goals/i);
   });
 
   it("renders featured project titles", async () => {
@@ -67,47 +89,43 @@ describe("HomePage", () => {
   it("renders Give Now CTA links pointing to /donate", async () => {
     const result = await HomePage();
     render(result);
-    // Two "Give Now" links exist (hero + CTA section); all must point to /donate
-    const giveNowLinks = screen.getAllByRole("link", { name: /give now/i });
-    expect(giveNowLinks.length).toBeGreaterThan(0);
-    for (const link of giveNowLinks) {
+    const giveLinks = screen.getAllByRole("link", { name: /give today/i });
+    expect(giveLinks.length).toBeGreaterThan(0);
+    for (const link of giveLinks) {
       expect(link).toHaveAttribute("href", "/donate");
     }
   });
 
-  it("renders Our Story link pointing to /about", async () => {
+  it("renders See the Impact link pointing to /impact", async () => {
     const result = await HomePage();
     render(result);
-    const ourStory = screen.getByRole("link", { name: /our story/i });
-    expect(ourStory).toBeInTheDocument();
-    expect(ourStory).toHaveAttribute("href", "/about");
+    const impact = screen.getByRole("link", { name: /see the impact/i });
+    expect(impact).toBeInTheDocument();
+    expect(impact).toHaveAttribute("href", "/impact");
   });
 
-  it("renders Learn More link in mission section pointing to /about", async () => {
+  it("renders transparency link", async () => {
     const result = await HomePage();
     render(result);
-    // Multiple "Learn More" links exist (mission + project cards); at least one points to /about
-    const learnMoreLinks = screen.getAllByRole("link", { name: /learn more/i });
-    expect(learnMoreLinks.length).toBeGreaterThan(0);
-    const hasAboutLink = learnMoreLinks.some(
-      (l) => l.getAttribute("href") === "/about",
-    );
-    expect(hasAboutLink).toBe(true);
+    const transparency = screen.getByRole("link", {
+      name: /review transparency commitments/i,
+    });
+    expect(transparency).toHaveAttribute("href", "/transparency");
   });
 
-  it("renders Volunteer link pointing to /contact", async () => {
+  it("renders Partner With Us link pointing to /contact", async () => {
     const result = await HomePage();
     render(result);
-    const volunteer = screen.getByRole("link", { name: /^volunteer$/i });
-    expect(volunteer).toBeInTheDocument();
-    expect(volunteer).toHaveAttribute("href", "/contact");
+    const partner = screen.getByRole("link", { name: /partner with us/i });
+    expect(partner).toBeInTheDocument();
+    expect(partner).toHaveAttribute("href", "/contact");
   });
 
-  it("renders View All Projects link", async () => {
+  it("renders Explore All Programs link", async () => {
     const result = await HomePage();
     render(result);
-    const viewAll = screen.getByRole("link", { name: /view all projects/i });
+    const viewAll = screen.getByRole("link", { name: /explore all programs/i });
     expect(viewAll).toBeInTheDocument();
-    expect(viewAll).toHaveAttribute("href", "/projects");
+    expect(viewAll).toHaveAttribute("href", "/programs");
   });
 });

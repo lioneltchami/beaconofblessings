@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
 
             <Separator />
 
-            <section>
+            <section id="donor-data">
               <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#8B3A24]">
                 Information We Collect
               </h2>
@@ -85,7 +85,8 @@ export default function PrivacyPolicyPage() {
               </h2>
               <ul className="list-inside list-disc space-y-2 text-muted-foreground">
                 <li>
-                  To process and acknowledge donations and issue tax receipts.
+                  To process donations and issue donation acknowledgements or
+                  receipts where applicable.
                 </li>
                 <li>To respond to your inquiries and provide support.</li>
                 <li>

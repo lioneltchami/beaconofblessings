@@ -12,7 +12,9 @@ describe("Header", () => {
 
   it("renders the logo as a link pointing to /", () => {
     render(<Header />);
-    const logoLink = screen.getByRole("link", { name: siteConfig.name });
+    const logoLink = screen.getByRole("link", {
+      name: new RegExp(siteConfig.name, "i"),
+    });
     expect(logoLink).toHaveAttribute("href", "/");
   });
 
@@ -27,9 +29,9 @@ describe("Header", () => {
     }
   });
 
-  it("renders the desktop Donate Now link pointing to /donate", () => {
+  it("renders the desktop Give Today link pointing to /donate", () => {
     render(<Header />);
-    const donateLinks = screen.getAllByRole("link", { name: /donate now/i });
+    const donateLinks = screen.getAllByRole("link", { name: /give today/i });
     expect(donateLinks.length).toBeGreaterThan(0);
     // At least one donate link should point to /donate
     const hasCorrectHref = donateLinks.some(

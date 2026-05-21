@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const securityHeaders = [
 	{ key: "X-Frame-Options", value: "DENY" },
@@ -15,6 +16,15 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+	outputFileTracingRoot: path.join(process.cwd()),
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "cdn.sanity.io",
+			},
+		],
+	},
 	async headers() {
 		return [
 			{
