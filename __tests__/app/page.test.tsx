@@ -1,15 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import HomePage from "@/app/page";
-// Static data imports for mock return values
-import {
-  getFeaturedProjects,
-  getFeaturedProjects as staticGetFeatured,
-} from "@/data/projects";
+import { programs } from "@/data/programs";
 import { impactStats, impactStats as staticImpactStats } from "@/data/site";
 
 vi.mock("@/lib/sanity/queries", () => ({
-  getFeaturedProjects: vi.fn(() => Promise.resolve(staticGetFeatured())),
   getImpactStats: vi.fn(() => Promise.resolve([...staticImpactStats])),
 }));
 
@@ -49,40 +44,36 @@ describe("HomePage", () => {
     const result = await HomePage();
     render(result);
     expect(
-      screen.getByText(/trust is designed into the journey/i),
+      screen.getByText(/simple mission\. visible follow-up/i),
     ).toBeInTheDocument();
   });
 
-  it("frames the homepage mission as a movement, not a one-time campaign", async () => {
+  it("keeps the homepage lightweight instead of duplicating deeper pages", async () => {
     const result = await HomePage();
     render(result);
-    expect(document.body).toHaveTextContent(
-      /movement to keep nigerian children learning/i,
-    );
-  });
-
-  it("shows donor proof points before asking for a gift", async () => {
-    const result = await HomePage();
-    render(result);
-    expect(document.body).toHaveTextContent(/donor proof/i);
-    expect(document.body).toHaveTextContent(/receipts/i);
-    expect(document.body).toHaveTextContent(/field photos/i);
-    expect(document.body).toHaveTextContent(/public impact updates/i);
-  });
-
-  it("keeps the homepage as a gateway rather than duplicating about-page depth", async () => {
-    const result = await HomePage();
-    render(result);
+    expect(document.body).toHaveTextContent(/specific gifts\. specific help/i);
     expect(document.body).not.toHaveTextContent(/founder and leadership preview/i);
     expect(document.body).not.toHaveTextContent(/2026 impact goals/i);
+    expect(document.body).not.toHaveTextContent(/story arc/i);
+    expect(document.body).not.toHaveTextContent(/donor proof standards/i);
+    expect(document.body).not.toHaveTextContent(/evidence-based donor trust/i);
+    expect(document.body).not.toHaveTextContent(/completed work should lead/i);
   });
 
-  it("renders featured project titles", async () => {
+  it("renders program titles without the old project archive", async () => {
     const result = await HomePage();
     render(result);
-    const featured = getFeaturedProjects();
-    for (const project of featured) {
-      expect(screen.getByText(project.title)).toBeInTheDocument();
+    for (const program of programs) {
+      expect(screen.getByText(program.title)).toBeInTheDocument();
+    }
+  });
+
+  it("links each program card to its detail page", async () => {
+    const result = await HomePage();
+    render(result);
+    for (const program of programs) {
+      const link = screen.getByRole("link", { name: program.ctaLabel });
+      expect(link).toHaveAttribute("href", `/programs/${program.slug}`);
     }
   });
 
@@ -121,10 +112,10 @@ describe("HomePage", () => {
     expect(partner).toHaveAttribute("href", "/contact");
   });
 
-  it("renders Explore All Programs link", async () => {
+  it("renders View Programs link", async () => {
     const result = await HomePage();
     render(result);
-    const viewAll = screen.getByRole("link", { name: /explore all programs/i });
+    const viewAll = screen.getByRole("link", { name: /view programs/i });
     expect(viewAll).toBeInTheDocument();
     expect(viewAll).toHaveAttribute("href", "/programs");
   });
