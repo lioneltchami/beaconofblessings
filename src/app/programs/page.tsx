@@ -11,11 +11,13 @@ import {
 	Users,
 } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { programs } from "@/data/programs";
 import { siteConfig } from "@/data/site";
+import { programStockImages, stockImages } from "@/data/stock-images";
 
 export const metadata: Metadata = {
 	title: `Programs | ${siteConfig.name}`,
@@ -82,8 +84,8 @@ export default function ProgramsPage() {
 	return (
 		<main className="flex flex-col bg-[#FAF6F1]">
 			<section className="bg-[#FDF2EE] px-4 py-16 sm:py-24">
-				<div className="mx-auto max-w-6xl">
-					<div className="max-w-3xl">
+				<div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+					<div>
 						<p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
 							Donor-funded education programs
 						</p>
@@ -96,8 +98,40 @@ export default function ProgramsPage() {
 							tools for children in vulnerable Nigerian communities.
 						</p>
 					</div>
+					<div className="grid gap-4 sm:grid-cols-[1fr_0.82fr]">
+						<div className="relative min-h-[360px] overflow-hidden rounded-lg bg-[#2C1810]">
+							<Image
+								src={stockImages.classroomWriting}
+								alt="Students writing in notebooks in a classroom"
+								fill
+								priority
+								sizes="(min-width: 1024px) 32vw, 100vw"
+								className="object-cover"
+							/>
+						</div>
+						<div className="grid gap-4">
+							<div className="relative min-h-[170px] overflow-hidden rounded-lg bg-[#2C1810]">
+								<Image
+									src={stockImages.schoolyard}
+									alt="Schoolchildren gathered outside on school grounds"
+									fill
+									sizes="(min-width: 1024px) 22vw, 100vw"
+									className="object-cover"
+								/>
+							</div>
+							<div className="relative min-h-[170px] overflow-hidden rounded-lg bg-[#2C1810]">
+								<Image
+									src={stockImages.smilingStudent}
+									alt="A smiling student in a classroom"
+									fill
+									sizes="(min-width: 1024px) 22vw, 100vw"
+									className="object-cover"
+								/>
+							</div>
+						</div>
+					</div>
 
-					<div className="mt-10 grid gap-4 md:grid-cols-3">
+					<div className="lg:col-span-2 mt-10 grid gap-4 md:grid-cols-3">
 						<div className="border-l-4 border-primary bg-white px-5 py-4 shadow-sm">
 							<p className="font-semibold text-[#8B3A24]">What your gift funds</p>
 							<p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -177,11 +211,23 @@ export default function ProgramsPage() {
 					</div>
 
 					<div className="mt-8 grid gap-6 lg:grid-cols-3">
-						{programs.map((program) => (
+						{programs.map((program, index) => {
+							const image = programStockImages[index] ?? programStockImages[0];
+
+							return (
 							<Card
 								key={program.slug}
-								className="rounded-lg border-t-4 border-t-primary bg-white shadow-sm"
+								className="overflow-hidden rounded-lg border-t-4 border-t-primary bg-white shadow-sm"
 							>
+								<div className="relative h-52 bg-[#2C1810]">
+									<Image
+										src={image.src}
+										alt={image.alt}
+										fill
+										sizes="(min-width: 1024px) 28vw, 100vw"
+										className="object-cover"
+									/>
+								</div>
 								<CardHeader>
 									<div className="flex items-start justify-between gap-3">
 										<CardTitle className="text-xl text-[#8B3A24]">
@@ -238,7 +284,8 @@ export default function ProgramsPage() {
 									</Link>
 								</CardContent>
 							</Card>
-						))}
+							);
+						})}
 					</div>
 				</div>
 			</section>

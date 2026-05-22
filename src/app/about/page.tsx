@@ -12,10 +12,12 @@ import {
   Target,
 } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/data/site";
+import { stockImages } from "@/data/stock-images";
 import { getCoreValues, getFounders } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
@@ -114,26 +116,38 @@ export default async function AboutPage() {
               single distribution.
             </p>
           </div>
-          <div className="border-l border-[#E8A825]/60 pl-5">
-            <p className="text-lg italic leading-relaxed text-[#F5D060]">
-              &ldquo;The Spirit of the Lord is on me, because he has anointed me
-              to proclaim good news to the poor.&rdquo;
-            </p>
-            <p className="mt-3 text-sm font-medium text-[#E8A825]">
-              Luke 4:18
-            </p>
-            <div className="mt-8 grid grid-cols-2 gap-3 text-white">
-              <div className="border-t border-white/20 pt-3">
-                <p className="text-2xl font-bold">{siteConfig.founded}</p>
-                <p className="text-xs uppercase tracking-[0.2em] text-white/65">
-                  Founded
-                </p>
-              </div>
-              <div className="border-t border-white/20 pt-3">
-                <p className="text-2xl font-bold">Nigeria</p>
-                <p className="text-xs uppercase tracking-[0.2em] text-white/65">
-                  Focus
-                </p>
+          <div className="overflow-hidden rounded-lg border border-white/10 bg-white/10 shadow-2xl">
+            <div className="relative h-72">
+              <Image
+                src={stockImages.outdoorLearning}
+                alt="Students gathered outdoors for a school learning session"
+                fill
+                priority
+                sizes="(min-width: 1024px) 34vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="p-5">
+              <p className="text-lg italic leading-relaxed text-[#F5D060]">
+                &ldquo;The Spirit of the Lord is on me, because he has anointed
+                me to proclaim good news to the poor.&rdquo;
+              </p>
+              <p className="mt-3 text-sm font-medium text-[#E8A825]">
+                Luke 4:18
+              </p>
+              <div className="mt-8 grid grid-cols-2 gap-3 text-white">
+                <div className="border-t border-white/20 pt-3">
+                  <p className="text-2xl font-bold">{siteConfig.founded}</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/65">
+                    Founded
+                  </p>
+                </div>
+                <div className="border-t border-white/20 pt-3">
+                  <p className="text-2xl font-bold">Nigeria</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/65">
+                    Focus
+                  </p>
+                </div>
               </div>
             </div>
           </div>

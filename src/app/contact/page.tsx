@@ -10,11 +10,13 @@ import {
   Users,
 } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/data/site";
+import { stockImages } from "@/data/stock-images";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -128,15 +130,29 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="border border-white/10 bg-white/10 p-5 shadow-2xl backdrop-blur">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#F5D060]">
-              Response window
-            </p>
-            <p className="mt-3 font-heading text-3xl text-white">24-48 hours</p>
-            <p className="mt-2 text-sm leading-6 text-[#FDF2EE]/75">
-              Include your preferred contact method and topic so the right
-              person can follow up cleanly.
-            </p>
+          <div className="overflow-hidden rounded-lg border border-white/10 bg-white/10 shadow-2xl backdrop-blur">
+            <div className="relative h-64">
+              <Image
+                src={stockImages.classroomGroup}
+                alt="Students seated together at classroom desks"
+                fill
+                priority
+                sizes="(min-width: 1024px) 32vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#F5D060]">
+                Response window
+              </p>
+              <p className="mt-3 font-heading text-3xl text-white">
+                24-48 hours
+              </p>
+              <p className="mt-2 text-sm leading-6 text-[#FDF2EE]/75">
+                Include your preferred contact method and topic so the right
+                person can follow up cleanly.
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import { Camera, CheckCircle2, FileText, TrendingUp } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -8,6 +9,7 @@ import {
 	outcomePathway,
 } from "@/data/impact";
 import { siteConfig } from "@/data/site";
+import { fieldMomentImages, stockImages } from "@/data/stock-images";
 
 export const metadata: Metadata = {
 	title: `Impact | ${siteConfig.name}`,
@@ -19,19 +21,31 @@ export default function ImpactPage() {
 	return (
 		<main className="flex flex-col bg-[#FAF6F1]">
 			<section className="bg-[#FDF2EE] px-4 py-16 sm:py-24">
-				<div className="mx-auto max-w-6xl">
-					<p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-						Impact reporting
-					</p>
-					<h1 className="mt-4 max-w-4xl font-heading text-4xl font-bold tracking-tight text-[#8B3A24] sm:text-5xl">
-						Measurable impact, documented with care
-					</h1>
-					<p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#2C1810]/75">
-						{impactReport.summary}
-					</p>
-					<div className="mt-8 inline-flex items-center gap-2 bg-white px-4 py-2 text-sm font-semibold text-[#8B3A24] shadow-sm">
-						<TrendingUp className="h-4 w-4 text-primary" />
-						{impactReport.period}
+				<div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+					<div>
+						<p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+							Impact reporting
+						</p>
+						<h1 className="mt-4 max-w-4xl font-heading text-4xl font-bold tracking-tight text-[#8B3A24] sm:text-5xl">
+							Measurable impact, documented with care
+						</h1>
+						<p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#2C1810]/75">
+							{impactReport.summary}
+						</p>
+						<div className="mt-8 inline-flex items-center gap-2 bg-white px-4 py-2 text-sm font-semibold text-[#8B3A24] shadow-sm">
+							<TrendingUp className="h-4 w-4 text-primary" />
+							{impactReport.period}
+						</div>
+					</div>
+					<div className="relative min-h-[410px] overflow-hidden rounded-lg bg-[#2C1810] shadow-sm">
+						<Image
+							src={stockImages.schoolyard}
+							alt="Schoolchildren gathered outside on school grounds"
+							fill
+							priority
+							sizes="(min-width: 1024px) 44vw, 100vw"
+							className="object-cover"
+						/>
 					</div>
 				</div>
 			</section>
@@ -127,6 +141,44 @@ export default function ImpactPage() {
 							focus on verified totals and community context rather than
 							exposing children&apos;s private stories.
 						</p>
+					</div>
+				</div>
+			</section>
+
+			<section className="bg-[#2C1810] px-4 py-16 text-white">
+				<div className="mx-auto max-w-6xl">
+					<div className="max-w-2xl">
+						<p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#E8A825]">
+							Visual proof
+						</p>
+						<h2 className="mt-3 font-heading text-3xl font-bold">
+							Impact should feel visible before it becomes a report.
+						</h2>
+						<p className="mt-4 leading-7 text-white/75">
+							These representative images hold the space for Beacon&apos;s own
+							child-safe media library as school visits and distributions are
+							documented.
+						</p>
+					</div>
+					<div className="mt-8 grid gap-4 md:grid-cols-4">
+						{fieldMomentImages.map((image) => (
+							<figure
+								key={image.title}
+								className="relative min-h-[240px] overflow-hidden rounded-lg bg-[#8B3A24]"
+							>
+								<Image
+									src={image.src}
+									alt={image.alt}
+									fill
+									sizes="(min-width: 1024px) 22vw, 100vw"
+									className="object-cover"
+								/>
+								<div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/75 via-transparent to-transparent" />
+								<figcaption className="absolute inset-x-0 bottom-0 p-4 text-sm font-semibold">
+									{image.title}
+								</figcaption>
+							</figure>
+						))}
 					</div>
 				</div>
 			</section>
