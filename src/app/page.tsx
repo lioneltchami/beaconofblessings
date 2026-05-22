@@ -129,10 +129,11 @@ export default async function HomePage() {
               </div>
               <div className="grid gap-4">
                 <div className="relative min-h-[205px] overflow-hidden rounded-lg bg-[#2C1810]">
-                    <Image
+                  <Image
                     src={stockImages.schoolyard}
                     alt="Schoolchildren gathered on school grounds"
                     fill
+                    priority
                     sizes="(min-width: 1024px) 24vw, 100vw"
                     className="object-cover"
                   />
@@ -142,6 +143,7 @@ export default async function HomePage() {
                     src={stockImages.smilingStudent}
                     alt="A smiling student looking through a classroom window"
                     fill
+                    priority
                     sizes="(min-width: 1024px) 24vw, 100vw"
                     className="object-cover"
                   />
