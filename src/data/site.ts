@@ -38,9 +38,9 @@ export const socialLinks = [
 ] as const;
 
 export const impactStats = [
-  { value: "500+", label: "Students Supported" },
-  { value: "5", label: "Communities Reached" },
-  { value: "4,500+", label: "Learning Items Distributed" },
+  { value: "92+", label: "Children Equipped" },
+  { value: "96", label: "Sandals Purchased" },
+  { value: "N1.37M", label: "First Project Spend" },
   { value: "2024", label: "First Field Project" },
 ] as const;
 

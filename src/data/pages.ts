@@ -483,9 +483,9 @@ export const projectsPageContent: ProjectsPageContent = {
 		},
 	},
 	metrics: [
-		{ value: "500+", label: "Lives Impacted", iconKey: "users" },
-		{ value: "N2.5M", label: "Invested", iconKey: "money" },
-		{ value: "5", label: "Communities Served", iconKey: "map" },
+		{ value: "92+", label: "Children Equipped", iconKey: "users" },
+		{ value: "N1,372,200", label: "Invested", iconKey: "money" },
+		{ value: "2024", label: "First Outreach", iconKey: "map" },
 		{ value: "1", label: "Completed Project", iconKey: "trend" },
 	],
 	completedIntro: {

@@ -19,12 +19,13 @@ export interface DocumentStatus {
 
 export const impactReport = {
 	period: "2024 Launch Year",
-	headline: "500+ students supported across 5 Lagos communities",
+	headline: "First outreach fully funded and reported at N1,372,200",
 	summary:
-		"Our first field project focused on the practical school supplies children need to participate fully in class. The next phase builds on that foundation with targeted scholarship and digital-learning support.",
+		"Our first field project focused on practical school-readiness supplies and a community celebration event for children in underserved communities. The published financial report documents N1,372,200 received and N1,372,200 spent.",
 	evidence: [
 		"Partner-school beneficiary lists and teacher confirmations",
-		"Procurement receipts, packing records, and distribution counts",
+		"Published income and expenditure report prepared by Grace Kure",
+		"Procurement records for 96 pairs of sandals, 92 school bags, books, stockings, pencils, and pens",
 		"Field photos and leadership review notes retained for reporting",
 		"Program learning notes used to shape the next funding cycle",
 	],
@@ -32,24 +33,24 @@ export const impactReport = {
 
 export const impactMetrics: ImpactMetric[] = [
 	{
-		value: "500+",
-		label: "Students Supported",
-		detail: "Children received school-readiness supplies during the 2024 launch project.",
+		value: "92+",
+		label: "Children Equipped",
+		detail: "School bags and related school-readiness supplies were purchased during the 2024 first project.",
 	},
 	{
-		value: "5",
-		label: "Communities Reached",
-		detail: "Support was distributed through local school and community relationships in Lagos.",
+		value: "96",
+		label: "Sandals Purchased",
+		detail: "The financial report records 96 pairs of sandals purchased for the outreach.",
 	},
 	{
-		value: "4,500+",
-		label: "Learning Items Distributed",
-		detail: "Bags, notebooks, textbooks, and writing materials helped students return prepared.",
+		value: "92",
+		label: "School Bags Purchased",
+		detail: "The financial report records 92 school bags purchased for children.",
 	},
 	{
-		value: "N2.5M",
+		value: "N1,372,200",
 		label: "Launch Investment",
-		detail: "Estimated value of the first completed school-support project.",
+		detail: "Published total funds received and total project expenditure for the first outreach project.",
 	},
 ];
 

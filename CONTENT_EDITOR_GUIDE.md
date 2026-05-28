@@ -430,9 +430,9 @@ If your photo is a very large file (e.g., straight from a professional camera), 
 
 ## 7. Managing Resources and Documents
 
-Resources are the downloadable documents on the Resources page — things like your CAC registration certificate, annual reports, project reports, and policy documents.
+Resources are the downloadable documents on the Resources page — things like your CAC registration certificate, annual reports, project reports, and policy documents. Resource listings are managed in Sanity Studio, and each listing can either use an uploaded file or an approved public website document URL.
 
-> **Note for Lionel:** As of this writing, the Resources section is managed through the website's static data file (`src/data/resources.ts`), not through Sanity Studio. This means adding a new resource requires a code change to add the document entry, plus uploading the actual file somewhere accessible (e.g., Sanity's media library or a storage service). The steps below describe the intended workflow once Sanity is connected for resources. Until then, contact Lionel to add or update documents.
+The website also keeps fallback resource entries in `src/data/resources.ts` so the page can still render if Sanity is unavailable. When a document is important for public trust, keep both Sanity and the fallback data aligned.
 
 ### Current document categories
 
@@ -445,7 +445,7 @@ Resources are the downloadable documents on the Resources page — things like y
 
 ### What each document listing needs
 
-When Lionel adds a new document, he will need the following from you:
+When adding or updating a document, fill in:
 
 1. **Title** — the name of the document as it should appear on the website
    - Example: `2025 Annual Report`
@@ -455,7 +455,7 @@ When Lionel adds a new document, he will need the following from you:
 4. **File type** — is it a PDF, a PowerPoint, a Word document, or an Excel spreadsheet?
 5. **File size** — approximately how large the file is (check your file properties)
 6. **Date** — the date the document was published
-7. **The actual file** — send Lionel the file so he can upload it
+7. **The actual file** — upload the document in the **File** field, or use an approved public document URL in **File URL**
 
 ### Updating the CAC registration banner
 

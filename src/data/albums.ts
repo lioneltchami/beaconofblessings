@@ -19,7 +19,7 @@ export const albums: Album[] = [
     slug: "school-supplies-drive-2024",
     title: "School Supplies Drive 2024",
     description:
-      "Our inaugural project distributing essential school supplies to 500+ students across 5 communities in Lagos.",
+      "Our inaugural education outreach documented in the 2024 first project financial report.",
     category: "Education",
     date: "September 2024",
     photoCount: 8,

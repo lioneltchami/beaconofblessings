@@ -87,25 +87,32 @@ describe("ProjectsPage", () => {
 		).toBeInTheDocument();
 	});
 
-	it("renders impact stat: 500+ lives impacted", async () => {
+	it("renders impact stat: 92+ children equipped", async () => {
 		const result = await ProjectsPage();
 		render(result);
-		expect(screen.getByText("500+")).toBeInTheDocument();
-		expect(screen.getByText("Lives Impacted")).toBeInTheDocument();
+		expect(screen.getByText("92+")).toBeInTheDocument();
+		expect(screen.getByText("Children Equipped")).toBeInTheDocument();
 	});
 
-	it("renders impact stat: N2.5M invested label", async () => {
+	it("renders impact stat from the first project financial report", async () => {
 		const result = await ProjectsPage();
 		render(result);
-		// N2.5M appears multiple times (stat + project card budget); use getAllByText
-		expect(screen.getAllByText("N2.5M").length).toBeGreaterThan(0);
+		expect(screen.getAllByText("N1,372,200").length).toBeGreaterThan(0);
 		expect(screen.getByText("Invested")).toBeInTheDocument();
 	});
 
-	it("renders impact stat: 5 communities served", async () => {
+	it("renders first project details from the financial report", async () => {
 		const result = await ProjectsPage();
 		render(result);
-		expect(screen.getByText("Communities Served")).toBeInTheDocument();
+		expect(screen.getByText(/96 pairs of sandals/i)).toBeInTheDocument();
+		expect(screen.getByText(/92 school bags/i)).toBeInTheDocument();
+		expect(screen.getByText(/fully covered all project expenditures/i)).toBeInTheDocument();
+	});
+
+	it("renders impact stat: 2024 first outreach", async () => {
+		const result = await ProjectsPage();
+		render(result);
+		expect(screen.getByText("First Outreach")).toBeInTheDocument();
 	});
 
 	it("renders Donate Now CTA link pointing to /donate", async () => {

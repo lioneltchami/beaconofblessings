@@ -15,16 +15,14 @@ export const blogPosts: BlogPost[] = [
 		slug: "transforming-lives-through-education",
 		title: "Transforming Lives Through Education",
 		excerpt:
-			"See how our School Supplies Drive 2024 is making a lasting impact on students across Lagos communities.",
-		content: `Our School Supplies Drive 2024 has been a transformative experience for both the communities we serve and our organization. When we set out in June 2024, we had a simple goal: ensure that no child in our target communities would start the school year without the basic supplies they need to learn.
+			"See how our first educational supplies outreach helped children with school-readiness materials and community care.",
+		content: `Our first educational supplies outreach in 2024 was a transformative experience for both the communities we serve and our organization. We had a simple goal: help children in underserved communities receive practical school-readiness support and experience care from the wider community.
 
-Over the course of three months, our team worked closely with local schools, community leaders, and parent associations across five Lagos communities. The response was overwhelming — both from donors who made this possible and from the families who received support.
+The published financial report records N1,372,200 in funds received and N1,372,200 in project expenditure. Those funds covered CAC registration costs, roll-up banner printing, 96 pairs of sandals, 92 school bags, books, stockings, pencils, pens, transportation, and outreach event costs.
 
-Each student received a school bag filled with notebooks, textbooks, and writing materials. But the impact goes far beyond the physical supplies. Teachers reported increased attendance, improved engagement in class, and a renewed sense of hope among students who previously struggled to participate fully in their education.
+The outreach also included a community celebration with T-shirts, face caps, bottled water, Maltina, meat pies, canopy, chairs, tables, car rental, DJ support, fuel, and volunteer stipends. The report notes that a N196,564 donation from ADA (Apoti Development Association, Cameroon) helped fully cover project expenditures.
 
-Mrs. Adebayo, a teacher at one of our partner schools, shared: "The children's faces lit up when they received their supplies. For many of them, it was the first time they had their own school bag. The change in their confidence was immediate."
-
-As we look ahead, we are planning our Digital Learning Initiative to bring technology into these same communities, building on the foundation of trust and partnership we have established.`,
+As we look ahead, we are planning our Digital Learning Initiative to bring technology into these same communities, building on the foundation of trust, reporting, and partnership established through this first project.`,
 		author: "Beacon of Blessings Team",
 		date: "2024-10-15",
 		category: "Impact Stories",
@@ -38,7 +36,7 @@ As we look ahead, we are planning our Digital Learning Initiative to bring techn
 			"A reflection on the power of community partnership in creating sustainable change for Nigeria's children.",
 		content: `At Beacon of Blessings, we believe that sustainable change happens when communities work together. Our approach has always been to partner with — not simply give to — the communities we serve.
 
-This philosophy was put into practice during our School Supplies Drive, where local leaders helped us identify the families most in need, schools opened their doors for distribution events, and parent associations organized follow-up support groups.
+This philosophy was put into practice during our first educational supplies outreach, where support was converted into practical school-readiness materials and a community celebration event for children.
 
 Chief Emeka, a community leader in one of our partner neighborhoods, told us: "What makes Beacon of Blessings different is that they came to us first. They asked what we needed, they listened, and they delivered exactly what our children required."
 
@@ -58,15 +56,15 @@ We invite you to join us in this journey. Whether through a donation, volunteeri
 			"Reflecting on our first year of operations and the impact we have made together.",
 		content: `As we close out 2024, we want to share a transparent look at what Beacon of Blessings accomplished in our founding year.
 
-In our first year, we successfully launched and completed one major project: the School Supplies Drive 2024. Here is a summary of our impact:
+In our first year, we successfully launched and completed one major project: our first educational supplies outreach. Here is a summary of the published financial report:
 
-Students Supported: 500+
-Communities Reached: 5
-Items Distributed: 2,000+ notebooks, 1,000+ textbooks, 1,500+ writing materials, 500+ school bags
-Total Investment: N2.5M
-Partner Organizations: Local schools, community leaders, parent associations
+Funds Received: N1,372,200
+Total Expenditure: N1,372,200
+School-Readiness Materials: 96 pairs of sandals, 92 school bags, books, stockings, pencils, and pens
+Outreach Support: T-shirts, face caps, bottled water, Maltina, meat pies, canopy, chairs, tables, car rental, DJ and fuel, and volunteer stipends
+Partner Support: ADA (Apoti Development Association, Cameroon) contributed N196,564
 
-Every naira donated went directly to supporting students. Our operational costs were covered separately by our founding team, ensuring that 100% of donations reached beneficiaries.
+The project report shows that all recorded funds received were matched by documented project expenditure.
 
 Looking ahead to 2025 and beyond, we have three major initiatives planned: the Digital Learning Initiative, the Girls' Education Scholarship Program, and the Community Library Project. Together, these programs represent an investment of over N28M in Nigeria's educational future.
 

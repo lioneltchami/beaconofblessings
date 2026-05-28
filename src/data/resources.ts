@@ -90,7 +90,7 @@ export const resources: Resource[] = [
 			id: "ar-1",
 			title: "2024 Annual Report",
 			description:
-				"Planned public report covering launch-year activities, financial summary, and impact metrics.",
+				"Planned broader annual report covering launch-year activities, governance, and next-cycle priorities.",
 		category: "annual-reports",
 		fileType: "pdf",
 		fileSize: "4.5 MB",
@@ -100,17 +100,18 @@ export const resources: Resource[] = [
 	// Project Reports
 	{
 		id: "pr-1",
-			title: "School Supplies Drive 2024 — Final Report",
+			title: "First Project Financial Report 2024",
 			description:
-				"Planned public report on beneficiary counts, budget allocation, outcomes, and lessons learned.",
+				"Income and expenditure summary for Beacon of Blessings' first outreach project, documenting N1,372,200 received and N1,372,200 spent on school supplies, outreach logistics, and community celebration costs.",
 		category: "project-reports",
 		fileType: "pdf",
-		fileSize: "3.2 MB",
-		date: "2024-10-15",
+		fileSize: "285 KB",
+		date: "2026-05-27",
+		fileUrl: "/documents/beacon-of-blessings-first-project-financial-report-2024.pdf",
 	},
 	{
 		id: "pr-2",
-			title: "School Supplies Drive 2024 — Impact Presentation",
+			title: "First Project 2024 — Impact Presentation",
 			description:
 				"Planned public presentation summarizing approved photos, outcomes, and field learning.",
 		category: "project-reports",
