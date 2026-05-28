@@ -7,13 +7,13 @@ export default function NotFound() {
   return (
     <section className="flex min-h-[60vh] flex-col items-center justify-center bg-[#FAF6F1] px-6 py-24 text-center">
       {/* Fun branded 404 with teal and marigold */}
-      <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#C05A3C] to-[#D4795F]">
+      <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#2F7D5A] to-[#4FA778]">
         <span className="font-heading text-4xl font-bold text-[#F5D060]">
           404
         </span>
       </div>
 
-      <h1 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24] sm:text-4xl">
+      <h1 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B] sm:text-4xl">
         Page Not Found
       </h1>
 
@@ -27,7 +27,7 @@ export default function NotFound() {
           href="/"
           className={cn(
             buttonVariants({ size: "lg" }),
-            "gap-2 bg-primary font-semibold text-white hover:bg-[#8B3A24]",
+            "gap-2 bg-primary font-semibold text-white hover:bg-[#256B4B]",
           )}
         >
           <Home className="h-4 w-4" />

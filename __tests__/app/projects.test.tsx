@@ -1,16 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import ProjectsPage from "@/app/projects/page";
+import { projectsPageContent } from "@/data/pages";
 // Static data imports for mock return values
 import {
 	getCompletedProjects,
+	getCurrentProjects,
 	getUpcomingProjects,
 	getCompletedProjects as staticGetCompleted,
+	getCurrentProjects as staticGetCurrent,
 	getUpcomingProjects as staticGetUpcoming,
 } from "@/data/projects";
 
 vi.mock("@/lib/sanity/queries", () => ({
 	getCompletedProjects: vi.fn(() => Promise.resolve(staticGetCompleted())),
+	getCurrentProjects: vi.fn(() => Promise.resolve(staticGetCurrent())),
+	getProjectsPage: vi.fn(() => Promise.resolve(projectsPageContent)),
 	getUpcomingProjects: vi.fn(() => Promise.resolve(staticGetUpcoming())),
 }));
 
@@ -41,6 +46,15 @@ describe("ProjectsPage", () => {
 		}
 	});
 
+	it("renders the current project titles", async () => {
+		const result = await ProjectsPage();
+		render(result);
+		const current = getCurrentProjects();
+		for (const project of current) {
+			expect(screen.getByText(project.title)).toBeInTheDocument();
+		}
+	});
+
 	it("renders Completed Projects section heading", async () => {
 		const result = await ProjectsPage();
 		render(result);
@@ -49,11 +63,27 @@ describe("ProjectsPage", () => {
 		).toBeInTheDocument();
 	});
 
+	it("renders completed projects with a relative completion age", async () => {
+		const result = await ProjectsPage();
+		render(result);
+		expect(document.body.textContent).toMatch(
+			/last year|year ago|years ago|month ago|months ago/i,
+		);
+	});
+
 	it("renders Upcoming Projects section heading", async () => {
 		const result = await ProjectsPage();
 		render(result);
 		expect(
 			screen.getByRole("heading", { name: /upcoming projects/i }),
+		).toBeInTheDocument();
+	});
+
+	it("renders Current Projects section heading", async () => {
+		const result = await ProjectsPage();
+		render(result);
+		expect(
+			screen.getByRole("heading", { name: /current projects/i }),
 		).toBeInTheDocument();
 	});
 

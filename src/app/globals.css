@@ -49,136 +49,125 @@
 }
 
 /* ==========================================================================
-   "Nigerian Sunrise" Light Theme
-   Terracotta + Deep Indigo + Marigold
+   "Growing Light" Light Theme
+   Growth Green + Trust Indigo + Donate Gold + Heritage Clay
    ========================================================================== */
 
 :root {
   --background: #faf6f1;
-  --foreground: #2c1810;
+  --foreground: #21352b;
   --card: #ffffff;
-  --card-foreground: #2c1810;
+  --card-foreground: #21352b;
   --popover: #ffffff;
-  --popover-foreground: #2c1810;
-  --primary: #c05a3c;
+  --popover-foreground: #21352b;
+  --primary: #2f7d5a;
   --primary-foreground: #ffffff;
   --secondary: #f5efe6;
-  --secondary-foreground: #2c1810;
-  --muted: #f0e8dd;
-  --muted-foreground: #7a6e64;
+  --secondary-foreground: #21352b;
+  --muted: #edf2e9;
+  --muted-foreground: #607267;
   --accent: #e8a825;
-  --accent-foreground: #2c1810;
+  --accent-foreground: #21352b;
   --destructive: #dc2626;
   --border: #e5ddd2;
   --input: #e5ddd2;
-  --ring: #c05a3c;
-  --chart-1: #c05a3c;
+  --ring: #2f7d5a;
+  --chart-1: #2f7d5a;
   --chart-2: #e8a825;
   --chart-3: #2d3a6e;
   --chart-4: #d4795f;
   --chart-5: #f5d060;
   --radius: 0.625rem;
   --sidebar: #f5efe6;
-  --sidebar-foreground: #2c1810;
-  --sidebar-primary: #c05a3c;
+  --sidebar-foreground: #21352b;
+  --sidebar-primary: #2f7d5a;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #f5efe6;
-  --sidebar-accent-foreground: #2c1810;
+  --sidebar-accent-foreground: #21352b;
   --sidebar-border: #e5ddd2;
-  --sidebar-ring: #c05a3c;
+  --sidebar-ring: #2f7d5a;
 }
 
 /* ==========================================================================
-   "Nigerian Sunrise" Dark Theme
+   "Growing Light" Dark Theme
    ========================================================================== */
 
 .dark {
-  --background: #1a0e08;
+  --background: #0d1f19;
   --foreground: #faf6f1;
-  --card: #2a1810;
+  --card: #142c23;
   --card-foreground: #faf6f1;
-  --popover: #2a1810;
+  --popover: #142c23;
   --popover-foreground: #faf6f1;
-  --primary: #d4795f;
-  --primary-foreground: #1a0e08;
-  --secondary: #2a2018;
+  --primary: #6fb98f;
+  --primary-foreground: #081510;
+  --secondary: #18372c;
   --secondary-foreground: #faf6f1;
-  --muted: #332418;
-  --muted-foreground: #a89888;
+  --muted: #1b3a30;
+  --muted-foreground: #a8b8ae;
   --accent: #f5d060;
-  --accent-foreground: #1a0e08;
+  --accent-foreground: #081510;
   --destructive: #ef4444;
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.15);
-  --ring: #d4795f;
-  --chart-1: #d4795f;
+  --ring: #6fb98f;
+  --chart-1: #6fb98f;
   --chart-2: #f5d060;
   --chart-3: #4a5a9e;
   --chart-4: #e8a825;
   --chart-5: #c05a3c;
-  --sidebar: #2a1810;
+  --sidebar: #142c23;
   --sidebar-foreground: #faf6f1;
-  --sidebar-primary: #d4795f;
-  --sidebar-primary-foreground: #1a0e08;
-  --sidebar-accent: #2a2018;
+  --sidebar-primary: #6fb98f;
+  --sidebar-primary-foreground: #081510;
+  --sidebar-accent: #18372c;
   --sidebar-accent-foreground: #faf6f1;
   --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #d4795f;
+  --sidebar-ring: #6fb98f;
 }
 
 /* ==========================================================================
-   Brand Tokens — "Nigerian Sunrise" palette
+   Brand Tokens — "Growing Light" palette
    ========================================================================== */
 
 :root {
-  /* Primary: Terracotta */
-  --brand-primary: #c05a3c;
-  --brand-primary-light: #d4795f;
-  --brand-primary-dark: #8b3a24;
-  --brand-primary-50: #fdf2ee;
+  /* Primary: growth green */
+  --brand-primary: #2f7d5a;
+  --brand-primary-light: #4fa778;
+  --brand-primary-dark: #256b4b;
+  --brand-primary-deep: #1f5e43;
+  --brand-primary-50: #eaf6ef;
 
-  /* Secondary: Deep Indigo */
+  /* Secondary: trust indigo */
   --brand-secondary: #2d3a6e;
   --brand-secondary-light: #4a5a9e;
 
-  /* Accent: Marigold */
+  /* Accent: donate gold */
   --brand-accent: #e8a825;
   --brand-accent-light: #f5d060;
   --brand-accent-dark: #b8861e;
 
-  /* Terracotta secondary warm */
+  /* Heritage clay */
   --brand-terracotta: #c05a3c;
   --brand-terracotta-light: #d4795f;
+  --brand-terracotta-dark: #8b3a24;
 
   /* Warm neutrals */
   --brand-cream: #faf6f1;
   --brand-warm-gray: #f5efe6;
+  --brand-ink: #21352b;
 
-  /* Legacy aliases — maps old bob-* tokens to the new palette.
-     This prevents broken references in components that still
-     use the old variable names during the migration. */
-  --bob-purple-50: var(--brand-primary-50);
-  --bob-purple-100: #fde8e0;
-  --bob-purple-200: #f5c4b3;
-  --bob-purple-300: #e8a08a;
-  --bob-purple-400: #d4795f;
-  --bob-purple-500: var(--brand-primary-light);
-  --bob-purple-600: #c05a3c;
-  --bob-purple-700: var(--brand-primary);
-  --bob-purple-800: var(--brand-primary-dark);
-  --bob-purple-900: #5c2618;
-  --bob-purple-950: #3a170e;
-
-  --bob-gold-50: #fff9e6;
-  --bob-gold-100: #fef0c3;
-  --bob-gold-200: #fde08a;
-  --bob-gold-300: #f5d060;
-  --bob-gold-400: #f0c030;
-  --bob-gold-500: var(--brand-accent);
-  --bob-gold-600: #b8861e;
-  --bob-gold-700: var(--brand-accent-dark);
-  --bob-gold-800: #8a6516;
-  --bob-gold-900: #5c440e;
+  /* Supporting scales */
+  --brand-growth-100: #d7eee1;
+  --brand-growth-200: #b7dfc8;
+  --brand-growth-300: #88c9a3;
+  --brand-growth-950: #123828;
+  --brand-gold-50: #fff9e6;
+  --brand-gold-100: #fef0c3;
+  --brand-gold-200: #fde08a;
+  --brand-gold-400: #f0c030;
+  --brand-gold-800: #8a6516;
+  --brand-gold-900: #5c440e;
 }
 
 /* ==========================================================================
@@ -192,7 +181,7 @@
   body {
     @apply bg-background text-foreground;
     background-image:
-      linear-gradient(90deg, rgba(192, 90, 60, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(47, 125, 90, 0.035) 1px, transparent 1px),
       linear-gradient(180deg, rgba(45, 58, 110, 0.025) 1px, transparent 1px);
     background-size: 44px 44px;
     text-rendering: optimizeLegibility;
@@ -204,7 +193,7 @@
   }
   ::selection {
     background: rgba(232, 168, 37, 0.45);
-    color: #2c1810;
+    color: #21352b;
   }
 }
 

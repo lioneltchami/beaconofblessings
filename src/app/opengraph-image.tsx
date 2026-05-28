@@ -23,11 +23,11 @@ export default function OGImage() {
         width: "100%",
         height: "100%",
         background:
-          "linear-gradient(135deg, #8B3A24 0%, #C05A3C 40%, #D4795F 100%)",
+          "linear-gradient(135deg, #1F5E43 0%, #2F7D5A 48%, #2D3A6E 100%)",
         position: "relative",
       }}
     >
-      {/* Marigold accent bar at bottom */}
+      {/* Donate gold accent bar at bottom */}
       <div
         style={{
           position: "absolute",

@@ -10,16 +10,8 @@ import {
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	boardMembers,
-	documentStatuses,
-	donationUse,
-	policyLinks,
-	reportingCadence,
-	stewardshipStandards,
-	transparencyFacts,
-} from "@/data/impact";
 import { siteConfig } from "@/data/site";
+import { getTransparencyPage } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
 	title: `Transparency | ${siteConfig.name}`,
@@ -27,32 +19,27 @@ export const metadata: Metadata = {
 		"Review Beacon of Blessings governance, registration placeholders, donation use, policies, and financial document links.",
 };
 
-export default function TransparencyPage() {
+export default async function TransparencyPage() {
+	const content = await getTransparencyPage();
+
 	return (
 		<main className="flex flex-col bg-[#FAF6F1]">
-			<section className="bg-[#FDF2EE] px-4 py-16 sm:py-24">
+			<section className="bg-[#EAF6EF] px-4 py-16 sm:py-24">
 				<div className="mx-auto max-w-6xl">
 					<p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-						Donor accountability
+						{content.hero.eyebrow}
 					</p>
-					<h1 className="mt-4 max-w-4xl font-heading text-4xl font-bold tracking-tight text-[#8B3A24] sm:text-5xl">
-						Transparent stewardship
+					<h1 className="mt-4 max-w-4xl font-heading text-4xl font-bold tracking-tight text-[#256B4B] sm:text-5xl">
+						{content.hero.title}
 					</h1>
-						<p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#2C1810]/75">
-							Trust is part of the mission. This page gathers the governance,
-							donation-use, and policy information donors need before giving to
-							Beacon of Blessings, with formal public documents linked as they
-							are verified and approved.
+						<p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#21352B]/75">
+							{content.hero.body}
 					</p>
 					<div className="mt-8 grid gap-3 sm:grid-cols-3">
-						{[
-							["Current status", "Honest about what is verified and what is pending"],
-							["Donation controls", "Program intent, receipts, and records are tracked"],
-							["Public updates", "Reports and documents are linked as they are approved"],
-						].map(([label, value]) => (
-							<div key={label} className="border-l-4 border-[#E8A825] bg-white px-4 py-3 shadow-sm">
-								<p className="text-sm font-semibold text-[#8B3A24]">{label}</p>
-								<p className="mt-1 text-sm leading-6 text-muted-foreground">{value}</p>
+						{content.summaryCards.map((card) => (
+							<div key={card.title} className="border-l-4 border-[#E8A825] bg-white px-4 py-3 shadow-sm">
+								<p className="text-sm font-semibold text-[#256B4B]">{card.title}</p>
+								<p className="mt-1 text-sm leading-6 text-muted-foreground">{card.description}</p>
 							</div>
 						))}
 					</div>
@@ -63,15 +50,15 @@ export default function TransparencyPage() {
 				<div className="mx-auto max-w-6xl">
 					<div className="flex items-center gap-2 text-primary">
 						<Scale className="h-5 w-5" />
-						<h2 className="font-heading text-3xl font-bold text-[#8B3A24]">
+						<h2 className="font-heading text-3xl font-bold text-[#256B4B]">
 							Registration and governance
 						</h2>
 					</div>
 					<div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-						{transparencyFacts.map((fact) => (
+						{content.facts.map((fact) => (
 							<Card key={fact.label} className="rounded-lg bg-white shadow-sm">
 								<CardHeader>
-									<CardTitle className="text-lg text-[#8B3A24]">
+									<CardTitle className="text-lg text-[#256B4B]">
 										{fact.label}
 									</CardTitle>
 								</CardHeader>
@@ -90,15 +77,15 @@ export default function TransparencyPage() {
 				<div className="mx-auto max-w-6xl">
 					<div className="flex items-center gap-2 text-primary">
 						<Users className="h-5 w-5" />
-						<h2 className="font-heading text-3xl font-bold text-[#8B3A24]">
+						<h2 className="font-heading text-3xl font-bold text-[#256B4B]">
 							Board and trustees
 						</h2>
 					</div>
 					<div className="mt-6 grid gap-5 md:grid-cols-3">
-						{boardMembers.map((member) => (
+						{content.boardMembers.map((member) => (
 							<Card key={member.name} className="rounded-lg bg-white shadow-sm">
 								<CardHeader>
-									<CardTitle className="text-xl text-[#8B3A24]">
+									<CardTitle className="text-xl text-[#256B4B]">
 										{member.name}
 									</CardTitle>
 									<p className="text-sm font-semibold text-primary">{member.role}</p>
@@ -119,7 +106,7 @@ export default function TransparencyPage() {
 					<div>
 						<div className="flex items-center gap-2 text-primary">
 							<ShieldCheck className="h-5 w-5" />
-							<h2 className="font-heading text-3xl font-bold text-[#8B3A24]">
+							<h2 className="font-heading text-3xl font-bold text-[#256B4B]">
 								How donations are used
 							</h2>
 						</div>
@@ -130,9 +117,9 @@ export default function TransparencyPage() {
 						</p>
 					</div>
 					<div className="grid gap-4">
-						{donationUse.map((item) => (
+						{content.donationUse.map((item) => (
 							<div key={item.label} className="border-l-4 border-primary bg-white p-5 shadow-sm">
-								<p className="font-semibold text-[#8B3A24]">{item.label}</p>
+								<p className="font-semibold text-[#256B4B]">{item.label}</p>
 								<p className="mt-2 text-sm leading-6 text-muted-foreground">
 									{item.value}
 								</p>
@@ -147,7 +134,7 @@ export default function TransparencyPage() {
 					<div>
 						<div className="flex items-center gap-2 text-primary">
 							<CheckCircle2 className="h-5 w-5" />
-							<h2 className="font-heading text-3xl font-bold text-[#8B3A24]">
+							<h2 className="font-heading text-3xl font-bold text-[#256B4B]">
 								Stewardship standards
 							</h2>
 						</div>
@@ -158,9 +145,9 @@ export default function TransparencyPage() {
 						</p>
 					</div>
 					<div className="grid gap-4 sm:grid-cols-2">
-						{stewardshipStandards.map((standard) => (
+						{content.stewardshipStandards.map((standard) => (
 							<div key={standard.label} className="border border-[#C05A3C]/10 bg-[#FAF6F1] p-5">
-								<p className="font-semibold text-[#8B3A24]">{standard.label}</p>
+								<p className="font-semibold text-[#256B4B]">{standard.label}</p>
 								<p className="mt-2 text-sm leading-6 text-muted-foreground">
 									{standard.value}
 								</p>
@@ -176,7 +163,7 @@ export default function TransparencyPage() {
 						<div>
 							<div className="flex items-center gap-2 text-primary">
 								<Clock className="h-5 w-5" />
-								<h2 className="font-heading text-3xl font-bold text-[#8B3A24]">
+								<h2 className="font-heading text-3xl font-bold text-[#256B4B]">
 									Reporting cadence
 								</h2>
 							</div>
@@ -187,9 +174,9 @@ export default function TransparencyPage() {
 							</p>
 						</div>
 						<ol className="grid gap-3">
-							{reportingCadence.map((item, index) => (
+							{content.reportingCadence.map((item, index) => (
 								<li key={item} className="flex gap-4 bg-white p-4 shadow-sm">
-									<span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#8B3A24] text-sm font-bold text-white">
+									<span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#256B4B] text-sm font-bold text-white">
 										{index + 1}
 									</span>
 									<span className="text-sm leading-6 text-muted-foreground">{item}</span>
@@ -200,7 +187,7 @@ export default function TransparencyPage() {
 				</div>
 			</section>
 
-			<section className="bg-[#8B3A24] px-4 py-16 text-white">
+			<section className="bg-[#256B4B] px-4 py-16 text-white">
 				<div className="mx-auto max-w-6xl">
 					<div className="flex items-center gap-2 text-[#F5D060]">
 						<FileCheck2 className="h-5 w-5" />
@@ -208,13 +195,13 @@ export default function TransparencyPage() {
 							Policies and documents
 						</h2>
 					</div>
-						<p className="mt-4 max-w-3xl text-[#FDF2EE]/80">
+						<p className="mt-4 max-w-3xl text-[#EAF6EF]/80">
 							Financial documents, annual reports, and formal registration files
-							will be linked here as they are verified and approved for public
+							are linked here as they are verified and approved for public
 							posting.
 						</p>
 					<div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-						{documentStatuses.map((document) => (
+						{content.documentStatuses.map((document) => (
 							document.href ? (
 								<Link
 									key={document.title}
@@ -245,7 +232,7 @@ export default function TransparencyPage() {
 						))}
 					</div>
 					<div className="mt-8 flex flex-wrap gap-3">
-						{policyLinks.map((link) => (
+						{content.policyLinks.map((link) => (
 							<Link
 								key={link.href}
 								href={link.href}

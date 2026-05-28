@@ -1,11 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import HomePage from "@/app/page";
+import { homePageContent } from "@/data/pages";
 import { programs } from "@/data/programs";
 import { impactStats, impactStats as staticImpactStats } from "@/data/site";
 
 vi.mock("@/lib/sanity/queries", () => ({
+  getHomePage: vi.fn(() => Promise.resolve(homePageContent)),
   getImpactStats: vi.fn(() => Promise.resolve([...staticImpactStats])),
+  getPrograms: vi.fn(() => Promise.resolve([...programs])),
 }));
 
 describe("HomePage", () => {

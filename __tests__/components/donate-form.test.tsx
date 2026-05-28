@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DonateForm } from "@/components/donate-form";
+import { programs } from "@/data/programs";
 
 const navigationState = vi.hoisted(() => ({
   searchParams: "",
@@ -105,7 +106,7 @@ describe("DonateForm", () => {
       screen.getByText(/donations may not be tax-deductible/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/verifying its public registration details/i),
+      screen.getByText(/registered with Nigeria's Corporate Affairs Commission/i),
     ).toBeInTheDocument();
     expect(screen.getByText(/consult your local tax adviser/i)).toBeInTheDocument();
   });
@@ -171,7 +172,7 @@ describe("DonateForm", () => {
   it("renders program designation and hidden fields when a program is selected", () => {
     navigationState.searchParams = "program=school-readiness-kits";
 
-    const { container } = render(<DonateForm />);
+    const { container } = render(<DonateForm programs={programs} />);
 
     expect(screen.getByText(/program designation:/i)).toBeInTheDocument();
     expect(screen.getByText(/school readiness kits/i)).toBeInTheDocument();

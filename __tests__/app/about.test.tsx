@@ -1,11 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import AboutPage from "@/app/about/page";
+import { aboutPageContent } from "@/data/pages";
 // Static data imports for mock return values
 import { founders, founders as staticFounders } from "@/data/founders";
 import { coreValues, coreValues as staticCoreValues } from "@/data/site";
 
 vi.mock("@/lib/sanity/queries", () => ({
+	getAboutPage: vi.fn(() => Promise.resolve(aboutPageContent)),
 	getFounders: vi.fn(() => Promise.resolve([...staticFounders])),
 	getCoreValues: vi.fn(() => Promise.resolve([...staticCoreValues])),
 }));

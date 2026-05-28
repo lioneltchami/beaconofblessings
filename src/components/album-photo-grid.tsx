@@ -9,9 +9,9 @@ import type { SanityImage } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
 const categoryGradients: Record<string, string> = {
-  Education: "linear-gradient(135deg, #C05A3C 0%, #8B3A24 100%)",
-  Community: "linear-gradient(135deg, #C05A3C 0%, #E8A825 100%)",
-  Team: "linear-gradient(135deg, #D4795F 0%, #C05A3C 100%)",
+  Education: "linear-gradient(135deg, #2F7D5A 0%, #256B4B 100%)",
+  Community: "linear-gradient(135deg, #2F7D5A 0%, #E8A825 100%)",
+  Team: "linear-gradient(135deg, #4FA778 0%, #2F7D5A 100%)",
   Impact: "linear-gradient(135deg, #2D3A6E 0%, #E8A825 100%)",
 };
 
@@ -46,7 +46,7 @@ export function AlbumPhotoGrid({
               onClick={() => setSelectedIndex(index)}
               className={cn(
                 "group overflow-hidden rounded-xl text-left ring-1 ring-foreground/10 transition-all duration-300",
-                "hover:scale-[1.02] hover:shadow-lg focus-visible:ring-2 focus-visible:ring-[#C05A3C]",
+                "hover:scale-[1.02] hover:shadow-lg focus-visible:ring-2 focus-visible:ring-[#2F7D5A]",
               )}
               aria-label={`View photo: ${photo.title}`}
             >

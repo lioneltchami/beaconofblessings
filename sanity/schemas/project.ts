@@ -18,15 +18,47 @@ export const project = {
     },
     {
       name: "status",
-      title: "Status",
+      title: "Manual status / fallback",
       type: "string",
+      description:
+        "Used when lifecycle mode is Manual, or when dates are missing.",
       options: {
         list: [
           { title: "Completed", value: "completed" },
+          { title: "Current", value: "current" },
           { title: "Upcoming", value: "upcoming" },
         ],
       },
       validation: (Rule: { required: () => unknown }) => Rule.required(),
+    },
+    {
+      name: "lifecycleMode",
+      title: "Lifecycle mode",
+      type: "string",
+      description:
+        "Auto moves the project between Upcoming, Current, and Completed using the dates below.",
+      initialValue: "auto",
+      options: {
+        list: [
+          { title: "Auto by start/end dates", value: "auto" },
+          { title: "Manual status", value: "manual" },
+        ],
+        layout: "radio",
+      },
+    },
+    {
+      name: "startDate",
+      title: "Start date",
+      type: "date",
+      description:
+        "When this date arrives, an automatic project appears under Current Projects.",
+    },
+    {
+      name: "endDate",
+      title: "End date",
+      type: "date",
+      description:
+        "After this date passes, an automatic project appears under Completed Projects.",
     },
     {
       name: "date",
@@ -62,6 +94,7 @@ export const project = {
       title: "Image",
       type: "image",
       options: { hotspot: true },
+      fields: [{ name: "alt", title: "Alt Text", type: "string" }],
     },
   ],
 };

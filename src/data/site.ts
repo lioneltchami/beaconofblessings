@@ -10,7 +10,8 @@ export const siteConfig = {
   officeHours: "Monday - Friday, 9:00 AM - 5:00 PM WAT",
   founded: 2024,
   legalName: "Beacon of Blessings Charity Initiative",
-  registrationStatus: "Nigerian registration details pending public posting",
+  registrationStatus:
+    "Registered with the Corporate Affairs Commission (CAC), registration number 8271788",
   serviceArea: "Lagos communities, Nigeria",
 } as const;
 

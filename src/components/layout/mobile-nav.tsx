@@ -12,9 +12,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { navLinks, siteConfig } from "@/data/site";
+import type { LinkItem } from "@/lib/sanity/types";
 
-export function MobileNav() {
+export function MobileNav({
+  navLinks,
+  siteName,
+}: {
+  navLinks: LinkItem[];
+  siteName: string;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,11 +38,11 @@ export function MobileNav() {
         <Menu className="size-5" />
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-72 bg-[#FAF6F1]">
+      <SheetContent side="right" className="w-72 bg-background">
         <SheetHeader>
           <SheetTitle className="text-left">
-            <span className="font-heading text-lg font-bold text-[#8B3A24]">
-              {siteConfig.name}
+            <span className="font-heading text-lg font-bold text-[#256B4B]">
+              {siteName}
             </span>
             <span className="mt-1 block text-xs font-medium text-[#C05A3C]">
               Education charity in Nigeria
@@ -54,7 +60,7 @@ export function MobileNav() {
               render={
                 <Link
                   href={link.href}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-[#C05A3C] transition-colors hover:bg-[#C05A3C]/10"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-[#256B4B] transition-colors hover:bg-[#2F7D5A]/10"
                 />
               }
             >
@@ -67,7 +73,7 @@ export function MobileNav() {
               render={
                 <Link
                   href="/donate"
-                  className="inline-flex h-9 w-full items-center justify-center rounded-full bg-[#E8A825] px-4 text-sm font-semibold text-gray-900 transition-all hover:bg-[#F5D060] hover:shadow-[0_0_12px_rgba(234,179,8,0.4)]"
+                  className="inline-flex h-9 w-full items-center justify-center rounded-full bg-[#E8A825] px-4 text-sm font-semibold text-[#1F352A] transition-all hover:bg-[#F5D060] hover:shadow-[0_0_12px_rgba(232,168,37,0.4)]"
                 />
               }
             >

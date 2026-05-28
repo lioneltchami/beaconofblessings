@@ -15,6 +15,19 @@ export { coreValue } from "./core-value";
 export { founder } from "./founder";
 export { galleryItem } from "./gallery-item";
 export { impactStat } from "./impact-stat";
+export {
+  aboutPage,
+  contactPage,
+  donatePage,
+  galleryPage,
+  homePage,
+  impactPage,
+  projectsPage,
+  programsPage,
+  resourcesPage,
+  transparencyPage,
+} from "./pages";
+export { program } from "./program";
 export { project } from "./project";
 export { resource } from "./resource";
 export { siteConfig } from "./site-config";

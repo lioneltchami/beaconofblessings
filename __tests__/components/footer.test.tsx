@@ -1,37 +1,51 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Footer } from "@/components/layout/footer";
-import { navLinks, siteConfig } from "@/data/site";
+import { footerTrustLinks, navLinks, siteConfig, socialLinks } from "@/data/site";
+
+vi.mock("@/lib/sanity/queries", () => ({
+  getSiteSettings: vi.fn(() =>
+    Promise.resolve({
+      _id: "static-site-config",
+      _type: "siteConfig",
+      ...siteConfig,
+      logoInitials: "BB",
+      navLinks,
+      footerTrustLinks,
+      socialLinks,
+    }),
+  ),
+}));
 
 describe("Footer", () => {
-  it("renders the organization name as a heading", () => {
-    render(<Footer />);
+  it("renders the organization name as a heading", async () => {
+    render(await Footer());
     // The org name appears in the footer h2 heading
     expect(
       screen.getByRole("heading", { name: siteConfig.name }),
     ).toBeInTheDocument();
   });
 
-  it("renders the email contact link", () => {
-    render(<Footer />);
+  it("renders the email contact link", async () => {
+    render(await Footer());
     const emailLink = screen.getByRole("link", { name: siteConfig.email });
     expect(emailLink).toBeInTheDocument();
     expect(emailLink).toHaveAttribute("href", `mailto:${siteConfig.email}`);
   });
 
-  it("renders the phone contact link", () => {
-    render(<Footer />);
+  it("renders the phone contact link", async () => {
+    render(await Footer());
     const phoneLink = screen.getByRole("link", { name: siteConfig.phone });
     expect(phoneLink).toBeInTheDocument();
   });
 
-  it("renders the address", () => {
-    render(<Footer />);
+  it("renders the address", async () => {
+    render(await Footer());
     expect(screen.getByText(siteConfig.address)).toBeInTheDocument();
   });
 
-  it("renders footer navigation with all nav links", () => {
-    render(<Footer />);
+  it("renders footer navigation with all nav links", async () => {
+    render(await Footer());
     const nav = screen.getByRole("navigation", { name: /footer navigation/i });
     expect(nav).toBeInTheDocument();
     for (const link of navLinks) {
@@ -41,29 +55,29 @@ describe("Footer", () => {
     }
   });
 
-  it("renders Privacy Policy link pointing to /privacy", () => {
-    render(<Footer />);
+  it("renders Privacy Policy link pointing to /privacy", async () => {
+    render(await Footer());
     const privacyLink = screen.getByRole("link", { name: /privacy policy/i });
     expect(privacyLink).toBeInTheDocument();
     expect(privacyLink).toHaveAttribute("href", "/privacy");
   });
 
-  it("renders Terms of Service link pointing to /terms", () => {
-    render(<Footer />);
+  it("renders Terms of Service link pointing to /terms", async () => {
+    render(await Footer());
     const termsLink = screen.getByRole("link", { name: /terms of service/i });
     expect(termsLink).toBeInTheDocument();
     expect(termsLink).toHaveAttribute("href", "/terms");
   });
 
-  it("renders Give Today link pointing to /donate", () => {
-    render(<Footer />);
+  it("renders Give Today link pointing to /donate", async () => {
+    render(await Footer());
     const donateLink = screen.getByRole("link", { name: /give today/i });
     expect(donateLink).toBeInTheDocument();
     expect(donateLink).toHaveAttribute("href", "/donate");
   });
 
-  it("renders donor trust links", () => {
-    render(<Footer />);
+  it("renders donor trust links", async () => {
+    render(await Footer());
     expect(
       screen.getByRole("navigation", { name: /donor trust links/i }),
     ).toBeInTheDocument();
@@ -75,8 +89,8 @@ describe("Footer", () => {
     ).toBe(true);
   });
 
-  it("renders copyright text with the organization name (multiple occurrences allowed)", () => {
-    render(<Footer />);
+  it("renders copyright text with the organization name (multiple occurrences allowed)", async () => {
+    render(await Footer());
     // The org name appears both as a heading and in copyright text;
     // use getAllByText to verify at least one occurrence exists
     const matches = screen.getAllByText(new RegExp(siteConfig.name, "i"));

@@ -94,7 +94,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				<meta name="theme-color" content="#C05A3C" />
+				<meta name="theme-color" content="#2F7D5A" />
 				<script
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{

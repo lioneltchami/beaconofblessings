@@ -9,8 +9,8 @@ import {
 } from "@/data/impact";
 
 describe("TransparencyPage", () => {
-	it("renders accountability sections donors expect", () => {
-		render(<TransparencyPage />);
+	it("renders accountability sections donors expect", async () => {
+		render(await TransparencyPage());
 
 		expect(
 			screen.getByRole("heading", {
@@ -25,8 +25,8 @@ describe("TransparencyPage", () => {
 		expect(screen.getByText(/policies and documents/i)).toBeInTheDocument();
 	});
 
-	it("renders board members and transparency facts", () => {
-		render(<TransparencyPage />);
+	it("renders board members and transparency facts", async () => {
+		render(await TransparencyPage());
 
 		for (const member of boardMembers) {
 			expect(screen.getByText(member.name)).toBeInTheDocument();
@@ -37,8 +37,8 @@ describe("TransparencyPage", () => {
 		}
 	});
 
-	it("renders stewardship standards and document status labels", () => {
-		render(<TransparencyPage />);
+	it("renders stewardship standards and document status labels", async () => {
+		render(await TransparencyPage());
 
 		for (const standard of stewardshipStandards) {
 			expect(screen.getAllByText(standard.label).length).toBeGreaterThan(0);

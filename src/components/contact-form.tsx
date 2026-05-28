@@ -41,11 +41,11 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-[#C05A3C]/15 bg-white/80 p-8 text-center shadow-sm">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#C05A3C]/10 ring-8 ring-[#C05A3C]/5">
-          <CheckCircle2 className="h-7 w-7 text-[#C05A3C]" />
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-[#2F7D5A]/15 bg-white/80 p-8 text-center shadow-sm">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#2F7D5A]/10 ring-8 ring-[#2F7D5A]/5">
+          <CheckCircle2 className="h-7 w-7 text-[#2F7D5A]" />
         </div>
-        <h3 className="font-heading text-2xl font-semibold text-[#8B3A24]">
+        <h3 className="font-heading text-2xl font-semibold text-[#256B4B]">
           Message Sent!
         </h3>
         <p className="max-w-md leading-7 text-muted-foreground">
@@ -135,7 +135,7 @@ export function ContactForm() {
         type="submit"
         size="lg"
         disabled={status === "submitting"}
-        className="w-full rounded-lg bg-[#C05A3C] text-white shadow-sm hover:bg-[#8B3A24]"
+        className="w-full rounded-lg bg-[#2F7D5A] text-white shadow-sm hover:bg-[#256B4B]"
       >
         {status === "submitting" ? (
           <>

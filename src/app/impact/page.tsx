@@ -3,13 +3,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	impactMetrics,
-	impactReport,
-	outcomePathway,
-} from "@/data/impact";
 import { siteConfig } from "@/data/site";
-import { fieldMomentImages, stockImages } from "@/data/stock-images";
+import { impactPageContent as staticImpactPageContent } from "@/data/pages";
+import { stockImages } from "@/data/stock-images";
+import { getImpactPage } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
 	title: `Impact | ${siteConfig.name}`,
@@ -17,30 +14,37 @@ export const metadata: Metadata = {
 		"See Beacon of Blessings annual results, impact metrics, evidence practices, and education outcomes for vulnerable Nigerian communities.",
 };
 
-export default function ImpactPage() {
+export default async function ImpactPage() {
+	const content = await getImpactPage();
+	const heroImage =
+		content.hero.images?.[0] ?? staticImpactPageContent.hero.images?.[0] ?? {
+			src: stockImages.schoolyard,
+			alt: "Schoolchildren gathered outside on school grounds",
+		};
+
 	return (
 		<main className="flex flex-col bg-[#FAF6F1]">
-			<section className="bg-[#FDF2EE] px-4 py-16 sm:py-24">
+			<section className="bg-[#EEF0F8] px-4 py-16 sm:py-24">
 				<div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
 					<div>
 						<p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-							Impact reporting
+							{content.hero.eyebrow}
 						</p>
-						<h1 className="mt-4 max-w-4xl font-heading text-4xl font-bold tracking-tight text-[#8B3A24] sm:text-5xl">
-							Measurable impact, documented with care
+						<h1 className="mt-4 max-w-4xl font-heading text-4xl font-bold tracking-tight text-[#2D3A6E] sm:text-5xl">
+							{content.hero.title}
 						</h1>
-						<p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#2C1810]/75">
-							{impactReport.summary}
+						<p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#21352B]/75">
+							{content.hero.body}
 						</p>
-						<div className="mt-8 inline-flex items-center gap-2 bg-white px-4 py-2 text-sm font-semibold text-[#8B3A24] shadow-sm">
-							<TrendingUp className="h-4 w-4 text-primary" />
-							{impactReport.period}
+						<div className="mt-8 inline-flex items-center gap-2 bg-white px-4 py-2 text-sm font-semibold text-[#2D3A6E] shadow-sm">
+							<TrendingUp className="h-4 w-4 text-[#2F7D5A]" />
+							{content.report.period}
 						</div>
 					</div>
-					<div className="relative min-h-[410px] overflow-hidden rounded-lg bg-[#2C1810] shadow-sm">
+					<div className="relative min-h-[410px] overflow-hidden rounded-lg bg-[#21352B] shadow-sm">
 						<Image
-							src={stockImages.schoolyard}
-							alt="Schoolchildren gathered outside on school grounds"
+							src={heroImage.src}
+							alt={heroImage.alt}
 							fill
 							priority
 							sizes="(min-width: 1024px) 44vw, 100vw"
@@ -52,10 +56,10 @@ export default function ImpactPage() {
 
 			<section className="px-4 py-14">
 				<div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
-					{impactMetrics.map((metric) => (
+					{content.metrics.map((metric) => (
 						<Card key={metric.label} className="rounded-lg bg-white shadow-sm">
 							<CardHeader>
-								<p className="text-3xl font-bold text-[#8B3A24]">{metric.value}</p>
+								<p className="text-3xl font-bold text-[#2D3A6E]">{metric.value}</p>
 								<CardTitle className="text-lg">{metric.label}</CardTitle>
 							</CardHeader>
 							<CardContent>
@@ -68,14 +72,14 @@ export default function ImpactPage() {
 				</div>
 			</section>
 
-			<section className="bg-[#F5EFE6] px-4 py-16">
+			<section className="bg-[#EEF0F8] px-4 py-16">
 				<div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1fr] lg:items-start">
 					<div>
 						<p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
 							Annual results
 						</p>
-						<h2 className="mt-3 font-heading text-3xl font-bold text-[#8B3A24]">
-							{impactReport.headline}
+						<h2 className="mt-3 font-heading text-3xl font-bold text-[#2D3A6E]">
+							{content.report.headline}
 						</h2>
 						<p className="mt-4 leading-7 text-muted-foreground">
 							The launch year established a practical baseline: identify
@@ -84,18 +88,18 @@ export default function ImpactPage() {
 						</p>
 						<Link
 							href="/transparency"
-							className="mt-6 inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-white hover:bg-[#8B3A24]"
+							className="mt-6 inline-flex h-10 items-center rounded-lg bg-[#2D3A6E] px-4 text-sm font-semibold text-white hover:bg-[#22305C]"
 						>
 							View accountability
 						</Link>
 					</div>
 					<div className="grid gap-4 sm:grid-cols-2">
-						{outcomePathway.map((item, index) => (
+						{content.outcomePathway.map((item, index) => (
 							<div key={item.step} className="bg-white p-5 shadow-sm">
-								<p className="text-xs font-bold uppercase tracking-[0.16em] text-[#B8861E]">
+								<p className="text-xs font-bold uppercase tracking-[0.16em] text-[#9A6A12]">
 									Step {index + 1}
 								</p>
-								<h3 className="mt-2 font-heading text-xl font-semibold text-[#8B3A24]">
+								<h3 className="mt-2 font-heading text-xl font-semibold text-[#2D3A6E]">
 									{item.step}
 								</h3>
 								<p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -111,16 +115,16 @@ export default function ImpactPage() {
 				<div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_0.8fr]">
 					<Card className="rounded-lg bg-white shadow-sm">
 						<CardHeader>
-							<div className="flex items-center gap-2 text-[#8B3A24]">
-								<FileText className="h-5 w-5 text-primary" />
+							<div className="flex items-center gap-2 text-[#2D3A6E]">
+								<FileText className="h-5 w-5 text-[#2D3A6E]" />
 								<CardTitle className="text-2xl">Evidence we keep</CardTitle>
 							</div>
 						</CardHeader>
 						<CardContent>
 							<ul className="grid gap-3 sm:grid-cols-2">
-								{impactReport.evidence.map((item) => (
+								{content.report.evidence.map((item) => (
 									<li key={item} className="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
-										<CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" />
+										<CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#2F7D5A]" />
 										{item}
 									</li>
 								))}
@@ -128,14 +132,14 @@ export default function ImpactPage() {
 						</CardContent>
 					</Card>
 
-					<div className="bg-[#8B3A24] p-6 text-white shadow-sm">
+					<div className="bg-[#2D3A6E] p-6 text-white shadow-sm">
 						<div className="flex items-center gap-2 text-[#F5D060]">
 							<Camera className="h-5 w-5" />
 							<p className="text-sm font-semibold uppercase tracking-[0.16em]">
 								Photo and report framing
 							</p>
 						</div>
-						<p className="mt-4 leading-7 text-[#FDF2EE]/85">
+						<p className="mt-4 leading-7 text-white/85">
 							Beacon publishes child-safe photos, delivery summaries, and
 							annual report links as documentation is approved. Public updates
 							focus on verified totals and community context rather than
@@ -145,26 +149,24 @@ export default function ImpactPage() {
 				</div>
 			</section>
 
-			<section className="bg-[#2C1810] px-4 py-16 text-white">
+			<section className="bg-[#256B4B] px-4 py-16 text-white">
 				<div className="mx-auto max-w-6xl">
 					<div className="max-w-2xl">
 						<p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#E8A825]">
-							Visual proof
+							{content.visualProof.eyebrow}
 						</p>
 						<h2 className="mt-3 font-heading text-3xl font-bold">
-							Impact should feel visible before it becomes a report.
+							{content.visualProof.title}
 						</h2>
 						<p className="mt-4 leading-7 text-white/75">
-							These representative images hold the space for Beacon&apos;s own
-							child-safe media library as school visits and distributions are
-							documented.
+							{content.visualProof.body}
 						</p>
 					</div>
 					<div className="mt-8 grid gap-4 md:grid-cols-4">
-						{fieldMomentImages.map((image) => (
+						{content.visualProof.images.map((image) => (
 							<figure
 								key={image.title}
-								className="relative min-h-[240px] overflow-hidden rounded-lg bg-[#8B3A24]"
+								className="relative min-h-[240px] overflow-hidden rounded-lg bg-[#1F5E43]"
 							>
 								<Image
 									src={image.src}
@@ -173,7 +175,7 @@ export default function ImpactPage() {
 									sizes="(min-width: 1024px) 22vw, 100vw"
 									className="object-cover"
 								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-[#2C1810]/75 via-transparent to-transparent" />
+								<div className="absolute inset-0 bg-gradient-to-t from-[#1F5E43]/75 via-transparent to-transparent" />
 								<figcaption className="absolute inset-x-0 bottom-0 p-4 text-sm font-semibold">
 									{image.title}
 								</figcaption>

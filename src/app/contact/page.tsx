@@ -16,7 +16,7 @@ import { ContactForm } from "@/components/contact-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/data/site";
-import { stockImages } from "@/data/stock-images";
+import { getContactPage } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -48,93 +48,50 @@ const contactInfo = [
   },
 ];
 
-const getInvolved = [
-  {
-    icon: Heart,
-    title: "Donate",
-    description:
-      "Fund school supplies, uniforms, tuition support, and reportable education programs.",
-    href: "/donate",
-    cta: "Give today",
-  },
-  {
-    icon: Users,
-    title: "Volunteer",
-    description:
-      "Offer time, skills, mentorship, workshop support, or community outreach help.",
-    href: "/contact?subject=Volunteer",
-    cta: "Start a conversation",
-  },
-  {
-    icon: Handshake,
-    title: "Partner",
-    description:
-      "Collaborate as a company, school, church, or community group to expand reach.",
-    href: "/contact?subject=Partnership",
-    cta: "Discuss partnership",
-  },
-  {
-    icon: Share2,
-    title: "Spread the Word",
-    description:
-      "Share verified impact, program pages, and donation links with your network.",
-    href: "/impact",
-    cta: "Share our impact",
-  },
-];
+const involvementIcons = {
+  handshake: Handshake,
+  heart: Heart,
+  share: Share2,
+  users: Users,
+} as const;
 
-const trustNotes = [
-  [
-    "Donor clarity",
-    "Ask before giving, verify program use, or request receipt support.",
-  ],
-  [
-    "Partnership fit",
-    "Schools, companies, churches, and community groups can start here.",
-  ],
-  [
-    "Safeguarding first",
-    "Public stories and photos are handled with consent and care.",
-  ],
-] as const;
+export default async function ContactPage() {
+  const content = await getContactPage();
 
-export default function ContactPage() {
   return (
     <div className="flex flex-col bg-[#FAF6F1]">
-      <section className="relative isolate overflow-hidden bg-[#2C1810] py-20 text-white md:py-28">
+      <section className="relative isolate overflow-hidden bg-[#EAF6EF] py-20 md:py-28">
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 opacity-95"
+          className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(120deg, rgba(139,58,36,0.96), rgba(44,24,16,0.94) 52%, rgba(45,58,110,0.82))",
+              "radial-gradient(circle at 78% 24%, rgba(232,168,37,0.18), transparent 34%), linear-gradient(120deg, rgba(234,246,239,0.96), rgba(250,246,241,0.98) 58%, rgba(238,240,248,0.92))",
           }}
         />
         <div
-          className="absolute bottom-0 left-0 h-1 w-full bg-[#E8A825]"
+          className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#2F7D5A] via-[#E8A825] to-[#2D3A6E]"
           aria-hidden="true"
         />
         <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[1fr_0.75fr] lg:items-end">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#F5D060]">
+            <p className="inline-flex items-center gap-2 rounded-full border border-[#2F7D5A]/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#256B4B]">
               <Mail className="h-3.5 w-3.5" />
-              Donor, volunteer, and partner support
+              {content.hero.eyebrow}
             </p>
-            <h1 className="mt-6 max-w-3xl font-heading text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Let&apos;s make the next step clear.
+            <h1 className="mt-6 max-w-3xl font-heading text-4xl font-bold tracking-tight text-[#21352B] sm:text-6xl">
+              {content.hero.title}
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#FDF2EE]/82">
-              Whether you want to give, volunteer, partner, or verify details
-              before supporting Beacon, this is the fastest path to the right
-              conversation.
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#21352B]/75">
+              {content.hero.body}
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-lg border border-white/10 bg-white/10 shadow-2xl backdrop-blur">
+          <div className="overflow-hidden rounded-lg border border-[#2F7D5A]/10 bg-white/85 shadow-[0_24px_80px_-56px_rgba(33,53,43,0.45)] backdrop-blur">
             <div className="relative h-64">
               <Image
-                src={stockImages.classroomGroup}
-                alt="Students seated together at classroom desks"
+                src={content.responseWindow.image.src}
+                alt={content.responseWindow.image.alt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 32vw, 100vw"
@@ -142,15 +99,14 @@ export default function ContactPage() {
               />
             </div>
             <div className="p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#F5D060]">
-                Response window
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#9A6A12]">
+                {content.responseWindow.label}
               </p>
-              <p className="mt-3 font-heading text-3xl text-white">
-                24-48 hours
+              <p className="mt-3 font-heading text-3xl text-[#256B4B]">
+                {content.responseWindow.value}
               </p>
-              <p className="mt-2 text-sm leading-6 text-[#FDF2EE]/75">
-                Include your preferred contact method and topic so the right
-                person can follow up cleanly.
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {content.responseWindow.description}
               </p>
             </div>
           </div>
@@ -164,7 +120,7 @@ export default function ContactPage() {
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
                 Direct contact
               </p>
-              <h2 className="mt-2 font-heading text-3xl font-bold tracking-tight text-[#8B3A24]">
+              <h2 className="mt-2 font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
                 Reach the team without friction.
               </h2>
               <p className="mt-3 leading-7 text-muted-foreground">
@@ -177,9 +133,9 @@ export default function ContactPage() {
               {contactInfo.map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-start gap-4 border border-[#C05A3C]/10 bg-white/80 p-4 shadow-sm"
+                  className="flex items-start gap-4 border border-[#2F7D5A]/10 bg-white/80 p-4 shadow-sm"
                 >
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#FDF2EE] text-primary">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#EAF6EF] text-primary">
                     <item.icon className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
@@ -189,12 +145,12 @@ export default function ContactPage() {
                     {item.href ? (
                       <a
                         href={item.href}
-                        className="mt-1 block break-words font-semibold text-[#8B3A24] hover:text-primary"
+                        className="mt-1 block break-words font-semibold text-[#256B4B] hover:text-primary"
                       >
                         {item.value}
                       </a>
                     ) : (
-                      <p className="mt-1 font-semibold text-[#8B3A24]">
+                      <p className="mt-1 font-semibold text-[#256B4B]">
                         {item.value}
                       </p>
                     )}
@@ -210,12 +166,12 @@ export default function ContactPage() {
           </aside>
 
           <div>
-            <Card className="border border-[#C05A3C]/10 bg-white/90 p-0 shadow-[0_24px_80px_-56px_rgba(44,24,16,0.75)]">
+            <Card className="border border-[#2F7D5A]/10 bg-white/90 p-0 shadow-[0_24px_80px_-56px_rgba(33,53,43,0.45)]">
               <CardContent className="p-6 md:p-9">
                 <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary">
                   Message
                 </p>
-                <h2 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24]">
+                <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
                   Send Us a Message
                 </h2>
                 <p className="mb-7 mt-2 leading-7 text-muted-foreground">
@@ -237,7 +193,7 @@ export default function ContactPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
               Choose your lane
             </p>
-            <h2 className="mt-2 font-heading text-3xl font-bold tracking-tight text-[#8B3A24]">
+            <h2 className="mt-2 font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
               Four useful ways to move the mission forward.
             </h2>
             <p className="mt-3 leading-7 text-muted-foreground">
@@ -247,37 +203,43 @@ export default function ContactPage() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {getInvolved.map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                className="group border border-[#C05A3C]/10 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-[#C05A3C]/25 hover:shadow-[0_22px_60px_-44px_rgba(44,24,16,0.65)]"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#E8A825]/12 text-[#B8861E]">
-                  <item.icon className="h-5 w-5" />
-                </div>
-                <h3 className="mt-5 font-heading text-xl font-semibold text-[#8B3A24]">
-                  {item.title}
-                </h3>
-                <p className="mt-3 min-h-24 text-sm leading-6 text-muted-foreground">
-                  {item.description}
-                </p>
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
-                  {item.cta}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ))}
+            {content.getInvolved.map((item) => {
+              const Icon =
+                involvementIcons[item.iconKey as keyof typeof involvementIcons] ??
+                Heart;
+
+              return (
+                <Link
+                  key={item.title}
+                  href={item.href ?? "/contact"}
+                  className="group border border-[#2F7D5A]/10 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-[#2F7D5A]/25 hover:shadow-[0_22px_60px_-44px_rgba(33,53,43,0.45)]"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#E8A825]/12 text-[#9A6A12]">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-5 font-heading text-xl font-semibold text-[#256B4B]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 min-h-24 text-sm leading-6 text-muted-foreground">
+                    {item.description}
+                  </p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                    {item.ctaLabel}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
 
-          <div className="mt-12 grid gap-6 border-t border-[#C05A3C]/10 pt-8 md:grid-cols-3">
-            {trustNotes.map(([title, body]) => (
-              <div key={title}>
-                <p className="font-heading text-lg font-semibold text-[#8B3A24]">
-                  {title}
+          <div className="mt-12 grid gap-6 border-t border-[#2F7D5A]/10 pt-8 md:grid-cols-3">
+            {content.trustNotes.map((note) => (
+              <div key={note.title}>
+                <p className="font-heading text-lg font-semibold text-[#256B4B]">
+                  {note.title}
                 </p>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  {body}
+                  {note.description}
                 </p>
               </div>
             ))}
@@ -285,7 +247,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="bg-[#2C1810] px-4 py-14 text-white">
+      <section className="bg-[#21352B] px-4 py-14 text-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#F5D060]">
@@ -304,7 +266,7 @@ export default function ContactPage() {
             </Link>
             <Link
               href="/transparency"
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-[#E8A825] px-5 text-sm font-semibold text-[#2C1810] transition-colors hover:bg-[#F5D060]"
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-[#E8A825] px-5 text-sm font-semibold text-[#21352B] transition-colors hover:bg-[#F5D060]"
             >
               Donor Trust
             </Link>

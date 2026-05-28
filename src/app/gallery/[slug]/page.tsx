@@ -39,7 +39,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
   return (
     <main className="flex flex-col">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#8B3A24] via-[#C05A3C] to-[#D4795F] py-16 sm:py-24">
+      <section className="relative bg-gradient-to-br from-[#256B4B] via-[#2F7D5A] to-[#4FA778] py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-4">
           <Link
             href="/gallery"
@@ -63,7 +63,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
             {album.description}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-[#FDF2EE]/70">
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-[#EAF6EF]/70">
             <span className="inline-flex items-center gap-1.5">
               <Calendar className="h-4 w-4" />
               {album.date}
@@ -93,7 +93,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
           <div className="rounded-xl border border-[#E8A825]/20 bg-[#E8A825]/5 px-6 py-4">
             <div className="flex items-start gap-3">
               <Camera className="mt-0.5 h-5 w-5 shrink-0 text-[#E8A825]" />
-              <p className="text-sm text-[#2C1810]/70">
+              <p className="text-sm text-[#21352B]/70">
                 Real photos are being documented and will replace these
                 placeholders soon. Thank you for your patience as we capture our
                 ongoing work.

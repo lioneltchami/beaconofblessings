@@ -79,7 +79,7 @@ export const outcomePathway = [
 export const transparencyFacts = [
 	{
 		label: "Registration",
-		value: "Nigerian registration details will be posted here after final verification",
+		value: "Registered with the Corporate Affairs Commission (CAC), registration number 8271788",
 	},
 	{
 		label: "Service Area",
@@ -148,9 +148,10 @@ export const stewardshipStandards = [
 export const documentStatuses: DocumentStatus[] = [
 	{
 		title: "Registration details",
-		status: "pending",
+		status: "available",
 		description:
-			"Nigerian registration details will be posted after final verification and approval for public sharing.",
+			"CAC certificate of incorporation is available for public review.",
+		href: "/resources",
 	},
 	{
 		title: "Annual report archive",
@@ -178,7 +179,7 @@ export const documentStatuses: DocumentStatus[] = [
 export const reportingCadence = [
 	"Project updates after major distributions or program milestones",
 	"Annual impact summary after year-end reconciliation",
-	"Public document updates when reports, policies, or registration files are verified",
+	"Public document updates when reports, policies, or registration files are added",
 	"Direct donor support through the contact page for receipt or restricted-gift questions",
 ] as const;
 

@@ -6,9 +6,9 @@ import type { AlbumPhoto } from "@/data/albums";
 import { cn } from "@/lib/utils";
 
 const categoryColors: Record<string, string> = {
-  Education: "from-[#C05A3C] to-[#8B3A24]",
-  Community: "from-[#C05A3C] to-[#E8A825]",
-  Team: "from-[#D4795F] to-[#C05A3C]",
+  Education: "from-[#2F7D5A] to-[#256B4B]",
+  Community: "from-[#2F7D5A] to-[#E8A825]",
+  Team: "from-[#4FA778] to-[#2F7D5A]",
   Impact: "from-[#2D3A6E] to-[#E8A825]",
 };
 
@@ -156,7 +156,7 @@ export function Lightbox({
               </p>
             )}
           </div>
-          <div className="bg-[#2C1810] px-6 py-4">
+          <div className="bg-[#21352B] px-6 py-4">
             <p className="text-sm text-[#FAF6F1]/60">{albumTitle}</p>
           </div>
         </div>

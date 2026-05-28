@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getProgramBySlug } from "@/data/programs";
+import type { SanityProgram } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
 const oneTimePresets = [
@@ -70,7 +70,7 @@ function SubmitButton({
     <Button
       type="submit"
       disabled={pending || amount <= 0}
-      className="h-12 w-full gap-2 rounded-full bg-[#E8A825] text-base font-semibold text-gray-900 hover:bg-[#F5D060] hover:shadow-[0_0_12px_rgba(234,179,8,0.4)]"
+      className="h-12 w-full gap-2 rounded-full bg-[#E8A825] text-base font-semibold text-[#1F352A] hover:bg-[#F5D060] hover:shadow-[0_0_12px_rgba(232,168,37,0.4)]"
     >
       {pending ? (
         <>
@@ -87,9 +87,15 @@ function SubmitButton({
   );
 }
 
-export function DonateForm() {
+export function DonateForm({
+  programs = [],
+}: {
+  programs?: Pick<SanityProgram, "slug" | "title">[];
+}) {
   const searchParams = useSearchParams();
-  const selectedProgram = getProgramBySlug(searchParams.get("program") ?? "");
+  const selectedProgram = programs.find(
+    (program) => program.slug === (searchParams.get("program") ?? ""),
+  );
   const [selectedAmount, setSelectedAmount] = useState<number>(50);
   const [customAmount, setCustomAmount] = useState("");
   const [isCustom, setIsCustom] = useState(false);
@@ -127,7 +133,7 @@ export function DonateForm() {
               Donation Frequency
             </Label>
             {selectedProgram && (
-              <div className="mb-4 rounded-lg border border-[#C05A3C]/20 bg-[#C05A3C]/5 px-4 py-3 text-sm text-[#8B3A24]">
+              <div className="mb-4 rounded-lg border border-[#2F7D5A]/20 bg-[#2F7D5A]/5 px-4 py-3 text-sm text-[#256B4B]">
                 <span className="font-semibold">Program designation:</span>{" "}
                 {selectedProgram.title}
               </div>
@@ -139,7 +145,7 @@ export function DonateForm() {
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "one-time"
-                    ? "bg-[#C05A3C] text-white"
+                    ? "bg-[#2F7D5A] text-white"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
@@ -151,7 +157,7 @@ export function DonateForm() {
                 className={cn(
                   "flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                   frequency === "monthly"
-                    ? "bg-[#C05A3C] text-white"
+                    ? "bg-[#2F7D5A] text-white"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
@@ -178,7 +184,7 @@ export function DonateForm() {
                   className={cn(
                     "rounded-lg border-2 p-4 text-left transition-all",
                     !isCustom && selectedAmount === amount
-                      ? "border-[#C05A3C] bg-[#C05A3C]/5 ring-2 ring-[#E8A825]/30"
+                      ? "border-[#2F7D5A] bg-[#2F7D5A]/5 ring-2 ring-[#E8A825]/35"
                       : "border-border hover:border-muted-foreground/30",
                   )}
                 >
@@ -186,7 +192,7 @@ export function DonateForm() {
                     className={cn(
                       "text-xl font-bold",
                       !isCustom && selectedAmount === amount
-                        ? "text-[#C05A3C]"
+                        ? "text-[#256B4B]"
                         : undefined,
                     )}
                   >
@@ -205,14 +211,14 @@ export function DonateForm() {
                 className={cn(
                   "rounded-lg border-2 p-4 text-left transition-all",
                   isCustom
-                    ? "border-[#C05A3C] bg-[#C05A3C]/5 ring-2 ring-[#E8A825]/30"
+                    ? "border-[#2F7D5A] bg-[#2F7D5A]/5 ring-2 ring-[#E8A825]/35"
                     : "border-border hover:border-muted-foreground/30",
                 )}
               >
                 <span
                   className={cn(
                     "text-xl font-bold",
-                    isCustom ? "text-[#C05A3C]" : undefined,
+                    isCustom ? "text-[#256B4B]" : undefined,
                   )}
                 >
                   Custom
@@ -253,7 +259,7 @@ export function DonateForm() {
 
           {/* Impact preview */}
           {finalAmount > 0 && (
-            <div className="rounded-lg border border-[#C05A3C]/20 bg-[#C05A3C]/5 px-4 py-3 text-center text-sm font-medium text-[#C05A3C]">
+            <div className="rounded-lg border border-[#2F7D5A]/20 bg-[#2F7D5A]/5 px-4 py-3 text-center text-sm font-medium text-[#256B4B]">
               {getImpactText(finalAmount, frequency)}
             </div>
           )}
@@ -301,27 +307,27 @@ export function DonateForm() {
             {/* Trust badges */}
             <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
               <span className="flex items-center gap-1.5">
-                <Lock className="h-3.5 w-3.5 text-[#C05A3C]" />
+                <Lock className="h-3.5 w-3.5 text-[#2F7D5A]" />
                 Secure payment
               </span>
               <span className="flex items-center gap-1.5">
-                <Shield className="h-3.5 w-3.5 text-[#C05A3C]" />
+                <Shield className="h-3.5 w-3.5 text-[#2F7D5A]" />
                 Powered by Stripe
               </span>
             </div>
 
             <p className="text-center text-xs text-muted-foreground">
               Stripe securely processes card details. Beacon of Blessings
-              Charity Initiative is verifying its public registration details;
-              donations may not be tax-deductible outside Nigeria, so please
-              consult your local tax adviser.
+              Charity Initiative is registered with Nigeria&apos;s Corporate
+              Affairs Commission; donations may not be tax-deductible outside
+              Nigeria, so please consult your local tax adviser.
             </p>
 
             <blockquote className="text-center text-sm italic text-muted-foreground">
               &ldquo;Give, and it will be given to you. A good measure, pressed
               down, shaken together and running over, will be poured into your
               lap.&rdquo;
-              <cite className="mt-1 block text-xs font-medium not-italic text-[#C05A3C]">
+              <cite className="mt-1 block text-xs font-medium not-italic text-[#2F7D5A]">
                 &mdash; Luke 6:38
               </cite>
             </blockquote>

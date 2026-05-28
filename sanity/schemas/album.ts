@@ -82,6 +82,7 @@ export const album = {
 							title: "Image",
 							type: "image",
 							options: { hotspot: true },
+							fields: [{ name: "alt", title: "Alt Text", type: "string" }],
 						},
 					],
 				},
@@ -92,6 +93,7 @@ export const album = {
 			title: "Cover Image",
 			type: "image",
 			options: { hotspot: true },
+			fields: [{ name: "alt", title: "Alt Text", type: "string" }],
 		},
 	],
 	preview: {

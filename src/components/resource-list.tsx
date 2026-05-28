@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   type Resource,
@@ -34,7 +35,7 @@ const fileTypeLabels: Record<Resource["fileType"], string> = {
 };
 
 const categoryBorderColors: Record<ResourceCategory, string> = {
-  registration: "border-l-[#C05A3C]",
+  registration: "border-l-[#2F7D5A]",
   "annual-reports": "border-l-[#2D3A6E]",
   "project-reports": "border-l-[#2D3A6E]",
   policies: "border-l-[#E8A825]",
@@ -103,7 +104,7 @@ export function ResourceList({ resources }: ResourceListProps) {
               className={cn(
                 "rounded-full px-4 py-1.5 text-sm font-medium transition-all",
                 isActive
-                  ? "bg-[#C05A3C] text-white shadow-sm"
+                  ? "bg-[#2F7D5A] text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200",
               )}
               aria-pressed={isActive}
@@ -136,8 +137,8 @@ export function ResourceList({ resources }: ResourceListProps) {
             >
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#FDF2EE]">
-                    <Icon className="h-5 w-5 text-[#C05A3C]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EAF6EF]">
+                    <Icon className="h-5 w-5 text-[#2F7D5A]" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <CardTitle className="font-heading text-base leading-snug">
@@ -165,21 +166,16 @@ export function ResourceList({ resources }: ResourceListProps) {
                 </div>
 
                 {fileUrl ? (
-                  <Button
-                    size="sm"
-                    className="w-full"
-                    render={
-                      <a
-                        href={fileUrl}
-                        download
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      />
-                    }
+                  <a
+                    href={fileUrl}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(buttonVariants({ size: "sm" }), "w-full")}
                   >
                     <Download className="mr-2 h-4 w-4" />
                     Download
-                  </Button>
+                  </a>
                 ) : (
                   <Button size="sm" className="w-full" disabled>
                     Coming Soon

@@ -2,9 +2,11 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import GalleryPage from "@/app/gallery/page";
 import { albums } from "@/data/albums";
+import { galleryPageContent } from "@/data/pages";
 
 vi.mock("@/lib/sanity/queries", () => ({
 	getAlbums: vi.fn(() => Promise.resolve([...albums])),
+	getGalleryPage: vi.fn(() => Promise.resolve(galleryPageContent)),
 }));
 
 describe("GalleryPage", () => {

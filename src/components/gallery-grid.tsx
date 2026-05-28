@@ -10,9 +10,9 @@ import type { SanityImage } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
 const categoryGradients: Record<string, string> = {
-	Education: "linear-gradient(135deg, #C05A3C 0%, #8B3A24 100%)",
-	Community: "linear-gradient(135deg, #C05A3C 0%, #E8A825 100%)",
-	Team: "linear-gradient(135deg, #D4795F 0%, #C05A3C 100%)",
+	Education: "linear-gradient(135deg, #2F7D5A 0%, #256B4B 100%)",
+	Community: "linear-gradient(135deg, #2F7D5A 0%, #E8A825 100%)",
+	Team: "linear-gradient(135deg, #4FA778 0%, #2F7D5A 100%)",
 	Impact: "linear-gradient(135deg, #2D3A6E 0%, #E8A825 100%)",
 };
 
@@ -49,7 +49,7 @@ export function GalleryGrid({ albums }: GalleryGridProps) {
 							className={cn(
 								"rounded-full px-4 py-1.5 text-sm font-medium transition-all",
 								isActive
-									? "bg-[#C05A3C] text-white shadow-sm"
+									? "bg-[#2F7D5A] text-white shadow-sm"
 									: "bg-gray-100 text-gray-600 hover:bg-gray-200",
 							)}
 							aria-pressed={isActive}
@@ -98,7 +98,7 @@ export function GalleryGrid({ albums }: GalleryGridProps) {
 
 								<CardHeader>
 								<div className="flex items-center justify-between gap-2">
-									<span className="inline-flex items-center rounded-full bg-[#C05A3C]/10 px-2.5 py-0.5 text-xs font-medium text-[#C05A3C]">
+									<span className="inline-flex items-center rounded-full bg-[#2F7D5A]/10 px-2.5 py-0.5 text-xs font-medium text-[#2F7D5A]">
 										{album.category}
 									</span>
 									<span className="inline-flex items-center gap-1 text-xs text-muted-foreground">

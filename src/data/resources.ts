@@ -30,7 +30,7 @@ export const resourceCategories: {
 			value: "registration",
 			label: "Registration & Legal",
 			description:
-				"Registration and legal documents will appear here after final verification",
+				"Public registration and legal documents for Beacon of Blessings",
 	},
 	{
 		value: "annual-reports",
@@ -54,23 +54,25 @@ export const resources: Resource[] = [
 	// Registration & Legal
 	{
 			id: "reg-1",
-			title: "Certificate of Incorporation",
+			title: "CAC Certificate of Incorporation",
 			description:
-				"Pending public posting after final verification of Beacon of Blessings registration records.",
+				"Corporate Affairs Commission certificate confirming Beacon of Blessings Charity Initiative as a registered corporate body.",
 		category: "registration",
 		fileType: "pdf",
-		fileSize: "1.2 MB",
-		date: "2024-03-15",
+		fileSize: "900 KB",
+		date: "2025-02-15",
+		fileUrl: "/documents/beacon-of-blessings-certificate-of-incorporation.pdf",
 	},
 	{
 			id: "reg-2",
-			title: "CAC Registration Document",
+			title: "Tax Identification Details",
 			description:
-				"Pending public posting of Corporate Affairs Commission registration details.",
+				"Beacon of Blessings' tax identification number is included on the public incorporation certificate.",
 		category: "registration",
 		fileType: "pdf",
-		fileSize: "850 KB",
-		date: "2024-03-15",
+		fileSize: "900 KB",
+		date: "2025-02-15",
+		fileUrl: "/documents/beacon-of-blessings-certificate-of-incorporation.pdf",
 	},
 	{
 			id: "reg-3",

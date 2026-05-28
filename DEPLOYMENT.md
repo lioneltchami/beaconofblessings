@@ -66,7 +66,7 @@ beacon-of-blessings.vercel.app
 ```
 
 or a custom preview URL. Click it. You should see the Beacon of Blessings homepage
-with the purple and gold design. All pages should load. If you see a blank page or
+with the growth green and donate gold design. All pages should load. If you see a blank page or
 a Next.js error overlay, go to the build logs as described in step 1.2.
 
 ### 1.4 — Check the build logs

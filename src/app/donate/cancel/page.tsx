@@ -21,7 +21,7 @@ export default function DonateCancelPage() {
           <RotateCcw className="h-10 w-10 text-[#2D3A6E]" />
         </div>
 
-        <h1 className="font-heading text-3xl font-bold tracking-tight text-[#8B3A24] sm:text-4xl">
+        <h1 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B] sm:text-4xl">
           Donation Cancelled
         </h1>
 
@@ -56,7 +56,7 @@ export default function DonateCancelPage() {
             href="/donate"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "gap-2 bg-[#E8A825] px-6 font-semibold text-[#2C1810] hover:bg-[#B8861E] hover:text-white",
+              "gap-2 bg-[#E8A825] px-6 font-semibold text-[#21352B] hover:bg-[#9A6A12] hover:text-white",
             )}
           >
             <ArrowRight className="h-4 w-4" />

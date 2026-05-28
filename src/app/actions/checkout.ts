@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { getProgramBySlug } from "@/data/programs";
+import { getProgram } from "@/lib/sanity/queries";
 import { getStripe } from "@/lib/stripe";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -15,7 +15,8 @@ export async function createCheckoutSession(formData: FormData) {
       : "one-time";
   const donorName = String(formData.get("donorName") ?? "").trim();
   const donorEmail = String(formData.get("donorEmail") ?? "").trim();
-  const program = getProgramBySlug(String(formData.get("programSlug") ?? ""));
+  const programSlug = String(formData.get("programSlug") ?? "");
+  const program = programSlug ? await getProgram(programSlug) : null;
 
   if (!amount || amount < 1 || amount > 999999) {
     throw new Error("Invalid donation amount");

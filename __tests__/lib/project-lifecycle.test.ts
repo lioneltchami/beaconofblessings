@@ -1,0 +1,91 @@
+import { describe, expect, it } from "vitest";
+import {
+	formatProjectCompletedAgo,
+	getProjectLifecycle,
+	sortProjectsByLifecycleDate,
+} from "@/lib/project-lifecycle";
+
+describe("project lifecycle", () => {
+	const today = new Date("2026-05-27T12:00:00.000Z");
+
+	it("marks automatic projects as upcoming before their start date", () => {
+		expect(
+			getProjectLifecycle(
+				{
+					status: "completed",
+					lifecycleMode: "auto",
+					startDate: "2026-09-01",
+					endDate: "2027-07-31",
+				},
+				today,
+			),
+		).toBe("upcoming");
+	});
+
+	it("marks automatic projects as current between start and end dates", () => {
+		expect(
+			getProjectLifecycle(
+				{
+					status: "upcoming",
+					lifecycleMode: "auto",
+					startDate: "2026-01-01",
+					endDate: "2026-12-31",
+				},
+				today,
+			),
+		).toBe("current");
+	});
+
+	it("marks automatic projects as completed after their end date", () => {
+		expect(
+			getProjectLifecycle(
+				{
+					status: "current",
+					lifecycleMode: "auto",
+					startDate: "2024-06-01",
+					endDate: "2024-09-30",
+				},
+				today,
+			),
+		).toBe("completed");
+	});
+
+	it("uses manual status when lifecycle mode is manual", () => {
+		expect(
+			getProjectLifecycle(
+				{
+					status: "upcoming",
+					lifecycleMode: "manual",
+					startDate: "2024-01-01",
+					endDate: "2024-12-31",
+				},
+				today,
+			),
+		).toBe("upcoming");
+	});
+
+	it("formats completed projects with relative age over time", () => {
+		expect(
+			formatProjectCompletedAgo(
+				{
+					status: "completed",
+					lifecycleMode: "auto",
+					endDate: "2016-05-27",
+				},
+				today,
+			),
+		).toBe("10 years ago");
+	});
+
+	it("sorts projects by lifecycle dates in the order visitors expect", () => {
+		const sorted = sortProjectsByLifecycleDate(
+			[
+				{ slug: "later", startDate: "2027-01-01", endDate: "2027-12-31" },
+				{ slug: "sooner", startDate: "2026-09-01", endDate: "2027-07-31" },
+			],
+			"upcoming",
+		);
+
+		expect(sorted.map((project) => project.slug)).toEqual(["sooner", "later"]);
+	});
+});

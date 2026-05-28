@@ -4,7 +4,7 @@ import Link from "next/link";
 import { GalleryGrid } from "@/components/gallery-grid";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { siteConfig } from "@/data/site";
-import { getAlbums } from "@/lib/sanity/queries";
+import { getAlbums, getGalleryPage } from "@/lib/sanity/queries";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -13,23 +13,23 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
-  const albums = await getAlbums();
+  const [content, albums] = await Promise.all([getGalleryPage(), getAlbums()]);
   return (
     <main className="flex flex-col">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#8B3A24] via-[#C05A3C] to-[#D4795F] py-20 sm:py-28">
+      <section className="relative bg-gradient-to-br from-[#256B4B] via-[#2F7D5A] to-[#4FA778] py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
             <Camera className="h-7 w-7 text-white" />
           </div>
           <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Gallery
+            {content.hero.title}
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-[#F5D060]">
-            Our visual journey of making a difference
+            {content.hero.body}
           </p>
-          <p className="mt-3 text-sm text-[#FDF2EE]/70">
-            Browse our photo albums documenting community impact across Nigeria
+          <p className="mt-3 text-sm text-[#EAF6EF]/70">
+            {content.hero.eyebrow}
           </p>
         </div>
       </section>
@@ -47,10 +47,8 @@ export default async function GalleryPage() {
           <div className="rounded-xl border border-[#E8A825]/20 bg-[#E8A825]/5 px-6 py-4">
             <div className="flex items-start gap-3">
               <Camera className="mt-0.5 h-5 w-5 shrink-0 text-[#E8A825]" />
-              <p className="text-sm text-[#2C1810]/70">
-                Real photos are being documented and will replace these
-                placeholders soon. Thank you for your patience as we capture our
-                ongoing work.
+              <p className="text-sm text-[#21352B]/70">
+                {content.note.description}
               </p>
             </div>
           </div>
@@ -58,24 +56,23 @@ export default async function GalleryPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#8B3A24] py-16 sm:py-20">
+      <section className="bg-[#256B4B] py-16 sm:py-20">
         <div className="mx-auto max-w-2xl px-4 text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-white">
-            See Our Work Firsthand
+            {content.cta.title}
           </h2>
-          <p className="mt-4 text-lg text-[#FDF2EE]/80">
-            Want to witness the impact in person? Join our team of volunteers
-            and help us illuminate more futures.
+          <p className="mt-4 text-lg text-[#EAF6EF]/80">
+            {content.cta.body}
           </p>
           <div className="mt-8">
             <Link
-              href="/contact"
+              href={content.cta.ctas?.[0]?.href ?? "/contact"}
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "gap-2 border-white/30 px-6 font-semibold text-white hover:bg-white/10",
               )}
             >
-              Volunteer With Us
+              {content.cta.ctas?.[0]?.label ?? "Volunteer With Us"}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

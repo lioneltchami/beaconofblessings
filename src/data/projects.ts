@@ -1,7 +1,15 @@
+import {
+	getProjectLifecycle,
+	sortProjectsByLifecycleDate,
+} from "@/lib/project-lifecycle";
+
 export interface Project {
 	slug: string;
 	title: string;
-	status: "completed" | "upcoming";
+	status: "completed" | "current" | "upcoming";
+	lifecycleMode?: "auto" | "manual";
+	startDate?: string;
+	endDate?: string;
 	date: string;
 	budget: string;
 	description: string;
@@ -14,6 +22,9 @@ export const projects: Project[] = [
 		slug: "school-supplies-drive-2024",
 		title: "School Supplies Drive 2024",
 		status: "completed",
+		lifecycleMode: "auto",
+		startDate: "2024-06-01",
+		endDate: "2024-09-30",
 		date: "June - September 2024",
 		budget: "N2.5M",
 		description:
@@ -30,7 +41,10 @@ export const projects: Project[] = [
 	{
 		slug: "digital-learning-initiative",
 		title: "Digital Learning Initiative",
-		status: "upcoming",
+		status: "current",
+		lifecycleMode: "auto",
+		startDate: "2026-01-01",
+		endDate: "2026-12-31",
 		date: "2026",
 		budget: "N5M",
 		description:
@@ -46,6 +60,9 @@ export const projects: Project[] = [
 		slug: "girls-education-scholarship",
 		title: "Girls' Education Scholarship Program",
 		status: "upcoming",
+		lifecycleMode: "auto",
+		startDate: "2026-09-01",
+		endDate: "2027-07-31",
 		date: "2026",
 		budget: "N8M",
 		description:
@@ -61,6 +78,9 @@ export const projects: Project[] = [
 		slug: "community-library-project",
 		title: "Community Library Project",
 		status: "upcoming",
+		lifecycleMode: "auto",
+		startDate: "2027-01-01",
+		endDate: "2027-12-31",
 		date: "2027",
 		budget: "N15M",
 		description:
@@ -75,11 +95,24 @@ export const projects: Project[] = [
 ];
 
 export function getCompletedProjects() {
-	return projects.filter((p) => p.status === "completed");
+	return sortProjectsByLifecycleDate(
+		projects.filter((p) => getProjectLifecycle(p) === "completed"),
+		"completed",
+	);
+}
+
+export function getCurrentProjects() {
+	return sortProjectsByLifecycleDate(
+		projects.filter((p) => getProjectLifecycle(p) === "current"),
+		"current",
+	);
 }
 
 export function getUpcomingProjects() {
-	return projects.filter((p) => p.status === "upcoming");
+	return sortProjectsByLifecycleDate(
+		projects.filter((p) => getProjectLifecycle(p) === "upcoming"),
+		"upcoming",
+	);
 }
 
 export function getFeaturedProjects() {

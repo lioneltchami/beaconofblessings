@@ -31,14 +31,15 @@ export const galleryItem = {
     {
       name: "date",
       title: "Date",
-      type: "date",
+      type: "string",
+      description: "Human-readable date, e.g. 'November 2024'",
     },
     {
       name: "image",
       title: "Image",
       type: "image",
       options: { hotspot: true },
-      validation: (Rule: { required: () => unknown }) => Rule.required(),
+      fields: [{ name: "alt", title: "Alt Text", type: "string" }],
     },
   ],
 };
