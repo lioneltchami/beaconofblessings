@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
+import { siteConfig } from "@/data/site";
 import { getAlbums, getBlogPosts } from "@/lib/sanity/queries";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://beaconofblessings.org";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
 
 function toLastModified(date?: string): Date {
 	if (!date) return new Date();

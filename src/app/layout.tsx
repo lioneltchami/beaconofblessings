@@ -22,7 +22,7 @@ const dmSerif = DM_Serif_Display({
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
-		process.env.NEXT_PUBLIC_SITE_URL || "https://beaconofblessings.org",
+		process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url,
 	),
 	title: {
 		default: "Beacon of Blessings — Illuminating Futures Through Education",

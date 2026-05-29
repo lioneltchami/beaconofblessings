@@ -3,7 +3,7 @@ export const siteConfig = {
   tagline: "Illuminating Futures Through Education",
   description:
     "Beacon of Blessings Charity Initiative helps children in vulnerable Nigerian communities stay in school through supplies, scholarships, digital learning, and local partnerships.",
-  url: "https://beaconofblessings.org",
+  url: "https://beaconofblessings.vercel.app",
   email: "info@beaconofblessings.org",
   phone: "+234 (0) 812 345 6789",
   address: "Lagos, Nigeria",

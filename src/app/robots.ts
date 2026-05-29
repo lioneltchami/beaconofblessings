@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
+import { siteConfig } from "@/data/site";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://beaconofblessings.org";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
 
 export default function robots(): MetadataRoute.Robots {
   return {
