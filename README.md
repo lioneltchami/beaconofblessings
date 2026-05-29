@@ -555,7 +555,7 @@ Environment variables:
 ```bash
 RESEND_API_KEY=...
 EMAIL_FROM=Beacon of Blessings <noreply@yourdomain.com>
-ORG_EMAIL=info@beaconofblessings.org
+ORG_EMAIL=info@blessedbeaconcharity.org
 ```
 
 Important behavior:
@@ -725,7 +725,7 @@ cp .env.example .env.local
 ### Site
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://beaconofblessings.org
+NEXT_PUBLIC_SITE_URL=https://www.blessedbeaconcharity.org
 ```
 
 Used for Stripe success/cancel URLs and canonical site behavior.
@@ -770,7 +770,7 @@ Notes:
 ```bash
 RESEND_API_KEY=re_...
 EMAIL_FROM=Beacon of Blessings <noreply@yourdomain.com>
-ORG_EMAIL=info@beaconofblessings.org
+ORG_EMAIL=info@blessedbeaconcharity.org
 ```
 
 Notes:
@@ -912,7 +912,7 @@ Deploy through Vercel with the required environment variables set in the Vercel 
 Set these in Vercel:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://beaconofblessings.org
+NEXT_PUBLIC_SITE_URL=https://www.blessedbeaconcharity.org
 SANITY_PROJECT_ID=...
 SANITY_DATASET=production
 SANITY_API_VERSION=2024-01-01
@@ -928,7 +928,7 @@ ORG_EMAIL=...
 Then configure Stripe webhook endpoint:
 
 ```txt
-https://beaconofblessings.org/api/webhooks/stripe
+https://www.blessedbeaconcharity.org/api/webhooks/stripe
 ```
 
 Webhook events to send:

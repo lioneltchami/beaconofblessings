@@ -43,7 +43,7 @@
 | **Focus**         | Educational support — school supplies, scholarships, digital learning, community libraries                                                                   |
 | **Location**      | Lagos, Nigeria                                                                                                                                               |
 | **Target Donors** | International diaspora Christians (US, Canada, UK, Australia) and Nigerians                                                                                  |
-| **Domain**        | beaconofblessings.org                                                                                                                                        |
+| **Domain**        | blessedbeaconcharity.org                                                                                                                                        |
 
 ### Programs & Projects
 
@@ -432,7 +432,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY (referenced nowhere — incomplete)
 | **Node.js version**  | Not pinned (no `.nvmrc` or `engines` field)                    |
 | **Package manager**  | npm (lockfileVersion 3)                                        |
 | **Error monitoring** | **None** (no Sentry, Datadog, etc.)                            |
-| **Domain**           | beaconofblessings.org                                          |
+| **Domain**           | blessedbeaconcharity.org                                          |
 | **Build status**     | **FAILING** — Next.js 16.2.1 Turbopack error                   |
 
 ### Build Error

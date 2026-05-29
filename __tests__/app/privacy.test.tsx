@@ -61,7 +61,7 @@ describe("PrivacyPolicyPage", () => {
 		render(<PrivacyPolicyPage />);
 		// There may be multiple email links; at least one should exist
 		const emailLinks = screen.getAllByRole("link", {
-			name: /info@beaconofblessings\.org/i,
+			name: /info@blessedbeaconcharity\.org/i,
 		});
 		expect(emailLinks.length).toBeGreaterThan(0);
 	});

@@ -23,7 +23,7 @@ describe("ResourceList", () => {
 
     expect(screen.getByRole("link", { name: /download/i })).toHaveAttribute(
       "href",
-      "https://beaconofblessings.org/documents/report.pdf",
+      "https://www.blessedbeaconcharity.org/documents/report.pdf",
     );
   });
 

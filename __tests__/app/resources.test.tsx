@@ -32,7 +32,7 @@ describe("ResourcesPage", () => {
 			downloadLinks.some(
 				(link) =>
 					link.getAttribute("href") ===
-					"https://beaconofblessings.org/documents/beacon-of-blessings-first-project-financial-report-2024.pdf",
+					"https://www.blessedbeaconcharity.org/documents/beacon-of-blessings-first-project-financial-report-2024.pdf",
 			),
 		).toBe(true);
 	});

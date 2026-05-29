@@ -2,7 +2,7 @@
 
 This document is the single source of truth for everything you need to do manually
 to take the Beacon of Blessings website from the current state to fully live at
-https://beaconofblessings.org. Follow the parts in order. Each part includes the
+https://www.blessedbeaconcharity.org. Follow the parts in order. Each part includes the
 exact URLs, exact steps, and what you should see when each step is complete.
 
 **Time estimate:** 3–5 hours to complete everything the first time through,
@@ -119,7 +119,7 @@ sitemap, OG image URLs, and the Stripe success/cancel redirect URLs after donati
 **Value:**
 
 ```
-https://beaconofblessings.org
+https://www.blessedbeaconcharity.org
 ```
 
 **Environment:** Production only. For Preview deployments, leave this unset or
@@ -213,7 +213,7 @@ Beacon of Blessings <onboarding@resend.dev>
 **Value for production (after domain verification in Part 4):**
 
 ```
-Beacon of Blessings <noreply@beaconofblessings.org>
+Beacon of Blessings <noreply@blessedbeaconcharity.org>
 ```
 
 **Important:** Before you verify your domain with Resend, you must use
@@ -233,7 +233,7 @@ organization's inbox — the address only the team sees.
 **Value:**
 
 ```
-info@beaconofblessings.org
+info@blessedbeaconcharity.org
 ```
 
 Replace this with whatever email address you actively monitor. This is where
@@ -347,7 +347,7 @@ notifications.
 2. Click **Add endpoint**.
 3. In the **Endpoint URL** field, enter exactly:
    ```
-   https://beaconofblessings.org/api/webhooks/stripe
+   https://www.blessedbeaconcharity.org/api/webhooks/stripe
    ```
 4. Under **Listen to**, select **Events on your account**.
 5. Click **Select events** to open the event picker.
@@ -425,7 +425,7 @@ When you are ready to accept real money:
 3. Go to https://dashboard.stripe.com/apikeys (live mode).
 4. Copy the live publishable key (`pk_live_...`) and live secret key (`sk_live_...`).
 5. Go to https://dashboard.stripe.com/webhooks and re-create the webhook endpoint
-   pointing to `https://beaconofblessings.org/api/webhooks/stripe` (same as
+   pointing to `https://www.blessedbeaconcharity.org/api/webhooks/stripe` (same as
    before, but now in live mode).
 6. Copy the new webhook signing secret (`whsec_...`).
 7. In Vercel → Settings → Environment Variables, update these three values with
@@ -488,18 +488,18 @@ the domain you are sending from. Without it, your emails will land in spam.
 
 1. Go to https://resend.com/domains
 2. Click **Add Domain**.
-3. Type `beaconofblessings.org` and click **Add**.
+3. Type `blessedbeaconcharity.org` and click **Add**.
 4. Resend shows you a list of DNS records to add. You will need to add these to
    your domain's DNS settings (at your domain registrar — wherever you bought
-   beaconofblessings.org).
+   blessedbeaconcharity.org).
 
 The records typically look like:
 
 | Type | Name                         | Value                                 |
 | ---- | ---------------------------- | ------------------------------------- |
 | TXT  | resend.\_domainkey           | v=DKIM1; p=...                        |
-| TXT  | @ (or beaconofblessings.org) | v=spf1 include:amazonses.com ~all     |
-| MX   | bounce.beaconofblessings.org | feedback-smtp.us-east-1.amazonses.com |
+| TXT  | @ (or blessedbeaconcharity.org) | v=spf1 include:amazonses.com ~all     |
+| MX   | bounce.blessedbeaconcharity.org | feedback-smtp.us-east-1.amazonses.com |
 
 The exact values will be shown in your Resend dashboard. Do not type them
 manually — copy and paste them.
@@ -522,12 +522,12 @@ Once Resend confirms your domain is verified:
 1. Go to Vercel → Settings → Environment Variables.
 2. Update `EMAIL_FROM` to:
    ```
-   Beacon of Blessings <noreply@beaconofblessings.org>
+   Beacon of Blessings <noreply@blessedbeaconcharity.org>
    ```
 3. Redeploy on Vercel.
 
 From this point on, donation receipts and contact form notifications will arrive
-from `noreply@beaconofblessings.org`.
+from `noreply@blessedbeaconcharity.org`.
 
 ### 4.6 — Test contact form
 
@@ -589,8 +589,8 @@ The Sanity API needs to know which domains are allowed to make requests.
 1. Go to https://sanity.io/manage → click your project → **API** → **CORS Origins**.
 2. Add:
    - `http://localhost:3000`
-   - `https://beaconofblessings.org`
-   - `https://www.beaconofblessings.org`
+   - `https://www.blessedbeaconcharity.org`
+   - `https://www.blessedbeaconcharity.org`
    - Your Vercel preview URL (e.g., `https://beacon-of-blessings.vercel.app`)
 
 ### 5.5 — Set up Sanity Studio (the editing interface)
@@ -664,7 +664,7 @@ measuring**.
 ### 6.2 — Create an account and property
 
 1. Under **Account name**, enter `Beacon of Blessings`.
-2. Under **Property name**, enter `beaconofblessings.org`.
+2. Under **Property name**, enter `blessedbeaconcharity.org`.
 3. Set your **Reporting time zone** to your local timezone.
 4. Set **Currency** to USD (or NGN if you prefer).
 5. Click **Next**.
@@ -677,7 +677,7 @@ measuring**.
 After creating the property:
 
 1. Click **Web** as your platform.
-2. Enter your website URL: `https://beaconofblessings.org`
+2. Enter your website URL: `https://www.blessedbeaconcharity.org`
 3. Enter a stream name: `Beacon of Blessings Website`
 4. Click **Create stream**.
 5. On the next screen, you will see a **Measurement ID** that looks like:
@@ -703,16 +703,16 @@ https://vercel.com/dashboard → your project → **Analytics** tab.
 
 ## Part 7: Domain and DNS
 
-This part connects `beaconofblessings.org` to your Vercel deployment so that
+This part connects `blessedbeaconcharity.org` to your Vercel deployment so that
 visitors who type your domain in their browser reach your site.
 
 ### 7.1 — Add the domain to Vercel
 
 1. Go to https://vercel.com/dashboard → click your project.
 2. Click **Settings** → **Domains** in the left sidebar.
-3. In the field that says **Add Domain**, type `beaconofblessings.org` and press
+3. In the field that says **Add Domain**, type `blessedbeaconcharity.org` and press
    **Add**.
-4. Also add `www.beaconofblessings.org` and press **Add** for that too.
+4. Also add `www.blessedbeaconcharity.org` and press **Add** for that too.
 
 Vercel will show you the DNS records you need to create. Keep this page open —
 you will need these values in the next step.
@@ -744,7 +744,7 @@ shows you, not this table, in case the values have changed.
 ### 7.3 — Wait for propagation
 
 DNS changes take anywhere from a few minutes to 48 hours to propagate worldwide.
-You can monitor propagation at https://dnschecker.org — type `beaconofblessings.org`
+You can monitor propagation at https://dnschecker.org — type `blessedbeaconcharity.org`
 and click **Search**. When most locations show green checkmarks with Vercel's IP,
 your domain is live.
 
@@ -753,13 +753,13 @@ your domain is live.
 Vercel automatically provisions an SSL certificate (HTTPS) for your domain using
 Let's Encrypt. You do not need to do anything. Once the domain is connected and
 DNS has propagated, Vercel will issue the certificate. You can confirm it is active
-by visiting https://beaconofblessings.org in your browser — the padlock icon in
+by visiting https://www.blessedbeaconcharity.org in your browser — the padlock icon in
 the address bar confirms SSL is working.
 
 ### 7.5 — Verify the domain in Vercel
 
 Back on the Vercel Domains page, once DNS has propagated, the status next to
-`beaconofblessings.org` will change from **Invalid Configuration** to **Valid
+`blessedbeaconcharity.org` will change from **Invalid Configuration** to **Valid
 Configuration** with a green checkmark.
 
 ---
@@ -776,7 +776,7 @@ Go to https://search.google.com/search-console
 Click **Add property**. Choose **URL prefix** and enter:
 
 ```
-https://beaconofblessings.org
+https://www.blessedbeaconcharity.org
 ```
 
 ### 8.2 — Verify ownership
@@ -809,7 +809,7 @@ Google needs to confirm you own the domain. The easiest method with Vercel:
 The sitemap is already built into the site. It lives at:
 
 ```
-https://beaconofblessings.org/sitemap.xml
+https://www.blessedbeaconcharity.org/sitemap.xml
 ```
 
 It includes all static pages (Home, About, Projects, Blog, Gallery, Contact,
@@ -830,7 +830,7 @@ Google will crawl the sitemap within a few days and begin indexing your pages.
 ### 8.4 — Request indexing for the homepage
 
 1. In Search Console, click the search bar at the top (the URL inspection tool).
-2. Type `https://beaconofblessings.org` and press Enter.
+2. Type `https://www.blessedbeaconcharity.org` and press Enter.
 3. Click **Request Indexing**.
 4. Google will crawl the page, usually within a day or two.
 
@@ -923,7 +923,7 @@ to match the handles you actually claim.
 3. Enter the page name: `Beacon of Blessings`.
 4. Select a category: `Non-Governmental Organization (NGO)` or `Charity Organization`.
 5. Complete the page setup: add your logo as the profile photo, a cover image,
-   the website URL (https://beaconofblessings.org), contact info, and a description.
+   the website URL (https://www.blessedbeaconcharity.org), contact info, and a description.
 6. Claim the username `beaconofblessings` by going to Page Settings → Page Info →
    Username. If it is taken, choose a close variant and update the link in the code.
 
@@ -1057,7 +1057,7 @@ you complete it.
 
 ### Environment Variables
 
-- [ ] `NEXT_PUBLIC_SITE_URL` is set to `https://beaconofblessings.org`
+- [ ] `NEXT_PUBLIC_SITE_URL` is set to `https://www.blessedbeaconcharity.org`
 - [ ] `STRIPE_SECRET_KEY` is set (test or live)
 - [ ] `STRIPE_WEBHOOK_SECRET` is set
 - [ ] `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` is set
@@ -1083,10 +1083,10 @@ you complete it.
 
 ### Domain and SSL
 
-- [ ] `beaconofblessings.org` is added to Vercel Domains with green checkmark
-- [ ] `www.beaconofblessings.org` is added to Vercel Domains with green checkmark
-- [ ] DNS has propagated: visiting `https://beaconofblessings.org` loads your site
-- [ ] `https://www.beaconofblessings.org` redirects to the non-www version
+- [ ] `blessedbeaconcharity.org` is added to Vercel Domains with green checkmark
+- [ ] `www.blessedbeaconcharity.org` is added to Vercel Domains with green checkmark
+- [ ] DNS has propagated: visiting `https://www.blessedbeaconcharity.org` loads your site
+- [ ] `https://www.blessedbeaconcharity.org` redirects to the non-www version
 - [ ] SSL padlock is visible in the browser address bar
 - [ ] No "insecure" warnings in browser
 
@@ -1102,9 +1102,9 @@ you complete it.
 
 ### SEO and Meta
 
-- [ ] Sitemap is accessible at `https://beaconofblessings.org/sitemap.xml`
+- [ ] Sitemap is accessible at `https://www.blessedbeaconcharity.org/sitemap.xml`
       (visit the URL in your browser — it should show an XML file listing all pages)
-- [ ] robots.txt is accessible at `https://beaconofblessings.org/robots.txt`
+- [ ] robots.txt is accessible at `https://www.blessedbeaconcharity.org/robots.txt`
       (should show "Allow: /" and the sitemap URL)
 - [ ] Page titles and descriptions look correct when shared on social media.
       Test with:
@@ -1225,7 +1225,7 @@ Vercel automatically deploys the update.
 
 | Variable                             | Required | Environment          | Notes                                             |
 | ------------------------------------ | -------- | -------------------- | ------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`               | Yes      | Production           | Set to `https://beaconofblessings.org`            |
+| `NEXT_PUBLIC_SITE_URL`               | Yes      | Production           | Set to `https://www.blessedbeaconcharity.org`            |
 | `STRIPE_SECRET_KEY`                  | Yes      | Production + Preview | `sk_test_...` or `sk_live_...`                    |
 | `STRIPE_WEBHOOK_SECRET`              | Yes      | Production           | `whsec_...` from Stripe webhook settings          |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Yes      | Production + Preview | `pk_test_...` or `pk_live_...`                    |

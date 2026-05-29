@@ -67,7 +67,7 @@ describe("TermsOfServicePage", () => {
   it("renders contact email link in the Contact Us section", () => {
     render(<TermsOfServicePage />);
     const emailLinks = screen.getAllByRole("link", {
-      name: /info@beaconofblessings\.org/i,
+      name: /info@blessedbeaconcharity\.org/i,
     });
     expect(emailLinks.length).toBeGreaterThan(0);
   });

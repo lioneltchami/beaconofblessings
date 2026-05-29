@@ -31,15 +31,15 @@ describe("DonateCancelPage", () => {
     expect(contactLink).toHaveAttribute("href", "/contact");
   });
 
-  it("renders the organisation email as a mailto link", () => {
-    render(<DonateCancelPage />);
-    const emailLink = screen.getByRole("link", {
-      name: /info@beaconofblessings\.org/i,
-    });
+	it("renders the organisation email as a mailto link", () => {
+		render(<DonateCancelPage />);
+		const emailLink = screen.getByRole("link", {
+			name: /info@blessedbeaconcharity\.org/i,
+		});
     expect(emailLink).toBeInTheDocument();
     expect(emailLink).toHaveAttribute(
       "href",
-      "mailto:info@beaconofblessings.org",
+      "mailto:info@blessedbeaconcharity.org",
     );
   });
 

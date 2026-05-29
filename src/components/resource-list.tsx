@@ -17,6 +17,7 @@ import {
   type ResourceCategory,
   resourceCategories,
 } from "@/data/resources";
+import { siteConfig } from "@/data/site";
 import type { SanityResource } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils";
 
@@ -64,14 +65,14 @@ function normalizeResourceUrl(url?: string): string | undefined {
   if (!url) return undefined;
 
   try {
-    const parsed = new URL(url, "https://beaconofblessings.org");
+    const siteOrigin = new URL(siteConfig.url).origin;
+    const parsed = new URL(url, siteOrigin);
     const isSanityFile =
       parsed.protocol === "https:" &&
       parsed.hostname === "cdn.sanity.io" &&
       parsed.pathname.startsWith("/files/");
     const isSameOrigin =
-      parsed.origin === "https://beaconofblessings.org" &&
-      parsed.pathname.startsWith("/documents/");
+      parsed.origin === siteOrigin && parsed.pathname.startsWith("/documents/");
 
     return isSanityFile || isSameOrigin ? parsed.toString() : undefined;
   } catch {

@@ -9,7 +9,7 @@ import {
 
 const FROM =
 	process.env.EMAIL_FROM ?? "Beacon of Blessings <onboarding@resend.dev>";
-const ORG_EMAIL = process.env.ORG_EMAIL ?? "info@beaconofblessings.org";
+const ORG_EMAIL = process.env.ORG_EMAIL ?? "info@blessedbeaconcharity.org";
 
 type EmailResult = {
 	success: boolean;

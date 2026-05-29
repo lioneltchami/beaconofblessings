@@ -1,7 +1,7 @@
 # Admin Setup Guide — Everything You Need to Do
 
 **Audience:** Lionel Tchami (technical founder)
-**Purpose:** Complete walkthrough from "code deployed on Vercel" to fully operational website at https://beaconofblessings.org
+**Purpose:** Complete walkthrough from "code deployed on Vercel" to fully operational website at https://www.blessedbeaconcharity.org
 **Time estimate:** 3–5 hours of active work, plus up to 48 hours waiting for DNS propagation
 
 ---
@@ -74,7 +74,7 @@ After merging, Vercel automatically triggers a new deployment. To confirm it suc
 
 ## Step 2: Custom Domain Setup
 
-Connect beaconofblessings.org to the Vercel deployment.
+Connect blessedbeaconcharity.org to the Vercel deployment.
 
 ### 2a. Add the domain in Vercel
 
@@ -82,13 +82,13 @@ Connect beaconofblessings.org to the Vercel deployment.
 2. Click the **beacon-of-blessings** project.
 3. Click **Settings** in the top navigation bar.
 4. Click **Domains** in the left sidebar.
-5. In the input field, type: `beaconofblessings.org`
+5. In the input field, type: `blessedbeaconcharity.org`
 6. Click **Add**.
 7. Vercel will show you the DNS records you need to create. Keep this page open.
 
 ### 2b. Add DNS records at your domain registrar
 
-Log in to the service where you purchased beaconofblessings.org (Namecheap, GoDaddy, Google Domains, etc.).
+Log in to the service where you purchased blessedbeaconcharity.org (Namecheap, GoDaddy, Google Domains, etc.).
 
 Find the DNS management section. The path varies by registrar:
 
@@ -99,7 +99,7 @@ Find the DNS management section. The path varies by registrar:
 
 Add the records Vercel shows you. They will look like one of these two options:
 
-**Option A — if you want to point the apex domain (beaconofblessings.org) directly:**
+**Option A — if you want to point the apex domain (blessedbeaconcharity.org) directly:**
 
 | Type  | Name | Value                |
 | ----- | ---- | -------------------- |
@@ -117,7 +117,7 @@ Use the exact values Vercel displays — do not type them from this document.
 
 ### 2c. Wait for DNS propagation
 
-DNS changes take anywhere from a few minutes to 48 hours. You can check propagation progress at https://dnschecker.org — type `beaconofblessings.org` and watch for green checkmarks spreading across regions.
+DNS changes take anywhere from a few minutes to 48 hours. You can check propagation progress at https://dnschecker.org — type `blessedbeaconcharity.org` and watch for green checkmarks spreading across regions.
 
 Vercel's Domains page will show a green **Valid Configuration** badge when it detects the records.
 
@@ -261,8 +261,8 @@ The Sanity API needs to be told which domains are allowed to talk to it. You mus
 | Origin                              | Why                        |
 | ----------------------------------- | -------------------------- |
 | `http://localhost:3000`             | Local development          |
-| `https://beaconofblessings.org`     | Production site            |
-| `https://www.beaconofblessings.org` | Production with www prefix |
+| `https://www.blessedbeaconcharity.org`     | Production site            |
+| `https://www.blessedbeaconcharity.org` | Production with www prefix |
 
 For Vercel preview deployments, also add your `*.vercel.app` URL if you use previews for testing.
 
@@ -305,7 +305,7 @@ Click **Site Config** in the left sidebar → **Create new Site Config**.
 | Name         | `Beacon of Blessings`                                                                                                        |
 | Tagline      | `Illuminating Futures Through Education`                                                                                     |
 | Description  | `Beacon of Blessings Charity Initiative transforms lives through educational support for vulnerable communities in Nigeria.` |
-| Email        | `info@beaconofblessings.org`                                                                                                 |
+| Email        | `info@blessedbeaconcharity.org`                                                                                                 |
 | Phone        | Your real phone number (see Step 8 — replace the placeholder `+234 (0) 812 345 6789`)                                        |
 | Address      | `Lagos, Nigeria`                                                                                                             |
 | Office Hours | `Monday - Friday, 9:00 AM - 5:00 PM WAT`                                                                                     |
@@ -595,7 +595,7 @@ Resend sends all outgoing emails: donation receipts to donors, donation notifica
 | ---------------- | --------------------------------------------------------------------------------------------------------------- |
 | `RESEND_API_KEY` | `re_...` (the key you just copied)                                                                              |
 | `EMAIL_FROM`     | `Beacon of Blessings <onboarding@resend.dev>`                                                                   |
-| `ORG_EMAIL`      | The email address you actively monitor (e.g., `info@beaconofblessings.org` or your personal email during setup) |
+| `ORG_EMAIL`      | The email address you actively monitor (e.g., `info@blessedbeaconcharity.org` or your personal email during setup) |
 
 During the testing phase, emails are sent from `onboarding@resend.dev`. Recipients see "via onboarding@resend.dev" next to your name. This is expected and normal before you verify your domain.
 
@@ -605,7 +605,7 @@ Domain verification prevents your emails from landing in spam and removes the "v
 
 1. Go to https://resend.com/domains
 2. Click **Add Domain**.
-3. Type `beaconofblessings.org` and click **Add**.
+3. Type `blessedbeaconcharity.org` and click **Add**.
 4. Resend shows you DNS records to add. Copy the exact values from your Resend dashboard.
 
 The records look similar to this (use the values Resend shows you, not these):
@@ -625,15 +625,15 @@ Once Resend shows your domain as verified:
 1. Go to Vercel → your project → **Settings** → **Environment Variables**.
 2. Edit `EMAIL_FROM`. Change the value to:
    ```
-   Beacon of Blessings <noreply@beaconofblessings.org>
+   Beacon of Blessings <noreply@blessedbeaconcharity.org>
    ```
 3. Redeploy on Vercel.
 
-From this point, all outgoing emails show `noreply@beaconofblessings.org` as the sender.
+From this point, all outgoing emails show `noreply@blessedbeaconcharity.org` as the sender.
 
 ### 4f. Test the contact form
 
-1. Go to https://beaconofblessings.org/contact
+1. Go to https://www.blessedbeaconcharity.org/contact
 2. Fill in all fields with real information.
 3. Submit the form.
 4. Check the inbox you set as `ORG_EMAIL`. The message should arrive within one minute.
@@ -679,7 +679,7 @@ The webhook is how Stripe notifies the site when a donation is completed. Withou
 2. Click **Add endpoint**.
 3. In the **Endpoint URL** field, enter exactly:
    ```
-   https://beaconofblessings.org/api/webhooks/stripe
+   https://www.blessedbeaconcharity.org/api/webhooks/stripe
    ```
 4. Under **Listen to**, select **Events on your account**.
 5. Click **Select events**.
@@ -705,7 +705,7 @@ Redeploy Vercel after adding this.
 ### 5e. Run a test donation
 
 1. Redeploy on Vercel after adding all three Stripe variables.
-2. Go to https://beaconofblessings.org/donate
+2. Go to https://www.blessedbeaconcharity.org/donate
 3. Enter a donation amount (e.g., 10), a name, and a real email address you can check.
 4. Click **Donate**.
 5. Stripe Checkout opens with a yellow **TEST MODE** banner.
@@ -744,7 +744,7 @@ When you are ready to accept actual donations:
 4. Copy the live publishable key (`pk_live_...`) and live secret key (`sk_live_...`).
 5. Go to https://dashboard.stripe.com/webhooks and create a new webhook endpoint for live mode, pointing to:
    ```
-   https://beaconofblessings.org/api/webhooks/stripe
+   https://www.blessedbeaconcharity.org/api/webhooks/stripe
    ```
    Select the same three events. Copy the new signing secret.
 6. In Vercel → **Settings** → **Environment Variables**, update all three:
@@ -777,7 +777,7 @@ Google Analytics 4 (GA4) tracks visitor traffic, page views, and user behavior. 
 After creating the property, you are prompted to create a data stream:
 
 1. Choose **Web**.
-2. Website URL: `https://beaconofblessings.org`
+2. Website URL: `https://www.blessedbeaconcharity.org`
 3. Stream name: `Beacon of Blessings Website`
 4. Click **Create stream**.
 
@@ -809,8 +809,8 @@ Search Console shows you how your site appears in Google Search — which keywor
 1. Go to https://search.google.com/search-console
 2. Sign in with the same Google account you used for Analytics.
 3. Click **Add property**.
-4. Choose **Domain** (not URL prefix) if you want to track all subdomains. Type: `beaconofblessings.org`
-5. Or choose **URL prefix** and enter: `https://beaconofblessings.org`
+4. Choose **Domain** (not URL prefix) if you want to track all subdomains. Type: `blessedbeaconcharity.org`
+5. Or choose **URL prefix** and enter: `https://www.blessedbeaconcharity.org`
 
 ### 7b. Verify ownership
 
@@ -833,7 +833,7 @@ Google needs to confirm you own the domain. The simplest method for a Vercel-hos
 
 ### 7c. Submit your sitemap
 
-The site generates a sitemap automatically at `https://beaconofblessings.org/sitemap.xml`.
+The site generates a sitemap automatically at `https://www.blessedbeaconcharity.org/sitemap.xml`.
 
 1. In Search Console, select your property.
 2. In the left sidebar, click **Sitemaps**.
@@ -869,7 +869,7 @@ Google Ad Grants gives eligible non-profits up to $10,000 USD per month in free 
 3. You will need to create a Google Ads account (free).
 4. Follow the Ad Grants eligibility requirements:
    - Account must have conversion tracking enabled (connect to GA4)
-   - Ads must link to beaconofblessings.org (your verified domain)
+   - Ads must link to blessedbeaconcharity.org (your verified domain)
    - At least 2 active campaigns with at least 2 ad groups each
 
 Initial setup for a meaningful Ad Grants campaign takes a few hours. Suggested campaigns for Beacon of Blessings: one targeting donors searching for Nigerian charities, one targeting volunteers.
@@ -952,7 +952,7 @@ The social links in `src/data/site.ts` currently point to placeholder URLs. Befo
 After creating each account:
 
 1. Set the profile photo to the Beacon of Blessings logo.
-2. Add the website URL (`https://beaconofblessings.org`) to each profile.
+2. Add the website URL (`https://www.blessedbeaconcharity.org`) to each profile.
 3. Write a bio consistent with the site's tagline: "Illuminating Futures Through Education."
 4. Make at least one introductory post before going live (do not send visitors to an empty profile).
 5. Update `src/data/site.ts` with the real URLs, commit, and push.
@@ -997,13 +997,13 @@ All variables used by the application. Set these in Vercel → Settings → Envi
 
 | Variable                             | Required?                     | Where to get it                                                        | Expected format                                       | Environment          |
 | ------------------------------------ | ----------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------- | -------------------- |
-| `NEXT_PUBLIC_SITE_URL`               | Yes                           | You already know this — it is your domain                              | `https://beaconofblessings.org`                       | Production           |
+| `NEXT_PUBLIC_SITE_URL`               | Yes                           | You already know this — it is your domain                              | `https://www.blessedbeaconcharity.org`                       | Production           |
 | `STRIPE_SECRET_KEY`                  | Yes (for donations)           | https://dashboard.stripe.com/apikeys                                   | `sk_test_...` or `sk_live_...`                        | Production + Preview |
 | `STRIPE_WEBHOOK_SECRET`              | Yes (for donation emails)     | https://dashboard.stripe.com/webhooks → your endpoint → Signing secret | `whsec_...`                                           | Production only      |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Yes (for donations)           | https://dashboard.stripe.com/apikeys                                   | `pk_test_...` or `pk_live_...`                        | Production + Preview |
 | `RESEND_API_KEY`                     | Yes (for all emails)          | https://resend.com/api-keys                                            | `re_...`                                              | Production + Preview |
-| `EMAIL_FROM`                         | Yes (for all emails)          | You set this yourself                                                  | `Beacon of Blessings <noreply@beaconofblessings.org>` | Production + Preview |
-| `ORG_EMAIL`                          | Yes (for notifications)       | Your organization's inbox address                                      | `info@beaconofblessings.org`                          | Production + Preview |
+| `EMAIL_FROM`                         | Yes (for all emails)          | You set this yourself                                                  | `Beacon of Blessings <noreply@blessedbeaconcharity.org>` | Production + Preview |
+| `ORG_EMAIL`                          | Yes (for notifications)       | Your organization's inbox address                                      | `info@blessedbeaconcharity.org`                          | Production + Preview |
 | `SANITY_PROJECT_ID`                  | No (but needed for CMS)       | https://www.sanity.io/manage → your project                            | `abc12xyz` (8 chars, no NEXT*PUBLIC* prefix)          | Production + Preview |
 | `SANITY_DATASET`                     | No (defaults to `production`) | Set this explicitly — value is always `production`                     | `production`                                          | Production + Preview |
 | `SANITY_API_VERSION`                 | No (defaults to `2024-01-01`) | Set this explicitly to pin behavior                                    | `2024-01-01`                                          | Production + Preview |
@@ -1013,7 +1013,7 @@ All variables used by the application. Set these in Vercel → Settings → Envi
 
 **`SANITY_PROJECT_ID` — no `NEXT_PUBLIC_` prefix:** This is intentional. The variable is read server-side in `src/lib/sanity/client.ts`. Adding `NEXT_PUBLIC_` would expose it to the browser, which is unnecessary and slightly less secure.
 
-**`EMAIL_FROM` during testing:** Before your domain is verified with Resend, use `Beacon of Blessings <onboarding@resend.dev>`. After verification, update to `Beacon of Blessings <noreply@beaconofblessings.org>`.
+**`EMAIL_FROM` during testing:** Before your domain is verified with Resend, use `Beacon of Blessings <onboarding@resend.dev>`. After verification, update to `Beacon of Blessings <noreply@blessedbeaconcharity.org>`.
 
 **`STRIPE_WEBHOOK_SECRET` — Production only:** Webhooks only fire against registered endpoints. There is no reason to set this in Preview environments unless you have a separate webhook endpoint registered for a preview URL.
 
