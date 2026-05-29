@@ -1,6 +1,7 @@
 "use client";
 
 import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { type FormEvent, useRef, useState } from "react";
 import { submitContactForm } from "@/app/actions/contact";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
 export function ContactForm() {
+  const searchParams = useSearchParams();
+  const initialSubject = searchParams?.get("subject") ?? "";
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const formRef = useRef<HTMLFormElement>(null);
@@ -104,6 +107,7 @@ export function ContactForm() {
           id="contact-subject"
           name="subject"
           placeholder="Donations, volunteering, partnership, or media"
+          defaultValue={initialSubject}
           autoComplete="off"
           required
           disabled={status === "submitting"}

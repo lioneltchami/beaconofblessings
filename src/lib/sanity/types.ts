@@ -218,6 +218,42 @@ export interface DonatePageContent {
 	};
 }
 
+export interface SponsorTier {
+	name: string;
+	amount: string;
+	bestFor: string;
+	funds: string;
+	recognition: string[];
+}
+
+export interface SponsorNeed {
+	item: string;
+	amount: string;
+	detail: string;
+}
+
+export interface SponsorProcessStep {
+	step: string;
+	title: string;
+	description: string;
+}
+
+export interface PartnerPageContent {
+	hero: PageHeroContent;
+	trustBar: MetricItem[];
+	whyPartner: SectionContent;
+	dueDiligence: CardItem[];
+	tiersIntro: SectionContent;
+	tiers: SponsorTier[];
+	needsIntro: SectionContent;
+	currentNeeds: SponsorNeed[];
+	processIntro: SectionContent;
+	process: SponsorProcessStep[];
+	recognitionPolicy: SectionContent & { points: string[] };
+	reportingPromise: SectionContent & { points: string[] };
+	finalCta: SectionContent & { ctas: CTA[] };
+}
+
 export interface ProjectsPageContent {
 	hero: PageHeroContent;
 	metrics: MetricItem[];

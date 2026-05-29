@@ -13,7 +13,7 @@ describe("Sanity seed documents", () => {
 			return result;
 		}, {});
 
-		expect(docs).toHaveLength(45);
+		expect(docs).toHaveLength(46);
 		expect(counts).toEqual({
 			aboutPage: 1,
 			album: 5,
@@ -26,6 +26,7 @@ describe("Sanity seed documents", () => {
 			homePage: 1,
 			impactPage: 1,
 			impactStat: 4,
+			partnerPage: 1,
 			program: 3,
 			programsPage: 1,
 			project: 4,
@@ -40,6 +41,11 @@ describe("Sanity seed documents", () => {
 	it("uses deterministic singleton and collection ids", () => {
 		expect(findDoc("siteConfig", "siteConfig")).toBeDefined();
 		expect(findDoc("homePage", "homePage")).toBeDefined();
+		expect(findDoc("partnerPage", "partnerPage")).toMatchObject({
+			hero: expect.objectContaining({
+				title: "Partner with Beacon of Blessings",
+			}),
+		});
 		expect(findDoc("program", "program.school-readiness-kits")).toMatchObject({
 			title: "School Readiness Kits",
 			visible: true,

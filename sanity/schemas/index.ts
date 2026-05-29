@@ -22,6 +22,7 @@ export {
   galleryPage,
   homePage,
   impactPage,
+  partnerPage,
   projectsPage,
   programsPage,
   resourcesPage,

@@ -19,12 +19,14 @@ export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Programs", href: "/programs" },
   { label: "Impact", href: "/impact" },
+  { label: "Partners", href: "/partner-with-us" },
   { label: "Transparency", href: "/transparency" },
   { label: "Stories", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
 export const footerTrustLinks = [
+  { label: "Partner With Us", href: "/partner-with-us" },
   { label: "Annual Reports", href: "/resources" },
   { label: "Financials", href: "/transparency#financials" },
   { label: "Donor Data", href: "/privacy#donor-data" },

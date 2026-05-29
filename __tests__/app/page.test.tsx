@@ -107,12 +107,12 @@ describe("HomePage", () => {
     expect(transparency).toHaveAttribute("href", "/transparency");
   });
 
-  it("renders Partner With Us link pointing to /contact", async () => {
+  it("renders Partner With Us link pointing to sponsor page", async () => {
     const result = await HomePage();
     render(result);
     const partner = screen.getByRole("link", { name: /partner with us/i });
     expect(partner).toBeInTheDocument();
-    expect(partner).toHaveAttribute("href", "/contact");
+    expect(partner).toHaveAttribute("href", "/partner-with-us");
   });
 
   it("renders View Programs link", async () => {

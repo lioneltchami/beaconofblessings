@@ -124,7 +124,7 @@ export const homePageContent: HomePageContent = {
 		},
 		ctas: [
 			{ label: "Give Today", href: "/donate", variant: "primary" },
-			{ label: "Partner With Us", href: "/contact", variant: "outline" },
+			{ label: "Partner With Us", href: "/partner-with-us", variant: "outline" },
 		],
 	},
 	representativeImageNote:

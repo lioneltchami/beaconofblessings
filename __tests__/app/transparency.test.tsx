@@ -23,6 +23,10 @@ describe("TransparencyPage", () => {
 		expect(screen.getByText(/stewardship standards/i)).toBeInTheDocument();
 		expect(screen.getByText(/reporting cadence/i)).toBeInTheDocument();
 		expect(screen.getByText(/policies and documents/i)).toBeInTheDocument();
+		expect(screen.getByText(/sponsor due diligence/i)).toBeInTheDocument();
+		expect(
+			screen.getByRole("link", { name: /view sponsor readiness/i }),
+		).toHaveAttribute("href", "/partner-with-us");
 	});
 
 	it("renders board members and transparency facts", async () => {

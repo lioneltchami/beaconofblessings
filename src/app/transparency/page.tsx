@@ -1,4 +1,6 @@
 import {
+	ArrowRight,
+	BriefcaseBusiness,
 	CheckCircle2,
 	Clock,
 	ExternalLink,
@@ -98,6 +100,43 @@ export default async function TransparencyPage() {
 							</Card>
 						))}
 					</div>
+				</div>
+			</section>
+
+			<section className="bg-white px-4 py-16">
+				<div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+					<div>
+						<div className="flex items-center gap-2 text-primary">
+							<BriefcaseBusiness className="h-5 w-5" />
+							<h2 className="font-heading text-3xl font-bold text-[#256B4B]">
+								Sponsor due diligence
+							</h2>
+						</div>
+						<p className="mt-4 leading-7 text-muted-foreground">
+							Corporate and institutional sponsors need a quick path to verify
+							legitimacy, understand reporting, and see how recognition is
+							handled before they commit funds.
+						</p>
+					</div>
+					<Link
+						href="/partner-with-us"
+						className="group rounded-lg border border-[#2F7D5A]/15 bg-[#EAF6EF] p-6 shadow-sm transition-colors hover:bg-[#DCEFE5]"
+					>
+						<span className="text-sm font-semibold uppercase tracking-[0.14em] text-[#9A6A12]">
+							Corporate giving
+						</span>
+						<span className="mt-2 block font-heading text-2xl font-bold text-[#256B4B]">
+							View sponsor readiness
+						</span>
+						<span className="mt-3 block text-sm leading-6 text-muted-foreground">
+							See sponsor tiers, current funding needs, recognition boundaries,
+							and the reporting promise for companies, churches, and foundations.
+						</span>
+						<span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B]">
+							View sponsor readiness
+							<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+						</span>
+					</Link>
 				</div>
 			</section>
 

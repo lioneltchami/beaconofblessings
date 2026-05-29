@@ -37,6 +37,7 @@ import {
 	projects as staticProjects,
 } from "@/data/projects";
 import { resources as staticResources } from "@/data/resources";
+import { partnerPageContent as staticPartnerPageContent } from "@/data/sponsors";
 import {
 	coreValues as staticCoreValues,
 	footerTrustLinks as staticFooterTrustLinks,
@@ -58,6 +59,7 @@ import type {
 	GalleryPageContent,
 	HomePageContent,
 	ImpactPageContent,
+	PartnerPageContent,
 	ProgramsPageContent,
 	ProjectsPageContent,
 	ResourcesPageContent,
@@ -279,6 +281,15 @@ export async function getDonatePage(): Promise<DonatePageContent> {
 	return fetchWithFallback(
 		staticDonatePageContent,
 		`*[_id == "donatePage"][0]${PAGE_CONTENT_PROJECTION}`,
+		{},
+		{ merge: true },
+	);
+}
+
+export async function getPartnerPage(): Promise<PartnerPageContent> {
+	return fetchWithFallback(
+		staticPartnerPageContent,
+		`*[_id == "partnerPage"][0]${PAGE_CONTENT_PROJECTION}`,
 		{},
 		{ merge: true },
 	);

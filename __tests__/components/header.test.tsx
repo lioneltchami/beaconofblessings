@@ -43,6 +43,14 @@ describe("Header", () => {
     }
   });
 
+  it("includes the partner page in top-level navigation", async () => {
+    render(await Header());
+    expect(screen.getByRole("link", { name: /partners/i })).toHaveAttribute(
+      "href",
+      "/partner-with-us",
+    );
+  });
+
   it("renders the desktop Give Today link pointing to /donate", async () => {
     render(await Header());
     const donateLinks = screen.getAllByRole("link", { name: /give today/i });

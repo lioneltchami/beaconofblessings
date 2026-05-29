@@ -32,6 +32,7 @@ import {
 import { programs } from "../src/data/programs";
 import { projects } from "../src/data/projects";
 import { resources } from "../src/data/resources";
+import { partnerPageContent } from "../src/data/sponsors";
 import {
 	coreValues,
 	footerTrustLinks,
@@ -163,6 +164,7 @@ export function buildDocs(): SeedDoc[] {
 		} as Record<string, unknown>),
 		pageDoc("contactPage", "contactPage", contactPageContent as unknown as Record<string, unknown>),
 		pageDoc("donatePage", "donatePage", donatePageContent as unknown as Record<string, unknown>),
+		pageDoc("partnerPage", "partnerPage", partnerPageContent as unknown as Record<string, unknown>),
 		pageDoc("projectsPage", "projectsPage", projectsPageContent as unknown as Record<string, unknown>),
 		pageDoc("galleryPage", "galleryPage", galleryPageContent as unknown as Record<string, unknown>),
 		pageDoc("resourcesPage", "resourcesPage", resourcesPageContent as unknown as Record<string, unknown>),

@@ -240,6 +240,71 @@ export const donatePage = {
   ],
 };
 
+export const partnerPage = {
+  name: "partnerPage",
+  title: "Partner With Us Page",
+  type: "document",
+  fields: [
+    hero,
+    { name: "trustBar", title: "Trust Bar", type: "array", of: [{ type: "object", fields: [
+      { name: "value", title: "Value", type: "string" },
+      { name: "label", title: "Label", type: "string" },
+      { name: "detail", title: "Detail", type: "text" },
+      { name: "iconKey", title: "Icon Key", type: "string" },
+    ] }] },
+    { name: "whyPartner", title: "Why Partner", type: "object", fields: [
+      { name: "eyebrow", title: "Eyebrow", type: "string" },
+      { name: "title", title: "Title", type: "string" },
+      { name: "body", title: "Body", type: "text" },
+    ] },
+    { name: "dueDiligence", title: "Due Diligence Cards", type: "array", of: [cardItem] },
+    { name: "tiersIntro", title: "Tiers Intro", type: "object", fields: [
+      { name: "title", title: "Title", type: "string" },
+      { name: "body", title: "Body", type: "text" },
+    ] },
+    { name: "tiers", title: "Sponsor Tiers", type: "array", of: [{ type: "object", fields: [
+      { name: "name", title: "Name", type: "string" },
+      { name: "amount", title: "Amount", type: "string" },
+      { name: "bestFor", title: "Best For", type: "text" },
+      { name: "funds", title: "What It Funds", type: "text" },
+      { name: "recognition", title: "Recognition", type: "array", of: [{ type: "string" }] },
+    ] }] },
+    { name: "needsIntro", title: "Needs Intro", type: "object", fields: [
+      { name: "title", title: "Title", type: "string" },
+      { name: "body", title: "Body", type: "text" },
+    ] },
+    { name: "currentNeeds", title: "Current Needs", type: "array", of: [{ type: "object", fields: [
+      { name: "item", title: "Item", type: "string" },
+      { name: "amount", title: "Amount", type: "string" },
+      { name: "detail", title: "Detail", type: "text" },
+    ] }] },
+    { name: "processIntro", title: "Process Intro", type: "object", fields: [
+      { name: "title", title: "Title", type: "string" },
+      { name: "body", title: "Body", type: "text" },
+    ] },
+    { name: "process", title: "Process", type: "array", of: [{ type: "object", fields: [
+      { name: "step", title: "Step", type: "string" },
+      { name: "title", title: "Title", type: "string" },
+      { name: "description", title: "Description", type: "text" },
+    ] }] },
+    { name: "recognitionPolicy", title: "Recognition Policy", type: "object", fields: [
+      { name: "title", title: "Title", type: "string" },
+      { name: "body", title: "Body", type: "text" },
+      { name: "points", title: "Points", type: "array", of: [{ type: "string" }] },
+    ] },
+    { name: "reportingPromise", title: "Reporting Promise", type: "object", fields: [
+      { name: "title", title: "Title", type: "string" },
+      { name: "body", title: "Body", type: "text" },
+      { name: "points", title: "Points", type: "array", of: [{ type: "string" }] },
+    ] },
+    { name: "finalCta", title: "Final CTA", type: "object", fields: [
+      { name: "title", title: "Title", type: "string" },
+      { name: "body", title: "Body", type: "text" },
+      { name: "ctas", title: "CTA Links", type: "array", of: [{ type: "object", fields: linkFields }] },
+    ] },
+  ],
+};
+
 export const projectsPage = {
   name: "projectsPage",
   title: "Projects Page",
