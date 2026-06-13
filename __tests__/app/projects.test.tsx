@@ -55,12 +55,20 @@ describe("ProjectsPage", () => {
 		}
 	});
 
-	it("renders Completed Projects section heading", async () => {
+	it("renders Project Archive section heading", async () => {
 		const result = await ProjectsPage();
 		render(result);
 		expect(
-			screen.getByRole("heading", { name: /completed projects/i }),
+			screen.getByRole("heading", { name: /project archive/i }),
 		).toBeInTheDocument();
+	});
+
+	it("links to the full project archive", async () => {
+		const result = await ProjectsPage();
+		render(result);
+		expect(
+			screen.getByRole("link", { name: /open full project archive/i }),
+		).toHaveAttribute("href", "/projects/archive");
 	});
 
 	it("renders completed projects with a relative completion age", async () => {

@@ -30,5 +30,6 @@ export {
 } from "./pages";
 export { program } from "./program";
 export { project } from "./project";
+export { projectArchiveRecord } from "./project-archive-record";
 export { resource } from "./resource";
 export { siteConfig } from "./site-config";

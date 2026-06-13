@@ -314,6 +314,9 @@ status: "completed" | "current" | "upcoming";
 lifecycleMode?: "auto" | "manual";
 startDate?: string;
 endDate?: string;
+archiveAfterDate?: string;
+autoArchiveAfterEndDate?: boolean;
+archiveRecord?: ProjectArchiveRecord;
 ```
 
 ### Automatic Mode
@@ -323,8 +326,13 @@ When `lifecycleMode` is `"auto"`:
 | Date Condition | Section |
 | --- | --- |
 | Today is before `startDate` | Upcoming Projects |
-| Today is between `startDate` and `endDate` | Current Projects |
-| Today is after `endDate` | Completed Projects |
+| Today is on/after `startDate` and before the archive date | Current Projects |
+| Today is after `archiveAfterDate` | Project Archive |
+| `archiveAfterDate` is empty and today is after `endDate` | Project Archive, when `autoArchiveAfterEndDate` is enabled |
+
+`archiveAfterDate` is the clearest field for editors because it says exactly
+when the project should stop appearing as current. If it is empty, automatic
+projects use `endDate` unless `autoArchiveAfterEndDate` is set to false.
 
 ### Manual Mode
 
@@ -356,20 +364,33 @@ Examples:
 
 This is why a project completed today will naturally read as older in future years without editing code.
 
+### Archive Pages
+
+Archived projects are available in two places:
+
+```txt
+src/app/projects/archive/page.tsx
+src/app/projects/[slug]/page.tsx
+```
+
+`/projects/archive` is the archive index. `/projects/[slug]` is the project
+detail/archive record page. Completed projects can optionally link to an
+`archiveRecord` with final outcomes, a report URL, and a gallery link.
+
 ### Current Project Data
 
 Fallback project examples in `src/data/projects.ts`:
 
-| Project | Start | End | Current Lifecycle on May 27, 2026 |
+| Project | Start | Archive after | Current Lifecycle on June 13, 2026 |
 | --- | --- | --- | --- |
-| School Supplies Drive 2024 | 2024-06-01 | 2024-09-30 | Completed |
+| First Project - Educational Supplies Outreach 2024 | 2024-01-01 | 2024-12-31 | Archived |
 | Digital Learning Initiative | 2026-01-01 | 2026-12-31 | Current |
 | Girls' Education Scholarship Program | 2026-09-01 | 2027-07-31 | Upcoming |
 | Community Library Project | 2027-01-01 | 2027-12-31 | Upcoming |
 
 ### Important Note
 
-There is no background cron job moving projects every night. The lifecycle is computed when the site renders or revalidates. This is better for this site because it avoids maintaining a separate scheduler and keeps the logic deterministic.
+There is no background job mutating project records every night. The lifecycle is computed when the site renders or revalidates, and `.github/workflows/scheduled-refresh.yml` provides a weekly build/refresh check. If `VERCEL_DEPLOY_HOOK_URL` is configured in GitHub Secrets, that scheduled workflow can also trigger a Vercel redeploy.
 
 ## Resources and Public Documents
 
@@ -975,12 +996,16 @@ Preferred:
 1. Add a `project` document in Sanity.
 2. Fill title and slug.
 3. Set `lifecycleMode`.
-4. Add `startDate` and `endDate`.
-5. Fill display date, budget, description, impact points, image, and featured flag.
+4. Add `startDate`, `endDate`, and `archiveAfterDate`.
+5. Keep `autoArchiveAfterEndDate` enabled unless the team wants the project to remain current after its planned end date.
+6. Fill display date, budget, description, impact points, image, and featured flag.
 
 Use `lifecycleMode: auto` if the project should move automatically.
 
 Use `lifecycleMode: manual` if the team wants to force the status.
+
+For completed projects, create or link an archive record with final outcomes,
+report URL, published date, and optional gallery link.
 
 Fallback/code:
 

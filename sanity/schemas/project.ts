@@ -61,6 +61,29 @@ export const project = {
         "After this date passes, an automatic project appears under Completed Projects.",
     },
     {
+      name: "archiveAfterDate",
+      title: "Archive after date",
+      type: "date",
+      description:
+        "Date the project should move into the archive. If empty, automatic projects use the end date.",
+    },
+    {
+      name: "autoArchiveAfterEndDate",
+      title: "Auto-archive after end date",
+      type: "boolean",
+      initialValue: true,
+      description:
+        "When enabled, automatic projects move to the archive after the end date if no archive-after date is set.",
+    },
+    {
+      name: "archiveRecord",
+      title: "Archive record",
+      type: "reference",
+      to: [{ type: "projectArchiveRecord" }],
+      description:
+        "Optional richer record with final outcomes, report links, and proof for completed projects.",
+    },
+    {
       name: "date",
       title: "Date",
       type: "string",

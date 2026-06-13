@@ -183,13 +183,37 @@ export function buildDocs(): SeedDoc[] {
 		),
 		...projects.map((project) =>
 			clean(
-				withStableKeys({
+				withStableKeys((() => {
+					const { archiveRecord, ...projectFields } = project;
+					return {
 					_id: `project.${project.slug}`,
 					_type: "project",
-					...project,
+					...projectFields,
 					slug: slug(project.slug),
-				}) as SeedDoc,
+					...(archiveRecord
+						? {
+								archiveRecord: {
+									_type: "reference",
+									_ref: `projectArchiveRecord.${project.slug}`,
+								},
+							}
+						: {}),
+					};
+				})()) as SeedDoc,
 			),
+		),
+		...projects.flatMap((project) =>
+			project.archiveRecord
+				? [
+						clean(
+							withStableKeys({
+								_id: `projectArchiveRecord.${project.slug}`,
+								_type: "projectArchiveRecord",
+								...project.archiveRecord,
+							}) as SeedDoc,
+						),
+					]
+				: [],
 		),
 		...blogPosts.map((post) =>
 			clean(

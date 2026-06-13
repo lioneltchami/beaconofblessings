@@ -33,6 +33,8 @@ import {
 	getCompletedProjects as staticGetCompleted,
 	getCurrentProjects as staticGetCurrent,
 	getFeaturedProjects as staticGetFeatured,
+	getProjectBySlug as staticGetProjectBySlug,
+	getProjectSlugs as staticGetProjectSlugs,
 	getUpcomingProjects as staticGetUpcoming,
 	projects as staticProjects,
 } from "@/data/projects";
@@ -78,7 +80,9 @@ import type {
 
 export const SANITY_IMAGE_PROJECTION = `_type, alt, asset->{ _id, url }`;
 
-export const PROJECT_PROJECTION = `{ _id, _type, "slug": slug.current, title, status, lifecycleMode, startDate, endDate, date, budget, description, impact, featured, image{ ${SANITY_IMAGE_PROJECTION} } }`;
+export const PROJECT_ARCHIVE_RECORD_PROJECTION = `{ _id, _type, title, summary, outcomes, reportUrl, galleryHref, publishedDate }`;
+
+export const PROJECT_PROJECTION = `{ _id, _type, "slug": slug.current, title, status, lifecycleMode, startDate, endDate, archiveAfterDate, autoArchiveAfterEndDate, date, budget, description, impact, featured, image{ ${SANITY_IMAGE_PROJECTION} }, archiveRecord->${PROJECT_ARCHIVE_RECORD_PROJECTION} }`;
 
 export const BLOG_POST_PROJECTION = `{ _id, _type, "slug": slug.current, title, excerpt, content, author, date, category, readTime, tags, image{ ${SANITY_IMAGE_PROJECTION} } }`;
 
@@ -371,6 +375,32 @@ export async function getProjects(): Promise<SanityProject[]> {
 		staticProjects as unknown as SanityProject[],
 		`*[_type == "project"] | order(coalesce(startDate, date) asc)${PROJECT_PROJECTION}`,
 	);
+}
+
+export async function getProject(slug: string): Promise<SanityProject | null> {
+	const fallback = staticGetProjectBySlug(slug) as unknown as SanityProject | undefined;
+	return fetchWithFallback(
+		fallback ?? null,
+		`*[_type == "project" && slug.current == $slug][0]${PROJECT_PROJECTION}`,
+		{ slug },
+		{ merge: true },
+	);
+}
+
+export async function getProjectSlugs(): Promise<string[]> {
+	if (!isSanityConfigured) return staticGetProjectSlugs();
+	try {
+		const client = getSanityClient();
+		const results = await client.fetch<Array<{ slug?: string }>>(
+			`*[_type == "project" && defined(slug.current)]{ "slug": slug.current }`,
+			{},
+			{ next: { revalidate: 60 } },
+		);
+		const slugs = results.map((result) => result.slug).filter(Boolean) as string[];
+		return hasItems(slugs) ? slugs : staticGetProjectSlugs();
+	} catch {
+		return staticGetProjectSlugs();
+	}
 }
 
 async function getProjectsByLifecycleStatus(

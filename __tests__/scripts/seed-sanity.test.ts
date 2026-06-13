@@ -13,7 +13,7 @@ describe("Sanity seed documents", () => {
 			return result;
 		}, {});
 
-		expect(docs).toHaveLength(46);
+		expect(docs).toHaveLength(47);
 		expect(counts).toEqual({
 			aboutPage: 1,
 			album: 5,
@@ -30,6 +30,7 @@ describe("Sanity seed documents", () => {
 			program: 3,
 			programsPage: 1,
 			project: 4,
+			projectArchiveRecord: 1,
 			projectsPage: 1,
 			resource: 9,
 			resourcesPage: 1,
@@ -50,9 +51,20 @@ describe("Sanity seed documents", () => {
 			title: "School Readiness Kits",
 			visible: true,
 		});
-	expect(findDoc("resource", "reg-1")).toMatchObject({
-		title: "CAC Certificate of Incorporation",
-	});
+		expect(findDoc("resource", "reg-1")).toMatchObject({
+			title: "CAC Certificate of Incorporation",
+		});
+		expect(
+			findDoc("projectArchiveRecord", "projectArchiveRecord.school-supplies-drive-2024"),
+		).toMatchObject({
+			title: "2024 Educational Supplies Outreach Archive",
+		});
+		expect(findDoc("project", "project.school-supplies-drive-2024")).toMatchObject({
+			archiveRecord: {
+				_type: "reference",
+				_ref: "projectArchiveRecord.school-supplies-drive-2024",
+			},
+		});
 	});
 
 	it("serializes slugs in the shape Sanity GROQ queries expect", () => {

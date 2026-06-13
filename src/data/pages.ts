@@ -489,8 +489,8 @@ export const projectsPageContent: ProjectsPageContent = {
 		{ value: "1", label: "Completed Project", iconKey: "trend" },
 	],
 	completedIntro: {
-		title: "Completed Projects",
-		body: "Projects we have successfully delivered to our communities.",
+		title: "Project Archive",
+		body: "Completed projects are archived automatically after their lifecycle date passes, with reports and outcomes connected where available.",
 	},
 	currentIntro: {
 		title: "Current Projects",

@@ -140,6 +140,12 @@ export default async function ProjectsPage() {
                       </li>
                     ))}
                   </ul>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B] hover:text-[#1F5E43]"
+                  >
+                    View project details
+                  </Link>
                 </CardContent>
               </Card>
             ))}
@@ -156,6 +162,12 @@ export default async function ProjectsPage() {
           <p className="mt-2 text-muted-foreground">
             {content.completedIntro.body}
           </p>
+          <Link
+            href="/projects/archive"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B] hover:text-[#1F5E43]"
+          >
+            Open full project archive
+          </Link>
           <Separator className="my-8" />
           <div className="space-y-8">
             {completedProjects.map((project) => (
@@ -204,6 +216,12 @@ export default async function ProjectsPage() {
                       </li>
                     ))}
                   </ul>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B] hover:text-[#1F5E43]"
+                  >
+                    View archive record
+                  </Link>
                 </CardContent>
               </Card>
             ))}
@@ -258,6 +276,12 @@ export default async function ProjectsPage() {
                       </li>
                     ))}
                   </ul>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#9A6A12] hover:text-[#74500F]"
+                  >
+                    View project details
+                  </Link>
                 </CardContent>
               </Card>
             ))}

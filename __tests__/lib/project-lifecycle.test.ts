@@ -50,6 +50,37 @@ describe("project lifecycle", () => {
 		).toBe("completed");
 	});
 
+	it("uses archiveAfterDate as the automatic archive boundary", () => {
+		expect(
+			getProjectLifecycle(
+				{
+					status: "current",
+					lifecycleMode: "auto",
+					startDate: "2026-01-01",
+					endDate: "2026-05-01",
+					archiveAfterDate: "2026-12-31",
+					autoArchiveAfterEndDate: true,
+				},
+				today,
+			),
+		).toBe("current");
+	});
+
+	it("can keep an ended project current when auto archive is disabled", () => {
+		expect(
+			getProjectLifecycle(
+				{
+					status: "current",
+					lifecycleMode: "auto",
+					startDate: "2026-01-01",
+					endDate: "2026-05-01",
+					autoArchiveAfterEndDate: false,
+				},
+				today,
+			),
+		).toBe("current");
+	});
+
 	it("uses manual status when lifecycle mode is manual", () => {
 		expect(
 			getProjectLifecycle(

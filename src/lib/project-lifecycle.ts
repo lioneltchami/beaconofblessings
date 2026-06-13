@@ -6,6 +6,8 @@ export interface ProjectLifecycleFields {
 	lifecycleMode?: ProjectLifecycleMode;
 	startDate?: string;
 	endDate?: string;
+	archiveAfterDate?: string;
+	autoArchiveAfterEndDate?: boolean;
 	date?: string;
 }
 
@@ -22,7 +24,7 @@ function parseDate(value?: string): Date | null {
 }
 
 function inferEndDate(project: ProjectLifecycleFields): Date | null {
-	const endDate = parseDate(project.endDate);
+	const endDate = parseDate(project.archiveAfterDate) ?? parseDate(project.endDate);
 	if (endDate) return endDate;
 	const years = project.date?.match(/\b(?:19|20)\d{2}\b/g);
 	if (!years?.length) return null;
@@ -41,11 +43,13 @@ export function getProjectLifecycle(
 	if (project.lifecycleMode === "manual") return getFallbackStatus(project);
 
 	const startDate = parseDate(project.startDate);
-	const endDate = parseDate(project.endDate);
+	const archiveDate =
+		parseDate(project.archiveAfterDate) ??
+		(project.autoArchiveAfterEndDate === false ? null : parseDate(project.endDate));
 	const currentTime = now.getTime();
 
 	if (startDate && currentTime < startDate.getTime()) return "upcoming";
-	if (endDate && currentTime > endDate.getTime()) return "completed";
+	if (archiveDate && currentTime > archiveDate.getTime()) return "completed";
 	if (startDate && currentTime >= startDate.getTime()) return "current";
 
 	return getFallbackStatus(project);
@@ -80,10 +84,18 @@ export function sortProjectsByLifecycleDate<T extends ProjectLifecycleFields>(
 	status: ProjectLifecycleStatus,
 ): T[] {
 	return [...projects].sort((a, b) => {
-		const aDate = parseDate(status === "completed" ? a.endDate : a.startDate)
+		const aDate = parseDate(
+			status === "completed"
+				? (a.archiveAfterDate ?? a.endDate)
+				: a.startDate,
+		)
 			?? inferEndDate(a)
 			?? parseDate(a.startDate);
-		const bDate = parseDate(status === "completed" ? b.endDate : b.startDate)
+		const bDate = parseDate(
+			status === "completed"
+				? (b.archiveAfterDate ?? b.endDate)
+				: b.startDate,
+		)
 			?? inferEndDate(b)
 			?? parseDate(b.startDate);
 

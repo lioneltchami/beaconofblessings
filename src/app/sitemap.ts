@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/data/site";
-import { getAlbums, getBlogPosts } from "@/lib/sanity/queries";
+import { getAlbums, getBlogPosts, getProjects } from "@/lib/sanity/queries";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
 
@@ -11,7 +11,11 @@ function toLastModified(date?: string): Date {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-	const [blogPosts, albums] = await Promise.all([getBlogPosts(), getAlbums()]);
+	const [blogPosts, albums, projects] = await Promise.all([
+		getBlogPosts(),
+		getAlbums(),
+		getProjects(),
+	]);
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -37,6 +41,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/projects/archive`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
     },
     {
       url: `${siteUrl}/programs`,
@@ -114,5 +124,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...blogPages, ...albumPages];
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${siteUrl}/projects/${project.slug}`,
+    lastModified: toLastModified(
+      project.archiveRecord?.publishedDate ??
+        project.archiveAfterDate ??
+        project.endDate ??
+        project.startDate,
+    ),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...blogPages, ...albumPages, ...projectPages];
 }

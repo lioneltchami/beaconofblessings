@@ -10,6 +10,8 @@ describe("Sanity query projections", () => {
   it("projects blog and project slugs as plain strings", () => {
     expect(BLOG_POST_PROJECTION).toContain('"slug": slug.current');
     expect(PROJECT_PROJECTION).toContain('"slug": slug.current');
+    expect(PROJECT_PROJECTION).toContain("archiveAfterDate");
+    expect(PROJECT_PROJECTION).toContain("archiveRecord->");
   });
 
   it("projects album photos and cover images with usable asset URLs", () => {

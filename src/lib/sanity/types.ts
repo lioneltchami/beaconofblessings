@@ -285,12 +285,26 @@ export interface SanityProject {
 	lifecycleMode?: "auto" | "manual";
 	startDate?: string;
 	endDate?: string;
+	archiveAfterDate?: string;
+	autoArchiveAfterEndDate?: boolean;
 	date: string;
 	budget: string;
 	description: string;
 	impact: string[];
 	featured: boolean;
 	image?: SanityImage;
+	archiveRecord?: ProjectArchiveRecord;
+}
+
+export interface ProjectArchiveRecord {
+	_id?: string;
+	_type?: "projectArchiveRecord";
+	title: string;
+	summary: string;
+	outcomes?: string[];
+	reportUrl?: string;
+	galleryHref?: string;
+	publishedDate?: string;
 }
 
 export interface SanityBlogPost {

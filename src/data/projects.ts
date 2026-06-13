@@ -10,11 +10,23 @@ export interface Project {
 	lifecycleMode?: "auto" | "manual";
 	startDate?: string;
 	endDate?: string;
+	archiveAfterDate?: string;
+	autoArchiveAfterEndDate?: boolean;
 	date: string;
 	budget: string;
 	description: string;
 	impact: string[];
 	featured: boolean;
+	archiveRecord?: ProjectArchiveRecord;
+}
+
+export interface ProjectArchiveRecord {
+	title: string;
+	summary: string;
+	outcomes: string[];
+	reportUrl?: string;
+	galleryHref?: string;
+	publishedDate?: string;
 }
 
 export const projects: Project[] = [
@@ -25,6 +37,8 @@ export const projects: Project[] = [
 		lifecycleMode: "auto",
 		startDate: "2024-01-01",
 		endDate: "2024-12-31",
+		archiveAfterDate: "2024-12-31",
+		autoArchiveAfterEndDate: true,
 		date: "2024",
 		budget: "N1,372,200",
 		description:
@@ -37,6 +51,20 @@ export const projects: Project[] = [
 			"ADA (Apoti Development Association, Cameroon) contributed N196,564, helping ensure funds received fully covered all project expenditures",
 		],
 		featured: true,
+		archiveRecord: {
+			title: "2024 Educational Supplies Outreach Archive",
+			summary:
+				"Final archive record for Beacon of Blessings' first outreach, tying the published financial report to the delivered school-readiness support.",
+			outcomes: [
+				"92 children equipped with school bags and learning support",
+				"96 pairs of sandals purchased for children",
+				"N1,372,200 received and N1,372,200 spent according to the published financial report",
+			],
+			reportUrl:
+				"/documents/beacon-of-blessings-first-project-financial-report-2024.pdf",
+			galleryHref: "/gallery/classroom-learning-2024",
+			publishedDate: "2024-12-31",
+		},
 	},
 	{
 		slug: "digital-learning-initiative",
@@ -45,6 +73,8 @@ export const projects: Project[] = [
 		lifecycleMode: "auto",
 		startDate: "2026-01-01",
 		endDate: "2026-12-31",
+		archiveAfterDate: "2026-12-31",
+		autoArchiveAfterEndDate: true,
 		date: "2026",
 		budget: "N5M",
 		description:
@@ -63,6 +93,8 @@ export const projects: Project[] = [
 		lifecycleMode: "auto",
 		startDate: "2026-09-01",
 		endDate: "2027-07-31",
+		archiveAfterDate: "2027-07-31",
+		autoArchiveAfterEndDate: true,
 		date: "2026",
 		budget: "N8M",
 		description:
@@ -81,6 +113,8 @@ export const projects: Project[] = [
 		lifecycleMode: "auto",
 		startDate: "2027-01-01",
 		endDate: "2027-12-31",
+		archiveAfterDate: "2027-12-31",
+		autoArchiveAfterEndDate: true,
 		date: "2027",
 		budget: "N15M",
 		description:
@@ -117,4 +151,12 @@ export function getUpcomingProjects() {
 
 export function getFeaturedProjects() {
 	return projects.filter((p) => p.featured);
+}
+
+export function getProjectBySlug(slug: string) {
+	return projects.find((project) => project.slug === slug);
+}
+
+export function getProjectSlugs() {
+	return projects.map((project) => project.slug);
 }
