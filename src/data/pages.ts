@@ -490,7 +490,7 @@ export const projectsPageContent: ProjectsPageContent = {
 	],
 	completedIntro: {
 		title: "Project Archive",
-		body: "Completed projects are archived automatically after their lifecycle date passes, with reports and outcomes connected where available.",
+		body: "Completed projects are kept here with reports, outcomes, and supporting documents connected where available.",
 	},
 	currentIntro: {
 		title: "Current Projects",
