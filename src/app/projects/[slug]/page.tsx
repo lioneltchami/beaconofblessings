@@ -14,7 +14,6 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/data/site";
 import { getProject, getProjectSlugs } from "@/lib/sanity/queries";
 import {
@@ -246,11 +245,6 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 										</div>
 									</div>
 								) : null}
-								<Separator />
-								<p className="text-xs leading-5 text-muted-foreground">
-									Projects move automatically between current and archive views
-									based on their CMS lifecycle dates.
-								</p>
 							</CardContent>
 						</Card>
 					</aside>
