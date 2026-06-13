@@ -87,6 +87,9 @@ describe("Footer", () => {
     expect(
       transparencyLinks.some((link) => link.getAttribute("href") === "/transparency"),
     ).toBe(true);
+    expect(
+      screen.getByRole("link", { name: /project archive/i }),
+    ).toHaveAttribute("href", "/projects/archive");
   });
 
   it("renders copyright text with the organization name (multiple occurrences allowed)", async () => {

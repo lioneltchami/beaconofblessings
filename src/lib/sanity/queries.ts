@@ -76,6 +76,7 @@ import type {
 	SanityResource,
 	SanitySiteConfig,
 	TransparencyPageContent,
+	LinkItem,
 } from "./types";
 
 export const SANITY_IMAGE_PROJECTION = `_type, alt, asset->{ _id, url }`;
@@ -165,6 +166,18 @@ function normalizePageImages<T>(content: T): T {
 	return normalize(copy) as T;
 }
 
+function mergeRequiredLinks(
+	links: LinkItem[] | undefined,
+	requiredLinks: readonly LinkItem[],
+): LinkItem[] {
+	const merged = [...(links ?? [])];
+	const existingHrefs = new Set(merged.map((link) => link.href));
+	for (const link of requiredLinks) {
+		if (!existingHrefs.has(link.href)) merged.push(link);
+	}
+	return merged;
+}
+
 async function fetchWithFallback<T>(
 	fallback: T,
 	query: string,
@@ -219,12 +232,21 @@ export async function getSiteSettings(): Promise<SanitySiteConfig> {
 		socialLinks: [...staticSocialLinks],
 	} as SanitySiteConfig;
 
-	return fetchWithFallback(
+	const settings = await fetchWithFallback(
 		fallback,
 		`*[_id == "siteConfig"][0]${SITE_CONFIG_PROJECTION}`,
 		{},
 		{ merge: true },
 	);
+
+	return {
+		...settings,
+		navLinks: mergeRequiredLinks(settings.navLinks, staticNavLinks),
+		footerTrustLinks: mergeRequiredLinks(
+			settings.footerTrustLinks,
+			staticFooterTrustLinks,
+		),
+	};
 }
 
 export async function getHomePage(): Promise<HomePageContent> {

@@ -60,6 +60,26 @@ export default async function ProjectsPage() {
               &mdash; {content.hero.verse?.reference}
             </p>
           </div>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="#present-projects"
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "bg-[#E8A825] text-[#21352B] hover:bg-[#F5D060]",
+              )}
+            >
+              Present & Upcoming
+            </Link>
+            <Link
+              href="/projects/archive"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "border-white/40 bg-white/10 text-white hover:bg-white hover:text-[#256B4B]",
+              )}
+            >
+              Past Projects Archive
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -87,7 +107,7 @@ export default async function ProjectsPage() {
       </section>
 
       {/* Current Projects */}
-      <section className="bg-white py-16 sm:py-20">
+      <section id="present-projects" className="scroll-mt-24 bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
             {content.currentIntro?.title ?? "Current Projects"}
@@ -154,7 +174,7 @@ export default async function ProjectsPage() {
       </section>
 
       {/* Completed Projects */}
-      <section className="bg-[#FAF6F1] py-16 sm:py-20">
+      <section id="project-archive" className="scroll-mt-24 bg-[#FAF6F1] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
             {content.completedIntro.title}
@@ -230,7 +250,7 @@ export default async function ProjectsPage() {
       </section>
 
       {/* Upcoming Projects */}
-      <section className="bg-[#F5EFE6] py-16 sm:py-20">
+      <section id="upcoming-projects" className="scroll-mt-24 bg-[#F5EFE6] py-16 sm:py-20">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
             {content.upcomingIntro.title}

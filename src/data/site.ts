@@ -18,6 +18,7 @@ export const siteConfig = {
 export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Programs", href: "/programs" },
+  { label: "Projects", href: "/projects" },
   { label: "Impact", href: "/impact" },
   { label: "Partners", href: "/partner-with-us" },
   { label: "Transparency", href: "/transparency" },
@@ -27,6 +28,7 @@ export const navLinks = [
 
 export const footerTrustLinks = [
   { label: "Partner With Us", href: "/partner-with-us" },
+  { label: "Project Archive", href: "/projects/archive" },
   { label: "Annual Reports", href: "/resources" },
   { label: "Financials", href: "/transparency#financials" },
   { label: "Donor Data", href: "/privacy#donor-data" },

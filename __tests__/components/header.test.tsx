@@ -51,6 +51,14 @@ describe("Header", () => {
     );
   });
 
+  it("includes projects in top-level navigation", async () => {
+    render(await Header());
+    expect(screen.getByRole("link", { name: /projects/i })).toHaveAttribute(
+      "href",
+      "/projects",
+    );
+  });
+
   it("renders the desktop Give Today link pointing to /donate", async () => {
     render(await Header());
     const donateLinks = screen.getAllByRole("link", { name: /give today/i });

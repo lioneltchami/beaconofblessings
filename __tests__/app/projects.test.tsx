@@ -71,6 +71,18 @@ describe("ProjectsPage", () => {
 		).toHaveAttribute("href", "/projects/archive");
 	});
 
+	it("offers hero links for present work and past projects", async () => {
+		const result = await ProjectsPage();
+		render(result);
+
+		expect(
+			screen.getByRole("link", { name: /present & upcoming/i }),
+		).toHaveAttribute("href", "#present-projects");
+		expect(
+			screen.getByRole("link", { name: /past projects archive/i }),
+		).toHaveAttribute("href", "/projects/archive");
+	});
+
 	it("renders completed projects with a relative completion age", async () => {
 		const result = await ProjectsPage();
 		render(result);
