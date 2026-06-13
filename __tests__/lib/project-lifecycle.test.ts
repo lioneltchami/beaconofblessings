@@ -36,6 +36,24 @@ describe("project lifecycle", () => {
 		).toBe("current");
 	});
 
+	it("keeps one-day projects current through the archive date", () => {
+		const project = {
+			status: "upcoming" as const,
+			lifecycleMode: "auto" as const,
+			startDate: "2026-06-15",
+			endDate: "2026-06-15",
+			archiveAfterDate: "2026-06-15",
+			autoArchiveAfterEndDate: true,
+		};
+
+		expect(
+			getProjectLifecycle(project, new Date("2026-06-15T12:00:00.000Z")),
+		).toBe("current");
+		expect(
+			getProjectLifecycle(project, new Date("2026-06-16T00:00:00.000Z")),
+		).toBe("completed");
+	});
+
 	it("marks automatic projects as completed after their end date", () => {
 		expect(
 			getProjectLifecycle(

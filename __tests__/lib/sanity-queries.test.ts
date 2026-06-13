@@ -12,6 +12,7 @@ describe("Sanity query projections", () => {
     expect(PROJECT_PROJECTION).toContain('"slug": slug.current');
     expect(PROJECT_PROJECTION).toContain("archiveAfterDate");
     expect(PROJECT_PROJECTION).toContain("archiveRecord->");
+    expect(PROJECT_PROJECTION).toContain("termsOfReference");
   });
 
   it("projects album photos and cover images with usable asset URLs", () => {

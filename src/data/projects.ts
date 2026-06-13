@@ -18,6 +18,7 @@ export interface Project {
 	impact: string[];
 	featured: boolean;
 	archiveRecord?: ProjectArchiveRecord;
+	termsOfReference?: ProjectTermsOfReference;
 }
 
 export interface ProjectArchiveRecord {
@@ -27,6 +28,22 @@ export interface ProjectArchiveRecord {
 	reportUrl?: string;
 	galleryHref?: string;
 	publishedDate?: string;
+}
+
+export interface ProjectTermsOfReference {
+	title: string;
+	projectLead: string;
+	purpose: string;
+	scope: string[];
+	budget: {
+		amount: string;
+		notes: string;
+	};
+	timeline: string[];
+	responsibilities: string[];
+	deliverables: string[];
+	successMeasures: string[];
+	reporting: string[];
 }
 
 export const projects: Project[] = [
@@ -64,6 +81,71 @@ export const projects: Project[] = [
 				"/documents/beacon-of-blessings-first-project-financial-report-2024.pdf",
 			galleryHref: "/gallery/classroom-learning-2024",
 			publishedDate: "2024-12-31",
+		},
+	},
+	{
+		slug: "youth-bible-distribution-june-2026",
+		title: "Youth Bible Distribution Outreach",
+		status: "upcoming",
+		lifecycleMode: "auto",
+		startDate: "2026-06-15",
+		endDate: "2026-06-15",
+		archiveAfterDate: "2026-06-15",
+		autoArchiveAfterEndDate: true,
+		date: "15 June 2026",
+		budget: "N150,000 - N200,000",
+		description:
+			"A one-day faith and youth-support outreach where Beacon of Blessings will purchase and distribute Bibles to young people in the community.",
+		impact: [
+			"Bibles purchased for youth in the community",
+			"Faith encouragement shared through a simple, community-led outreach",
+			"Femi will coordinate purchase, delivery, and distribution on behalf of the team",
+			"Post-project notes and receipts will be collected for the archive record",
+		],
+		featured: true,
+		termsOfReference: {
+			title: "Term of Reference - Youth Bible Distribution Outreach",
+			projectLead: "Femi",
+			purpose:
+				"To provide Bibles to youth in the community as a faith-based encouragement project connected to Beacon of Blessings' mission of practical care, formation, and community support.",
+			scope: [
+				"Purchase youth-appropriate Bibles within the approved budget range.",
+				"Coordinate delivery and distribution to the identified youth group/community.",
+				"Keep the activity simple, respectful, child-safe, and community-led.",
+				"Collect basic proof of purchase, distribution notes, and approved photos where appropriate.",
+			],
+			budget: {
+				amount: "N150,000 - N200,000",
+				notes:
+					"Budget is allocated primarily for Bible purchase. Final report should record actual amount spent, number of Bibles purchased, unit cost where available, and any transport/logistics cost.",
+			},
+			timeline: [
+				"Before 15 June 2026: confirm Bible quantity, vendor, and distribution location.",
+				"15 June 2026: purchase/prepare Bibles and distribute them to youth in the community.",
+				"After 15 June 2026: submit receipts, short activity summary, number of Bibles distributed, and approved documentation for the archive record.",
+			],
+			responsibilities: [
+				"Femi leads purchasing, coordination, and distribution.",
+				"Beacon of Blessings team confirms budget approval and receives post-project documentation.",
+				"Volunteers/community contacts support safe distribution and basic attendance/count records where possible.",
+			],
+			deliverables: [
+				"Bibles purchased and distributed to youth.",
+				"Receipt or purchase record for the Bible purchase.",
+				"Short project completion note with date, location, lead, quantity distributed, final spend, and observations.",
+				"Approved child-safe photos or media only where consent and dignity are protected.",
+			],
+			successMeasures: [
+				"Bibles are purchased within the N150,000 - N200,000 budget range.",
+				"Distribution is completed on 15 June 2026.",
+				"Final count of Bibles distributed is recorded.",
+				"Receipts and a short report are ready for the archive after the project.",
+			],
+			reporting: [
+				"Femi submits purchase receipts and final distribution count.",
+				"Beacon of Blessings prepares a short archive record after completion.",
+				"If actual spend differs from the approved range, the final report should explain why.",
+			],
 		},
 	},
 	{

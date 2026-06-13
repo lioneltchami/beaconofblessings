@@ -84,6 +84,61 @@ export const project = {
         "Optional richer record with final outcomes, report links, and proof for completed projects.",
     },
     {
+      name: "termsOfReference",
+      title: "Term of Reference",
+      type: "object",
+      fields: [
+        { name: "title", title: "Title", type: "string" },
+        { name: "projectLead", title: "Project Lead", type: "string" },
+        { name: "purpose", title: "Purpose", type: "text" },
+        {
+          name: "scope",
+          title: "Scope",
+          type: "array",
+          of: [{ type: "string" }],
+        },
+        {
+          name: "budget",
+          title: "Budget",
+          type: "object",
+          fields: [
+            { name: "amount", title: "Amount", type: "string" },
+            { name: "notes", title: "Budget Notes", type: "text" },
+          ],
+        },
+        {
+          name: "timeline",
+          title: "Timeline",
+          type: "array",
+          of: [{ type: "string" }],
+        },
+        {
+          name: "responsibilities",
+          title: "Responsibilities",
+          type: "array",
+          of: [{ type: "string" }],
+        },
+        {
+          name: "deliverables",
+          title: "Deliverables",
+          type: "array",
+          of: [{ type: "string" }],
+        },
+        {
+          name: "successMeasures",
+          title: "Success Measures",
+          type: "array",
+          of: [{ type: "string" }],
+        },
+        {
+          name: "reporting",
+          title: "Reporting Requirements",
+          type: "array",
+          of: [{ type: "string" }],
+        },
+      ],
+    },
+    {
       name: "date",
       title: "Date",
       type: "string",

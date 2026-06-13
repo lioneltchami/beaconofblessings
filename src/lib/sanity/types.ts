@@ -294,6 +294,7 @@ export interface SanityProject {
 	featured: boolean;
 	image?: SanityImage;
 	archiveRecord?: ProjectArchiveRecord;
+	termsOfReference?: ProjectTermsOfReference;
 }
 
 export interface ProjectArchiveRecord {
@@ -305,6 +306,22 @@ export interface ProjectArchiveRecord {
 	reportUrl?: string;
 	galleryHref?: string;
 	publishedDate?: string;
+}
+
+export interface ProjectTermsOfReference {
+	title?: string;
+	projectLead?: string;
+	purpose?: string;
+	scope?: string[];
+	budget?: {
+		amount?: string;
+		notes?: string;
+	};
+	timeline?: string[];
+	responsibilities?: string[];
+	deliverables?: string[];
+	successMeasures?: string[];
+	reporting?: string[];
 }
 
 export interface SanityBlogPost {

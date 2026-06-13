@@ -384,6 +384,7 @@ Fallback project examples in `src/data/projects.ts`:
 | Project | Start | Archive after | Current Lifecycle on June 13, 2026 |
 | --- | --- | --- | --- |
 | First Project - Educational Supplies Outreach 2024 | 2024-01-01 | 2024-12-31 | Archived |
+| Youth Bible Distribution Outreach | 2026-06-15 | 2026-06-15 | Upcoming |
 | Digital Learning Initiative | 2026-01-01 | 2026-12-31 | Current |
 | Girls' Education Scholarship Program | 2026-09-01 | 2027-07-31 | Upcoming |
 | Community Library Project | 2027-01-01 | 2027-12-31 | Upcoming |
@@ -1006,6 +1007,12 @@ Use `lifecycleMode: manual` if the team wants to force the status.
 
 For completed projects, create or link an archive record with final outcomes,
 report URL, published date, and optional gallery link.
+
+For projects that need a Term of Reference, use the project
+`termsOfReference` field. Include the project lead, purpose, scope, budget
+range, timeline, responsibilities, deliverables, success measures, and reporting
+requirements. The project detail page renders this publicly so donors and team
+members can see how the work is governed before it becomes an archive record.
 
 Fallback/code:
 

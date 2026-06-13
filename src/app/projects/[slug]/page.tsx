@@ -6,6 +6,7 @@ import {
 	Clock3,
 	DollarSign,
 	FileText,
+	UserRound,
 } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -57,6 +58,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 	const lifecycle = getProjectLifecycle(project);
 	const isArchived = lifecycle === "completed";
 	const archiveRecord = project.archiveRecord;
+	const terms = project.termsOfReference;
 
 	return (
 		<main className="flex flex-col">
@@ -109,6 +111,70 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 								</ul>
 							</CardContent>
 						</Card>
+
+						{terms ? (
+							<Card className="mt-8 border-l-4 border-[#E8A825]">
+								<CardHeader>
+									<CardTitle>{terms.title ?? "Term of Reference"}</CardTitle>
+								</CardHeader>
+								<CardContent className="space-y-6">
+									{terms.projectLead ? (
+										<div className="flex items-start gap-3 rounded-lg bg-[#FAF6F1] p-4">
+											<UserRound className="mt-0.5 h-5 w-5 shrink-0 text-[#9A6A12]" />
+											<div>
+												<p className="text-sm font-semibold text-[#21352B]">
+													Project lead
+												</p>
+												<p className="text-sm text-muted-foreground">
+													{terms.projectLead}
+												</p>
+											</div>
+										</div>
+									) : null}
+									{terms.purpose ? (
+										<div>
+											<h2 className="text-sm font-semibold uppercase tracking-wide text-[#256B4B]">
+												Purpose
+											</h2>
+											<p className="mt-2 leading-7 text-muted-foreground">
+												{terms.purpose}
+											</p>
+										</div>
+									) : null}
+									{terms.budget?.amount || terms.budget?.notes ? (
+										<div>
+											<h2 className="text-sm font-semibold uppercase tracking-wide text-[#256B4B]">
+												Budget and Control
+											</h2>
+											{terms.budget.amount ? (
+												<p className="mt-2 font-semibold text-[#21352B]">
+													{terms.budget.amount}
+												</p>
+											) : null}
+											{terms.budget.notes ? (
+												<p className="mt-2 leading-7 text-muted-foreground">
+													{terms.budget.notes}
+												</p>
+											) : null}
+										</div>
+									) : null}
+									<div className="grid gap-6 md:grid-cols-2">
+										<TorList title="Scope" items={terms.scope} />
+										<TorList title="Timeline" items={terms.timeline} />
+										<TorList
+											title="Responsibilities"
+											items={terms.responsibilities}
+										/>
+										<TorList title="Deliverables" items={terms.deliverables} />
+										<TorList
+											title="Success Measures"
+											items={terms.successMeasures}
+										/>
+										<TorList title="Reporting" items={terms.reporting} />
+									</div>
+								</CardContent>
+							</Card>
+						) : null}
 
 						{archiveRecord ? (
 							<Card className="mt-8 border-l-4 border-[#2F7D5A]">
@@ -191,5 +257,34 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 				</div>
 			</section>
 		</main>
+	);
+}
+
+function TorList({
+	title,
+	items,
+}: {
+	title: string;
+	items?: string[];
+}) {
+	if (!items?.length) return null;
+
+	return (
+		<div>
+			<h2 className="text-sm font-semibold uppercase tracking-wide text-[#256B4B]">
+				{title}
+			</h2>
+			<ul className="mt-3 space-y-2">
+				{items.map((item) => (
+					<li
+						key={item}
+						className="flex gap-2 text-sm leading-6 text-muted-foreground"
+					>
+						<CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[#2F7D5A]" />
+						{item}
+					</li>
+				))}
+			</ul>
+		</div>
 	);
 }

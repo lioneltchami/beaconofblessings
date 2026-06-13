@@ -83,7 +83,7 @@ export const SANITY_IMAGE_PROJECTION = `_type, alt, asset->{ _id, url }`;
 
 export const PROJECT_ARCHIVE_RECORD_PROJECTION = `{ _id, _type, title, summary, outcomes, reportUrl, galleryHref, publishedDate }`;
 
-export const PROJECT_PROJECTION = `{ _id, _type, "slug": slug.current, title, status, lifecycleMode, startDate, endDate, archiveAfterDate, autoArchiveAfterEndDate, date, budget, description, impact, featured, image{ ${SANITY_IMAGE_PROJECTION} }, archiveRecord->${PROJECT_ARCHIVE_RECORD_PROJECTION} }`;
+export const PROJECT_PROJECTION = `{ _id, _type, "slug": slug.current, title, status, lifecycleMode, startDate, endDate, archiveAfterDate, autoArchiveAfterEndDate, date, budget, description, impact, featured, termsOfReference, image{ ${SANITY_IMAGE_PROJECTION} }, archiveRecord->${PROJECT_ARCHIVE_RECORD_PROJECTION} }`;
 
 export const BLOG_POST_PROJECTION = `{ _id, _type, "slug": slug.current, title, excerpt, content, author, date, category, readTime, tags, image{ ${SANITY_IMAGE_PROJECTION} } }`;
 

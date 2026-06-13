@@ -40,6 +40,25 @@ describe("ProjectDetailPage", () => {
 		);
 	});
 
+	it("renders the youth Bible project term of reference", async () => {
+		const result = await ProjectDetailPage({
+			params: Promise.resolve({ slug: "youth-bible-distribution-june-2026" }),
+		});
+		render(result);
+
+		expect(
+			screen.getByRole("heading", {
+				level: 1,
+				name: /youth bible distribution outreach/i,
+			}),
+		).toBeInTheDocument();
+		expect(screen.getByText(/project lead/i)).toBeInTheDocument();
+		expect(screen.getByText("Femi")).toBeInTheDocument();
+		expect(screen.getAllByText(/N150,000 - N200,000/i).length).toBeGreaterThan(0);
+		expect(screen.getByText(/term of reference/i)).toBeInTheDocument();
+		expect(screen.getByText(/receipts and a short report/i)).toBeInTheDocument();
+	});
+
 	it("uses project content in metadata", async () => {
 		const metadata = await generateMetadata({
 			params: Promise.resolve({ slug: "school-supplies-drive-2024" }),

@@ -13,7 +13,7 @@ describe("Sanity seed documents", () => {
 			return result;
 		}, {});
 
-		expect(docs).toHaveLength(47);
+		expect(docs).toHaveLength(48);
 		expect(counts).toEqual({
 			aboutPage: 1,
 			album: 5,
@@ -29,7 +29,7 @@ describe("Sanity seed documents", () => {
 			partnerPage: 1,
 			program: 3,
 			programsPage: 1,
-			project: 4,
+			project: 5,
 			projectArchiveRecord: 1,
 			projectsPage: 1,
 			resource: 9,
@@ -64,6 +64,20 @@ describe("Sanity seed documents", () => {
 				_type: "reference",
 				_ref: "projectArchiveRecord.school-supplies-drive-2024",
 			},
+		});
+		expect(
+			findDoc("project", "project.youth-bible-distribution-june-2026"),
+		).toMatchObject({
+			title: "Youth Bible Distribution Outreach",
+			startDate: "2026-06-15",
+			endDate: "2026-06-15",
+			archiveAfterDate: "2026-06-15",
+			termsOfReference: expect.objectContaining({
+				projectLead: "Femi",
+				budget: expect.objectContaining({
+					amount: "N150,000 - N200,000",
+				}),
+			}),
 		});
 	});
 

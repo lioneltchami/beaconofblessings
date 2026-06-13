@@ -44,6 +44,7 @@ describe("ProjectsPage", () => {
 		for (const project of upcoming) {
 			expect(screen.getByText(project.title)).toBeInTheDocument();
 		}
+		expect(screen.getByText(/youth bible distribution outreach/i)).toBeInTheDocument();
 	});
 
 	it("renders the current project titles", async () => {
