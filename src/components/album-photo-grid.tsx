@@ -1,0 +1,94 @@
+"use client";
+
+import { Camera } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import { Lightbox } from "@/components/lightbox";
+import type { AlbumPhoto } from "@/data/albums";
+import type { SanityImage } from "@/lib/sanity/types";
+import { cn } from "@/lib/utils";
+
+const categoryGradients: Record<string, string> = {
+  Education: "linear-gradient(135deg, #2F7D5A 0%, #256B4B 100%)",
+  Community: "linear-gradient(135deg, #2F7D5A 0%, #E8A825 100%)",
+  Team: "linear-gradient(135deg, #4FA778 0%, #2F7D5A 100%)",
+  Impact: "linear-gradient(135deg, #2D3A6E 0%, #E8A825 100%)",
+};
+
+interface AlbumPhotoGridProps {
+  photos: Array<AlbumPhoto & { image?: SanityImage }>;
+  albumTitle: string;
+  albumCategory: string;
+}
+
+function getImageUrl(image?: SanityImage): string | undefined {
+  return image?.asset?.url;
+}
+
+export function AlbumPhotoGrid({
+  photos,
+  albumTitle,
+  albumCategory,
+}: AlbumPhotoGridProps) {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const gradient =
+    categoryGradients[albumCategory] || categoryGradients.Education;
+
+  return (
+    <>
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {photos.map((photo, index) => {
+          const photoImageUrl = getImageUrl(photo.image);
+          return (
+            <button
+              key={photo.id}
+              onClick={() => setSelectedIndex(index)}
+              className={cn(
+                "group overflow-hidden rounded-xl text-left ring-1 ring-foreground/10 transition-all duration-300",
+                "hover:scale-[1.02] hover:shadow-lg focus-visible:ring-2 focus-visible:ring-[#2F7D5A]",
+              )}
+              aria-label={`View photo: ${photo.title}`}
+            >
+              {photoImageUrl ? (
+                <div className="aspect-[4/3] overflow-hidden bg-gray-100">
+                  <Image
+                    src={photoImageUrl}
+                    alt={photo.image?.alt || photo.title}
+                    width={480}
+                    height={360}
+                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              ) : (
+                <div
+                  className="flex aspect-[4/3] items-center justify-center"
+                  style={{ background: gradient }}
+                  aria-hidden="true"
+                >
+                  <Camera className="h-8 w-8 text-white/30 transition-transform duration-300 group-hover:scale-110" />
+                </div>
+              )}
+              <div className="bg-card px-3 py-2.5">
+                <p className="text-sm font-medium text-card-foreground line-clamp-2">
+                  {photo.title}
+                </p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {selectedIndex !== null && (
+        <Lightbox
+          photos={photos}
+          initialIndex={selectedIndex}
+          onClose={() => setSelectedIndex(null)}
+          albumTitle={albumTitle}
+          albumCategory={albumCategory}
+        />
+      )}
+    </>
+  );
+}

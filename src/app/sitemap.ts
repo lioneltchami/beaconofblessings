@@ -1,68 +1,140 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from "next";
+import { siteConfig } from "@/data/site";
+import { getAlbums, getBlogPosts, getProjects } from "@/lib/sanity/queries";
 
-/**
- * Dynamic Sitemap Generation
- * Automatically generates sitemap.xml for all static pages
- */
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://beaconofblessings.org'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
 
-  // Static pages with their priorities and change frequencies
-  const staticPages = [
+function toLastModified(date?: string): Date {
+	if (!date) return new Date();
+	const parsed = new Date(date);
+	return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	const [blogPosts, albums, projects] = await Promise.all([
+		getBlogPosts(),
+		getAlbums(),
+		getProjects(),
+	]);
+
+  const staticPages: MetadataRoute.Sitemap = [
     {
-      url: '',
+      url: siteUrl,
       lastModified: new Date(),
-      changeFrequency: 'daily' as const,
+      changeFrequency: "weekly",
       priority: 1.0,
     },
     {
-      url: '/about',
+      url: `${siteUrl}/donate`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: '/projects',
+      url: `${siteUrl}/about`,
       lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: '/gallery',
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: '/donate',
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 1.0,
-    },
-    {
-      url: '/contact',
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: '/privacy',
-      lastModified: new Date('2025-11-14'),
-      changeFrequency: 'yearly' as const,
+      url: `${siteUrl}/projects`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/projects/archive`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/programs`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/impact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/partner-with-us`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/transparency`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/gallery`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/resources`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
+    {
+      url: `${siteUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
       priority: 0.3,
     },
     {
-      url: '/terms',
-      lastModified: new Date('2025-11-14'),
-      changeFrequency: 'yearly' as const,
+      url: `${siteUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
       priority: 0.3,
     },
-  ]
+  ];
 
-  return staticPages.map((page) => ({
-    url: `${baseUrl}${page.url}`,
-    lastModified: page.lastModified,
-    changeFrequency: page.changeFrequency,
-    priority: page.priority,
-  }))
+  const blogPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}`,
+    lastModified: toLastModified(post.date),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const albumPages: MetadataRoute.Sitemap = albums.map((album) => ({
+    url: `${siteUrl}/gallery/${album.slug}`,
+    lastModified: toLastModified(album.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${siteUrl}/projects/${project.slug}`,
+    lastModified: toLastModified(
+      project.archiveRecord?.publishedDate ??
+        project.archiveAfterDate ??
+        project.endDate ??
+        project.startDate,
+    ),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...blogPages, ...albumPages, ...projectPages];
 }

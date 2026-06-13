@@ -1,234 +1,245 @@
-'use client'
+import type { Metadata } from "next";
+import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/data/site";
 
-import { motion } from 'framer-motion'
-import { Shield, Lock, Eye, UserCheck, FileText, Globe } from 'lucide-react'
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: `Privacy Policy for ${siteConfig.name}. Learn how we collect, use, and protect your personal information.`,
+};
+
+const lastUpdated = "March 2026";
 
 export default function PrivacyPolicyPage() {
-  const sections = [
-    {
-      icon: FileText,
-      title: 'Information We Collect',
-      content: [
-        'We collect information you provide directly to us when you:',
-        '• Make a donation through our website',
-        '• Fill out our contact form',
-        '• Subscribe to our newsletter',
-        '• Interact with our website',
-        '',
-        'This information may include:',
-        '• Name and contact information (email address, phone number)',
-        '• Billing information for donations',
-        '• Communication preferences',
-        '• Any other information you choose to provide'
-      ]
-    },
-    {
-      icon: Lock,
-      title: 'How We Use Your Information',
-      content: [
-        'We use the information we collect to:',
-        '• Process your donations securely',
-        '• Send donation receipts and confirmations',
-        '• Respond to your inquiries and requests',
-        '• Send you updates about our projects and impact',
-        '• Improve our website and services',
-        '• Comply with legal obligations'
-      ]
-    },
-    {
-      icon: Shield,
-      title: 'Information Security',
-      content: [
-        'We take the security of your personal information seriously:',
-        '• All payment processing is handled through Stripe, a PCI-compliant payment processor',
-        '• We use SSL encryption for all data transmission',
-        '• We do not store credit card information on our servers',
-        '• Access to personal information is restricted to authorized personnel only',
-        '• We regularly review and update our security practices'
-      ]
-    },
-    {
-      icon: Globe,
-      title: 'Information Sharing',
-      content: [
-        'We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:',
-        '• With service providers who assist us in operating our website and processing donations (e.g., Stripe for payment processing)',
-        '• When required by law or to respond to legal processes',
-        '• To protect our rights, property, or safety, or that of our users or the public',
-        '',
-        'All third-party service providers are required to maintain the confidentiality of your information and use it only for the purposes for which we disclose it to them.'
-      ]
-    },
-    {
-      icon: Eye,
-      title: 'Cookies and Tracking',
-      content: [
-        'We use cookies and similar tracking technologies to:',
-        '• Remember your preferences',
-        '• Understand how you use our website',
-        '• Improve your experience on our site',
-        '',
-        'You can control cookies through your browser settings. Please note that disabling cookies may affect the functionality of our website.'
-      ]
-    },
-    {
-      icon: UserCheck,
-      title: 'Your Rights and Choices',
-      content: [
-        'You have the right to:',
-        '• Access the personal information we hold about you',
-        '• Request correction of inaccurate information',
-        '• Request deletion of your personal information',
-        '• Opt-out of marketing communications',
-        '• Withdraw consent where we rely on it',
-        '',
-        'To exercise these rights, please contact us at info@beaconofblessings.org'
-      ]
-    }
-  ]
-
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary-50 via-white to-primary-100 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero opacity-5"></div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <div className="w-20 h-20 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Shield className="w-10 h-10 text-white" />
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Privacy <span className="text-gradient">Policy</span>
-            </h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Your privacy is important to us. This policy explains how we collect, use, and protect your personal information.
-            </p>
-            <p className="text-sm text-gray-600 mt-4">
-              Last Updated: November 14, 2025
-            </p>
-          </motion.div>
+    <div className="flex flex-col">
+      {/* Hero */}
+      <section className="relative bg-[#256B4B] py-20 md:py-28">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            Privacy Policy
+          </h1>
+          <p className="mt-4 text-[#EAF6EF]/70">Last updated: {lastUpdated}</p>
         </div>
       </section>
 
-      {/* Introduction */}
-      <section className="py-12 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="prose prose-lg max-w-none"
-          >
-            <p className="text-gray-700 text-lg leading-relaxed">
-              Beacon of Blessings Charity Initiative (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your privacy.
-              This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit
-              our website beaconofblessings.org or make a donation to our organization.
-            </p>
-            <p className="text-gray-700 text-lg leading-relaxed mt-4">
-              By using our website, you agree to the collection and use of information in accordance with this policy.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Policy Sections */}
-      <section className="py-16 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
-            {sections.map((section, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg border border-primary-200 p-8"
+      {/* Content */}
+      <section className="bg-[#FAF6F1] py-16 md:py-24">
+        <div className="mx-auto max-w-3xl px-4">
+          <div className="prose prose-neutral max-w-none space-y-8 text-foreground">
+            <p className="text-lg text-muted-foreground">
+              {siteConfig.name} (&quot;we,&quot; &quot;us,&quot; or
+              &quot;our&quot;) is committed to protecting your privacy. This
+              Privacy Policy explains how we collect, use, disclose, and
+              safeguard your information when you visit our website{" "}
+              <a
+                href={siteConfig.url}
+                className="font-medium text-primary hover:underline"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                    <section.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">{section.title}</h2>
-                    <div className="space-y-2">
-                      {section.content.map((paragraph, idx) => (
-                        <p key={idx} className="text-gray-700 leading-relaxed">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                {siteConfig.url}
+              </a>
+              .
+            </p>
+
+            <Separator />
+
+            <section id="donor-data">
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Information We Collect
+              </h2>
+              <p className="mb-3 text-muted-foreground">
+                We may collect the following types of information:
+              </p>
+              <ul className="list-inside list-disc space-y-2 text-muted-foreground">
+                <li>
+                  <strong className="text-foreground">
+                    Personal Information:
+                  </strong>{" "}
+                  Name, email address, phone number, and mailing address when
+                  you contact us, make a donation, or sign up for our
+                  newsletter.
+                </li>
+                <li>
+                  <strong className="text-foreground">
+                    Payment Information:
+                  </strong>{" "}
+                  When you make a donation, payment details are processed
+                  securely by our third-party payment processor. We do not store
+                  your credit card or bank account numbers.
+                </li>
+                <li>
+                  <strong className="text-foreground">
+                    Usage Information:
+                  </strong>{" "}
+                  Browser type, operating system, pages visited, time spent on
+                  the site, and referring URLs collected automatically through
+                  cookies and analytics tools.
+                </li>
+              </ul>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                How We Use Your Information
+              </h2>
+              <ul className="list-inside list-disc space-y-2 text-muted-foreground">
+                <li>
+                  To process donations and issue donation acknowledgements or
+                  receipts where applicable.
+                </li>
+                <li>To respond to your inquiries and provide support.</li>
+                <li>
+                  To send newsletters, updates, and information about our
+                  programs (with your consent).
+                </li>
+                <li>To improve our website, services, and user experience.</li>
+                <li>
+                  To comply with legal obligations and protect our rights.
+                </li>
+              </ul>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Cookies
+              </h2>
+              <p className="text-muted-foreground">
+                Our website may use cookies and similar tracking technologies to
+                enhance your browsing experience. Cookies are small data files
+                stored on your device. You can control cookie preferences
+                through your browser settings. Disabling cookies may affect
+                certain features of our website.
+              </p>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Third-Party Services
+              </h2>
+              <p className="text-muted-foreground">
+                We may use third-party services for analytics (such as Google
+                Analytics), payment processing, and email communications. These
+                services have their own privacy policies governing the use of
+                your information. We encourage you to review their policies. We
+                do not sell, trade, or rent your personal information to third
+                parties.
+              </p>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Data Security
+              </h2>
+              <p className="text-muted-foreground">
+                We implement reasonable administrative, technical, and physical
+                security measures to protect your personal information. However,
+                no method of transmission over the Internet or electronic
+                storage is 100% secure. While we strive to protect your
+                information, we cannot guarantee its absolute security.
+              </p>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Your Rights
+              </h2>
+              <p className="mb-3 text-muted-foreground">
+                Depending on your location, you may have the following rights
+                regarding your personal information:
+              </p>
+              <ul className="list-inside list-disc space-y-2 text-muted-foreground">
+                <li>
+                  The right to access the personal data we hold about you.
+                </li>
+                <li>The right to request correction of inaccurate data.</li>
+                <li>The right to request deletion of your personal data.</li>
+                <li>
+                  The right to withdraw consent for marketing communications at
+                  any time.
+                </li>
+                <li>
+                  The right to lodge a complaint with a data protection
+                  authority.
+                </li>
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                To exercise any of these rights, please contact us at{" "}
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="font-medium text-primary hover:underline"
+                >
+                  {siteConfig.email}
+                </a>
+                .
+              </p>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Children&apos;s Privacy
+              </h2>
+              <p className="text-muted-foreground">
+                Our website is not directed at children under the age of 13. We
+                do not knowingly collect personal information from children
+                under 13. If you believe a child has provided us with personal
+                information, please contact us so we can delete it promptly.
+              </p>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Changes to This Policy
+              </h2>
+              <p className="text-muted-foreground">
+                We may update this Privacy Policy from time to time. Any changes
+                will be posted on this page with an updated revision date. We
+                encourage you to review this policy periodically to stay
+                informed about how we are protecting your information.
+              </p>
+            </section>
+
+            <Separator />
+
+            <section>
+              <h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+                Contact Us
+              </h2>
+              <p className="text-muted-foreground">
+                If you have questions or concerns about this Privacy Policy,
+                please contact us at:
+              </p>
+              <div className="mt-3 rounded-lg border bg-[#EAF6EF] p-4 text-sm">
+                <p className="font-semibold">{siteConfig.name}</p>
+                <p className="text-muted-foreground">
+                  Email:{" "}
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="font-medium text-primary hover:underline"
+                  >
+                    {siteConfig.email}
+                  </a>
+                </p>
+                <p className="text-muted-foreground">
+                  Address: {siteConfig.address}
+                </p>
+              </div>
+            </section>
           </div>
         </div>
       </section>
-
-      {/* Additional Information */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            {/* Children's Privacy */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Children&apos;s Privacy</h2>
-              <p className="text-gray-700 leading-relaxed">
-                Our website is not intended for children under the age of 13. We do not knowingly collect personal
-                information from children under 13. If you are a parent or guardian and believe your child has provided
-                us with personal information, please contact us immediately.
-              </p>
-            </div>
-
-            {/* International Users */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">International Users</h2>
-              <p className="text-gray-700 leading-relaxed">
-                Beacon of Blessings is based in Nigeria. If you are accessing our website from outside Nigeria,
-                please be aware that your information may be transferred to, stored, and processed in Nigeria where
-                our servers are located. By using our website, you consent to the transfer of your information to
-                Nigeria and the use of your information in accordance with this Privacy Policy.
-              </p>
-            </div>
-
-            {/* Changes to Policy */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Changes to This Privacy Policy</h2>
-              <p className="text-gray-700 leading-relaxed">
-                We may update this Privacy Policy from time to time. We will notify you of any changes by posting
-                the new Privacy Policy on this page and updating the &ldquo;Last Updated&rdquo; date. You are advised to review
-                this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when
-                they are posted on this page.
-              </p>
-            </div>
-
-            {/* Contact Information */}
-            <div className="bg-gradient-primary rounded-2xl p-8 text-white">
-              <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-              <p className="mb-4 text-white/90">
-                If you have any questions about this Privacy Policy or our privacy practices, please contact us:
-              </p>
-              <div className="space-y-2 text-white/90">
-                <p><strong>Email:</strong> info@beaconofblessings.org</p>
-                <p><strong>Address:</strong> Lagos, Nigeria</p>
-                <p><strong>Website:</strong> www.beaconofblessings.org</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
-  )
+  );
 }

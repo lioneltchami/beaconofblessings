@@ -1,88 +1,116 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Chatbot from "@/components/ui/Chatbot";
-import SkipToContent from "@/components/ui/SkipToContent";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import { OrganizationStructuredData, DonationStructuredData } from "@/components/seo/StructuredData";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from "next";
+import { DM_Serif_Display, Inter } from "next/font/google";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
+import { siteConfig } from "@/data/site";
+import "./globals.css";
+
+const inter = Inter({
+	subsets: ["latin"],
+	display: "swap",
+	variable: "--font-sans",
+});
+
+const dmSerif = DM_Serif_Display({
+	weight: "400",
+	subsets: ["latin"],
+	display: "swap",
+	variable: "--font-heading",
+});
 
 export const metadata: Metadata = {
-  title: "Beacon of Blessings Charity Initiative - Sharing God's Love Through Service",
-  description: "A Christian nonprofit organization based in Nigeria, sharing the love of Jesus Christ through educational support, school supplies, and compassionate care for vulnerable communities. Founded by Lionel Tchami and Grace Kure.",
-  keywords: ["charity", "nonprofit", "Nigeria", "education", "Christian", "school supplies", "donation", "Jesus", "blessing", "vulnerable communities"],
-  authors: [{ name: "Beacon of Blessings Charity Initiative" }],
-  creator: "Beacon of Blessings Charity Initiative",
-  metadataBase: new URL("https://beaconofblessings.org"),
-  openGraph: {
-    title: "Beacon of Blessings Charity Initiative",
-    description: "Sharing the love of Jesus Christ through educational support and compassionate care for vulnerable communities in Nigeria.",
-    url: "https://beaconofblessings.org",
-    siteName: "Beacon of Blessings Charity Initiative",
-    images: [
-      {
-        url: "/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Beacon of Blessings Charity Initiative",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Beacon of Blessings Charity Initiative",
-    description: "Sharing the love of Jesus Christ through educational support for vulnerable communities in Nigeria.",
-    images: ["/images/twitter-image.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "your-google-site-verification-code",
-  },
+	metadataBase: new URL(
+		process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url,
+	),
+	title: {
+		default: "Beacon of Blessings — Illuminating Futures Through Education",
+		template: "%s | Beacon of Blessings",
+	},
+	description:
+		"Beacon of Blessings Charity Initiative transforms lives through educational support for vulnerable communities in Nigeria. Join us in making a difference.",
+	keywords: [
+		"charity",
+		"non-profit",
+		"education",
+		"Nigeria",
+		"Beacon of Blessings",
+		"school supplies",
+		"donate",
+	],
+	openGraph: {
+		type: "website",
+		locale: "en_US",
+		siteName: "Beacon of Blessings",
+		title: "Beacon of Blessings",
+		description:
+			"Educational support for vulnerable communities in Nigeria through supplies, scholarships, digital learning, and local partnerships.",
+		url: "/",
+	},
+	twitter: {
+		card: "summary_large_image",
+	},
+	robots: {
+		index: true,
+		follow: true,
+	},
+	alternates: {
+		canonical: "/",
+	},
+};
+
+const organizationJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "NGO",
+	name: siteConfig.legalName,
+	alternateName: siteConfig.name,
+	url: siteConfig.url,
+	description: siteConfig.description,
+	email: siteConfig.email,
+	telephone: siteConfig.phone,
+	foundingDate: `${siteConfig.founded}`,
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "Lagos",
+		addressCountry: "NG",
+	},
+	areaServed: {
+		"@type": "Place",
+		name: siteConfig.serviceArea,
+	},
+	sameAs: [
+		"https://facebook.com/beaconofblessings",
+		"https://instagram.com/beaconofblessings",
+		"https://x.com/beaconofblessings",
+	],
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#22c55e" />
-        <OrganizationStructuredData />
-        <DonationStructuredData />
-      </head>
-      <body
-        className="antialiased min-h-screen flex flex-col"
-      >
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
-        <Analytics />
-        <SpeedInsights />
-        <SkipToContent />
-        <Header />
-        <main id="main-content" className="flex-1 pt-20">
-          {children}
-        </main>
-        <Footer />
-        <Chatbot />
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<head>
+				<meta name="theme-color" content="#2F7D5A" />
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify(organizationJsonLd),
+					}}
+				/>
+			</head>
+			<body
+				className={`${inter.variable} ${dmSerif.variable} min-h-screen bg-background font-sans antialiased`}
+			>
+				<Header />
+				<main className="pt-16">{children}</main>
+				<Footer />
+				<Analytics />
+				<SpeedInsights />
+			</body>
+		</html>
+	);
 }

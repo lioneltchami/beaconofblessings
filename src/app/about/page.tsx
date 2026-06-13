@@ -1,373 +1,407 @@
-'use client'
+import {
+  ArrowRight,
+  BookOpen,
+  CalendarCheck,
+  GraduationCap,
+  Handshake,
+  Heart,
+  MapPin,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  Target,
+} from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { aboutPageContent as staticAboutPageContent } from "@/data/pages";
+import { siteConfig } from "@/data/site";
+import { stockImages } from "@/data/stock-images";
+import { getAboutPage, getCoreValues, getFounders } from "@/lib/sanity/queries";
 
-import { motion } from 'framer-motion'
-import { Heart, Globe, HandHeart, Star, Target, Eye, Shield } from 'lucide-react'
+export const metadata: Metadata = {
+  title: `About Us | ${siteConfig.name}`,
+  description: `Learn about ${siteConfig.name} Charity Initiative -- our mission, story, founders, and commitment to transforming lives through educational support for vulnerable communities in Nigeria.`,
+};
 
-export default function AboutPage() {
-  const founders = [
-    {
-      name: 'Lionel Tchami',
-      role: 'Co-Founder & Director',
-      description: 'A passionate advocate for education and community development, Lionel brings years of experience in nonprofit leadership. His heart for serving vulnerable communities was ignited through personal experiences and a deep commitment to living out Christ&apos;s love through practical action.',
-      background: 'Based internationally with extensive experience in community outreach and organizational development.',
-      vision: 'To see every child in Nigeria have access to quality education and the opportunity to reach their God-given potential.',
-    },
-    {
-      name: 'Grace Kure',
-      role: 'Co-Founder & Nigeria Operations Lead',
-      description: 'Grace is our boots-on-the-ground leader in Nigeria, bringing intimate knowledge of local communities and their specific needs. Her compassionate heart and practical approach ensure our initiatives reach those who need them most.',
-      background: 'A lifelong resident of Nigeria with deep community connections and understanding of local challenges.',
-      vision: 'To be a beacon of hope in Nigerian communities, demonstrating God&apos;s love through sustainable, impactful programs.',
-    }
-  ]
+const valueIcons = [Heart, BookOpen, Handshake, ShieldCheck];
 
-  const values = [
-    {
-      icon: Heart,
-      title: 'Love in Action',
-      description: 'We believe love is demonstrated through practical service to others, especially those in need.',
-      scripture: 'Dear children, let us not love with words or speech but with actions and in truth. (1 John 3:18)'
-    },
-    {
-      icon: Shield,
-      title: 'Integrity & Transparency',
-      description: 'We maintain the highest standards of accountability in all our operations and communications.',
-      scripture: 'The integrity of the upright guides them. (Proverbs 11:3)'
-    },
-    {
-      icon: HandHeart,
-      title: 'Compassionate Service',
-      description: 'We serve with genuine compassion, treating every beneficiary with dignity and respect.',
-      scripture: 'Be kind and compassionate to one another. (Ephesians 4:32)'
-    },
-    {
-      icon: Globe,
-      title: 'Community Focus',
-      description: 'We work within communities to understand their needs and develop sustainable solutions.',
-      scripture: 'As we have opportunity, let us do good to all people. (Galatians 6:10)'
-    }
-  ]
-
-  const milestones = [
-    {
-      year: '2024',
-      title: 'Organization Founded',
-      description: 'Lionel Tchami and Grace Kure officially established Beacon of Blessings Charity Initiative with a vision to transform lives through education.',
-    },
-    {
-      year: '2024',
-      title: 'First Project Launch',
-      description: 'Successfully completed our inaugural School Supplies Drive, providing educational materials to over 500 students across Lagos communities.',
-    },
-    {
-      year: 'Ongoing',
-      title: 'Expanding Impact',
-      description: 'Developing new programs and partnerships to reach more vulnerable communities across Nigeria.',
-    }
-  ]
+export default async function AboutPage() {
+  const [content, founders, coreValues] = await Promise.all([
+    getAboutPage(),
+    getFounders(),
+    getCoreValues(),
+  ]);
+  const heroImage =
+    content.hero.images?.[0] ??
+    staticAboutPageContent.hero.images?.[0] ?? {
+      src: stockImages.outdoorLearning,
+      alt: "Students gathered outdoors for a school learning session",
+    };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary-50 via-white to-primary-100 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero opacity-5"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              About <span className="text-gradient">Our Mission</span>
-            </h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Discover the heart behind Beacon of Blessings Charity Initiative and our commitment 
-              to sharing God&apos;s love through practical service to vulnerable communities in Nigeria.
+    <main className="flex flex-col bg-[#FAF6F1]">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-[#EAF6EF] py-20 sm:py-28">
+        <div
+          className="absolute left-0 top-0 h-1.5 w-full bg-gradient-to-r from-[#2F7D5A] via-[#E8A825] to-[#2D3A6E]"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-y-0 right-0 hidden w-1/2 bg-[radial-gradient(circle_at_70%_35%,rgba(232,168,37,0.18),transparent_34%),linear-gradient(135deg,transparent_0%,rgba(45,58,110,0.08)_100%)] lg:block"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#2F7D5A]">
+              {content.hero.eyebrow}
             </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Our Story Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200 shadow-lg">
-                <blockquote className="text-xl text-gray-800 italic leading-relaxed mb-6">
-                  &ldquo;The Spirit of the Lord is on me, because he has anointed me to proclaim good news to the poor. 
-                  He has sent me to proclaim freedom for the prisoners and recovery of sight for the blind, 
-                  to set the oppressed free.&rdquo;
-                </blockquote>
-                <cite className="text-primary-600 font-semibold text-lg">Luke 4:18</cite>
-              </div>
-              
-              <div className="mt-12 text-lg text-gray-700 leading-relaxed space-y-6">
-                <p>
-                  Beacon of Blessings Charity Initiative was born from a divine calling to be the hands and feet 
-                  of Jesus in our world. Founded in 2024 by Lionel Tchami and Grace Kure, our organization emerged 
-                  from a shared burden for the educational needs of vulnerable children and families across Nigeria.
-                </p>
-                <p>
-                  The inspiration came through witnessing firsthand the challenges faced by students who lacked 
-                  basic school supplies - a seemingly small barrier that created enormous obstacles to their educational 
-                  journey. We realized that sometimes the difference between a child staying in school or dropping out 
-                  could be as simple as having a backpack, notebooks, and pencils.
-                </p>
-                <p>
-                  Our name, &ldquo;Beacon of Blessings,&rdquo; reflects our commitment to being a light in dark places, 
-                  pointing others toward hope, opportunity, and the transformative love of Christ. We believe that 
-                  every act of service, no matter how small, can become a beacon that illuminates the path to a 
-                  brighter future.
-                </p>
+            <h1 className="mt-4 max-w-4xl font-heading text-4xl font-bold tracking-tight text-[#21352B] sm:text-5xl lg:text-6xl">
+              {content.hero.title}
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#21352B]/75">
+              {content.hero.body}
+            </p>
+          </div>
+          <div className="overflow-hidden rounded-lg border border-[#2F7D5A]/10 bg-white/85 shadow-[0_24px_80px_-56px_rgba(33,53,43,0.45)]">
+            <div className="relative h-72">
+              <Image
+                src={heroImage.src}
+                alt={heroImage.alt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 34vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="p-5">
+              <p className="text-lg italic leading-relaxed text-[#256B4B]">
+                &ldquo;{content.hero.verse?.text}&rdquo;
+              </p>
+              <p className="mt-3 text-sm font-medium text-[#9A6A12]">
+                {content.hero.verse?.reference}
+              </p>
+              <div className="mt-8 grid grid-cols-2 gap-3 text-[#21352B]">
+                <div className="border-t border-[#2F7D5A]/15 pt-3">
+                  <p className="text-2xl font-bold">{siteConfig.founded}</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    Founded
+                  </p>
+                </div>
+                <div className="border-t border-[#2F7D5A]/15 pt-3">
+                  <p className="text-2xl font-bold">Nigeria</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    Focus
+                  </p>
+                </div>
               </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Vision & Mission Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Vision & Mission</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-xl border border-primary-200"
-            >
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mr-4">
-                  <Eye className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900">Our Vision</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed mb-6">
-                To be a transformative beacon of hope across Nigeria, illuminating pathways to education, 
-                opportunity, and spiritual growth for vulnerable communities. We envision a Nigeria where 
-                every child has access to quality education and where the love of Christ is demonstrated 
-                through practical, sustainable community development.
-              </p>
-              <div className="bg-primary-50 rounded-lg p-4">
-                <blockquote className="text-primary-800 italic">
-                  &ldquo;Where there is no vision, the people perish.&rdquo;
-                </blockquote>
-                <cite className="text-primary-600 font-medium">Proverbs 29:18</cite>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-xl border border-primary-200"
-            >
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mr-4">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900">Our Mission</h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed mb-6">
-                To share the love of Jesus Christ through practical, compassionate service to vulnerable 
-                communities in Nigeria, with a primary focus on educational support, school supplies, 
-                and programs that empower children and families to break cycles of poverty through education 
-                and spiritual growth.
-              </p>
-              <div className="bg-primary-50 rounded-lg p-4">
-                <blockquote className="text-primary-800 italic">
-                  &ldquo;Let us not love with words or speech but with actions and in truth.&rdquo;
-                </blockquote>
-                <cite className="text-primary-600 font-medium">1 John 3:18</cite>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Founders Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet Our Founders</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              United by faith and a shared vision for transformation, our founders bring diverse experiences 
-              and unwavering commitment to serving vulnerable communities.
+      {/* Founder credibility and movement framing */}
+      <section className="bg-[#FAF6F1] py-16 sm:py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#9A6A12]">
+              {content.story.eyebrow}
             </p>
-          </motion.div>
-
-          <div className="space-y-16">
-            {founders.map((founder, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-                }`}
-              >
-                <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                  <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200 shadow-lg">
-                    <h3 className="text-2xl font-bold text-primary-600 mb-2">{founder.name}</h3>
-                    <p className="text-primary-500 font-semibold mb-4">{founder.role}</p>
-                    <p className="text-gray-700 mb-6 leading-relaxed">{founder.description}</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Background</h4>
-                        <p className="text-gray-600 text-sm">{founder.background}</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900 mb-2">Personal Vision</h4>
-                        <p className="text-gray-600 text-sm italic">{founder.vision}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className={index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}>
-                  <div className="relative">
-                    <div className="w-full aspect-square bg-gradient-to-br from-primary-200 to-primary-300 rounded-2xl flex items-center justify-center text-white text-8xl font-bold shadow-xl">
-                      {founder.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div className="absolute -bottom-4 -right-4 w-16 h-16 gradient-primary rounded-full flex items-center justify-center shadow-lg">
-                      <Heart className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Core Values Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Core Values</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              These biblical principles guide every aspect of our work and define who we are as an organization.
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-[#256B4B] sm:text-4xl">
+              {content.story.title}
+            </h2>
+            <p className="mt-3 font-heading text-xl font-semibold text-[#256B4B]">
+              {content.story.subtitle}
             </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {values.map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl p-8 shadow-lg border border-primary-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="flex items-start mb-6">
-                  <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                    <value.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{value.title}</h3>
-                    <p className="text-gray-700 leading-relaxed">{value.description}</p>
-                  </div>
-                </div>
-                
-                <div className="bg-primary-50 rounded-lg p-4">
-                  <blockquote className="text-primary-800 italic text-sm">
-                    {value.scripture}
-                  </blockquote>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Journey</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              From vision to reality - key milestones in our mission to transform lives through education.
+            <p className="mt-5 text-base leading-8 text-muted-foreground">
+              {content.story.body}
             </p>
-          </motion.div>
-
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full gradient-primary"></div>
-            
-            <div className="space-y-12">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {content.story.cards.map((card) => (
+                <div
+                  key={card.title}
+                  className="border-l-2 border-[#E8A825] bg-white/60 px-4 py-3"
                 >
-                  <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                    <div className="bg-gradient-to-br from-white to-primary-50 rounded-2xl p-6 shadow-lg border border-primary-200">
-                      <div className="text-2xl font-bold text-primary-600 mb-2">{milestone.year}</div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">{milestone.title}</h3>
-                      <p className="text-gray-700 leading-relaxed">{milestone.description}</p>
+                  <p className="font-heading text-lg font-semibold text-[#256B4B]">
+                    {card.title}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {card.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h2 className="font-heading text-2xl font-bold tracking-tight text-[#256B4B]">
+              Meet Our Founders
+            </h2>
+            <div className="mt-5 grid gap-5 sm:grid-cols-2">
+              {founders.map((founder) => (
+                <Card
+                  key={founder.name}
+                  className="card-interactive border-[#E8A825]/30 bg-white/85 shadow-sm"
+                >
+                  <CardHeader>
+                    <div className="flex items-start gap-4">
+                      <div
+                        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#256B4B] text-lg font-bold text-white"
+                        aria-hidden="true"
+                      >
+                        {founder.initials}
+                      </div>
+                      <div>
+                        <CardTitle className="text-lg text-[#256B4B]">
+                          {founder.name}
+                        </CardTitle>
+                        <p className="mt-1 text-sm font-medium text-[#9A6A12]">
+                          {founder.role}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="relative flex-shrink-0">
-                    <div className="w-12 h-12 gradient-primary rounded-full flex items-center justify-center shadow-lg border-4 border-white">
-                      <Star className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                  
-                  <div className="w-1/2"></div>
-                </motion.div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="leading-7 text-muted-foreground">
+                      {founder.bio}
+                    </p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-    </div>
-  )
+      {/* Mission movement */}
+      <section className="bg-[#EAF6EF] py-16 sm:py-20">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <div className="border-y border-[#2F7D5A]/20 py-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2F7D5A]">
+              Mission movement
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+              Not just supplies. A pathway back to possibility.
+            </h2>
+            <p className="mt-5 leading-8 text-muted-foreground">
+              The mission is to transform educational access for vulnerable
+              children by starting where the need is concrete: materials,
+              encouragement, school readiness, and support that helps families
+              keep learning within reach.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              {
+                title: "Our Vision",
+                icon: GraduationCap,
+                copy: "A Nigeria where a child's background does not decide whether they can learn, grow, and build a brighter future.",
+              },
+              {
+                title: "Our Mission",
+                icon: Rocket,
+                copy: "Provide educational resources, support, and opportunity to vulnerable communities through faith-guided service.",
+              },
+              {
+                title: "Starting point",
+                icon: MapPin,
+                copy: "Begin with reachable community needs, then expand only as support, trust, and accountability mature.",
+              },
+              {
+                title: "Measure of progress",
+                icon: Target,
+                copy: "More children equipped, encouraged, and able to keep showing up for school.",
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="border border-[#2F7D5A]/15 bg-white/70 p-6"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E8A825]/15">
+                    <Icon className="h-5 w-5 text-[#2F7D5A]" />
+                  </div>
+                  <h3 className="mt-5 font-heading text-xl font-semibold text-[#256B4B]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 leading-7 text-muted-foreground">
+                    {item.copy}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Journey Timeline */}
+      <section className="bg-[#FAF6F1] py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#9A6A12]">
+              Timeline
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-[#2D3A6E]">
+              The journey is being built in public, one faithful step at a time.
+            </h2>
+          </div>
+          <Separator className="my-8" />
+          <div className="grid gap-5 md:grid-cols-4">
+            {content.milestones.map((milestone, index) => (
+              <div
+                key={milestone.title}
+                className="relative border-t-2 border-[#E8A825] pt-5"
+              >
+                <div className="mb-5 flex items-center justify-between">
+                  <p className="font-heading text-3xl font-bold text-[#2D3A6E]">
+                    {milestone.year}
+                  </p>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#2D3A6E] text-sm font-bold text-white">
+                    {index + 1}
+                  </span>
+                </div>
+                <h3 className="font-heading text-lg font-semibold text-[#2D3A6E]">
+                  {milestone.title}
+                </h3>
+                <p className="mt-3 leading-7 text-muted-foreground">
+                  {milestone.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2026 goals */}
+      <section className="bg-[#2D3A6E] py-16 text-white sm:py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E8A825]/20">
+              <CalendarCheck className="h-6 w-6 text-[#F5D060]" />
+            </div>
+            <h2 className="mt-5 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              2026 goals
+            </h2>
+            <p className="mt-5 leading-8 text-white/80">
+              The next phase is intentionally practical: serve better, report
+              more clearly, and expand only where the organization can support
+              the promise it makes.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {content.goals2026.map((goal, index) => (
+              <div
+                key={goal}
+                className="border border-white/15 bg-white/[0.06] p-5"
+              >
+                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#F5D060]">
+                  Goal {index + 1}
+                </p>
+                <p className="mt-3 leading-7 text-white/90">{goal}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="bg-[#EAF6EF] py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#9A6A12]">
+                Values and principles
+              </p>
+              <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+                Core Values
+              </h2>
+              <p className="mt-3 font-heading text-xl font-semibold text-[#256B4B]">
+                A premium mission still needs plain standards.
+              </p>
+              <p className="mt-5 leading-8 text-muted-foreground">
+                These values shape what Beacon of Blessings says yes to, what it
+                declines, and how it treats every gift entrusted to the work.
+              </p>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {coreValues.map((value, index) => {
+                const Icon = valueIcons[index] ?? Sparkles;
+                return (
+                  <Card
+                    key={value.title}
+                    className="card-interactive border-[#E8A825]/30 bg-white/80"
+                  >
+                    <CardHeader>
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E8A825]/15">
+                          <Icon className="h-5 w-5 text-[#2F7D5A]" />
+                        </div>
+                        <CardTitle className="text-[#256B4B]">
+                          {value.title}
+                        </CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="leading-7 text-muted-foreground">
+                        {value.description}
+                      </p>
+                      <p className="mt-4 border-l-2 border-[#E8A825] pl-3 text-sm font-medium italic text-primary">
+                        {value.verse}
+                      </p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-4">
+            {content.operatingPrinciples.map((principle) => (
+              <div
+                key={principle.title}
+                className="border-t border-[#2D3A6E]/20 pt-4"
+              >
+                <h3 className="font-heading text-lg font-semibold text-[#2D3A6E]">
+                  {principle.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {principle.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Invitation */}
+      <section className="bg-[#FAF6F1] py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid gap-8 border-y border-[#2F7D5A]/20 py-10 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#9A6A12]">
+                Join the movement
+              </p>
+              <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+                Help turn school access from a fragile hope into a durable
+                pattern.
+              </h2>
+              <p className="mt-4 max-w-3xl leading-8 text-muted-foreground">
+                Whether you give, volunteer, introduce a partner, or help share
+                the work, your support helps Beacon of Blessings serve children
+                with more consistency and care.
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-[#E8A825] px-5 text-base font-medium text-[#21352B] transition-all hover:bg-[#F5D060] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:w-auto"
+            >
+              Get In Touch
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }

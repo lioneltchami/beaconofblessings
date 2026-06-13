@@ -1,428 +1,336 @@
-'use client'
+import {
+  Calendar,
+  CheckCircle2,
+  Clock3,
+  DollarSign,
+  Heart,
+  MapPin,
+  TrendingUp,
+  Users,
+} from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/data/site";
+import {
+  getCompletedProjects,
+  getCurrentProjects,
+  getProjectsPage,
+  getUpcomingProjects,
+} from "@/lib/sanity/queries";
+import { formatProjectCompletedAgo } from "@/lib/project-lifecycle";
+import { cn } from "@/lib/utils";
 
-import { motion } from 'framer-motion'
-import { Users, Gift, Calendar, MapPin, Star, Target, CheckCircle, Clock, Award } from 'lucide-react'
+export const metadata: Metadata = {
+  title: `Our Projects | ${siteConfig.name}`,
+  description: `Explore the educational projects of ${siteConfig.name} -- from school supplies drives to digital learning initiatives, see how we are transforming communities in Nigeria.`,
+};
 
-export default function ProjectsPage() {
-  const completedProjects = [
-    {
-      id: 1,
-      title: 'School Supplies Drive 2024',
-      description: 'Our inaugural project that launched Beacon of Blessings into action. We identified vulnerable students across Lagos communities who lacked basic school supplies, creating barriers to their education.',
-      longDescription: 'This transformative initiative was our first step in making a tangible difference in Nigerian communities. Working closely with local schools and community leaders, we identified students from low-income families who were at risk of dropping out due to lack of basic educational materials. The project spanned several months of careful planning, fundraising, and community engagement.',
-      impact: {
-        students: 500,
-        schoolBags: 500,
-        notebooks: 2000,
-        textbooks: 1000,
-        writingMaterials: 1500,
-        communities: 5
-      },
-      location: 'Lagos Communities, Nigeria',
-      duration: '3 months',
-      startDate: 'June 2024',
-      endDate: 'September 2024',
-      status: 'completed',
-      budget: '₦2,500,000',
-      partners: ['Local Schools', 'Community Leaders', 'Parent Associations'],
-      testimonials: [
-        {
-          name: 'Mrs. Adebayo',
-          role: 'Teacher, Community Primary School',
-          quote: 'The joy on my students\' faces when they received their school bags was indescribable. Many of them had been carrying their books in plastic bags or their hands. This project didn\'t just give them supplies; it gave them dignity and hope.'
-        },
-        {
-          name: 'Chief Emeka',
-          role: 'Community Leader',
-          quote: 'Beacon of Blessings has shown what true charity looks like. They didn\'t just drop supplies and leave; they took time to understand our community\'s needs and worked with us as partners.'
-        }
-      ],
-      outcomes: [
-        'Zero dropouts among beneficiary students during the academic year',
-        'Improved academic performance in participating schools',
-        'Increased parent engagement in education',
-        'Strengthened community partnerships',
-        'Model framework developed for future projects'
-      ],
-      gallery: [
-        '/images/projects/school-supplies-1.jpg',
-        '/images/projects/school-supplies-2.jpg',
-        '/images/projects/school-supplies-3.jpg',
-        '/images/projects/school-supplies-4.jpg'
-      ]
-    }
-  ]
+const iconByKey = {
+  map: MapPin,
+  money: DollarSign,
+  trend: TrendingUp,
+  users: Users,
+} as const;
 
-  const upcomingProjects = [
-    {
-      id: 2,
-      title: 'Digital Learning Initiative 2025',
-      description: 'Bridging the digital divide by providing tablets and digital learning resources to underserved schools.',
-      status: 'planned',
-      expectedLaunch: 'Q2 2025',
-      targetBeneficiaries: 300,
-      estimatedBudget: '₦5,000,000',
-      objectives: [
-        'Provide 300 tablets to students in rural communities',
-        'Install solar-powered charging stations in 10 schools',
-        'Train 50 teachers on digital learning tools',
-        'Develop offline educational content in local languages'
-      ]
-    },
-    {
-      id: 3,
-      title: 'Girls\' Education Scholarship Program',
-      description: 'Supporting young girls from vulnerable families to complete their secondary education.',
-      status: 'development',
-      expectedLaunch: 'Q3 2025',
-      targetBeneficiaries: 100,
-      estimatedBudget: '₦8,000,000',
-      objectives: [
-        'Provide full scholarships to 100 girls',
-        'Include mentorship and life skills training',
-        'Partner with local businesses for internship opportunities',
-        'Create a support network for scholarship recipients'
-      ]
-    },
-    {
-      id: 4,
-      title: 'Community Library Project',
-      description: 'Establishing well-equipped libraries in underserved communities to promote literacy and learning.',
-      status: 'concept',
-      expectedLaunch: '2026',
-      targetBeneficiaries: 2000,
-      estimatedBudget: '₦15,000,000',
-      objectives: [
-        'Build 5 community libraries across Nigeria',
-        'Stock libraries with age-appropriate books',
-        'Create reading programs for children and adults',
-        'Train local librarians and volunteers'
-      ]
-    }
-  ]
-
-  const projectStats = [
-    { number: '500+', label: 'Lives Impacted', icon: Users },
-    { number: '₦2.5M', label: 'Invested in Communities', icon: Gift },
-    { number: '5', label: 'Communities Served', icon: MapPin },
-    { number: '100%', label: 'Project Success Rate', icon: Award },
-  ]
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed': return 'bg-green-100 text-green-800'
-      case 'planned': return 'bg-blue-100 text-blue-800'
-      case 'development': return 'bg-yellow-100 text-yellow-800'
-      case 'concept': return 'bg-purple-100 text-purple-800'
-      default: return 'bg-gray-100 text-gray-800'
-    }
-  }
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed': return CheckCircle
-      case 'planned': return Target
-      case 'development': return Clock
-      case 'concept': return Star
-      default: return Clock
-    }
-  }
+export default async function ProjectsPage() {
+  const [content, completedProjects, currentProjects, upcomingProjects] = await Promise.all([
+    getProjectsPage(),
+    getCompletedProjects(),
+    getCurrentProjects(),
+    getUpcomingProjects(),
+  ]);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary-50 via-white to-primary-100 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero opacity-5"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Our <span className="text-gradient">Projects</span>
-            </h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed mb-8">
-              Discover the tangible ways we&apos;re transforming lives and communities through 
-              education-focused initiatives across Nigeria.
+    <main className="flex flex-col">
+      {/* Hero -- gradient with stats overlay feel */}
+      <section className="relative bg-gradient-to-br from-[#256B4B] via-[#2F7D5A] to-[#4FA778] py-20 sm:py-28">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
+            {content.hero.title}
+          </h1>
+          <div className="mx-auto mt-6 max-w-lg border-l-4 border-[#E8A825] pl-4 text-left">
+            <p className="text-lg italic leading-relaxed text-[#F5D060]">
+              &ldquo;{content.hero.verse?.text}&rdquo;
             </p>
-
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto border border-primary-200 shadow-lg">
-              <blockquote className="text-lg text-gray-800 italic mb-3">
-                &ldquo;Faith by itself, if it is not accompanied by action, is dead.&rdquo;
-              </blockquote>
-              <cite className="text-primary-600 font-semibold">James 2:17</cite>
-            </div>
-          </motion.div>
+            <p className="mt-2 text-sm font-medium text-[#E8A825]">
+              &mdash; {content.hero.verse?.reference}
+            </p>
+          </div>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="#present-projects"
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "bg-[#E8A825] text-[#21352B] hover:bg-[#F5D060]",
+              )}
+            >
+              Present & Upcoming
+            </Link>
+            <Link
+              href="/projects/archive"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "border-white/40 bg-white/10 text-white hover:bg-white hover:text-[#256B4B]",
+              )}
+            >
+              Past Projects Archive
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Project Stats */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Impact by the Numbers</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Measuring our progress in creating lasting change in Nigerian communities
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {projectStats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-8 bg-gradient-to-br from-primary-50 to-white rounded-2xl border border-primary-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <stat.icon className="w-8 h-8 text-white" />
+      {/* Impact Stats */}
+      <section className="bg-[#EAF6EF] py-12 sm:py-16">
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 md:grid-cols-4">
+          {content.metrics.map((stat) => {
+            const Icon =
+              iconByKey[stat.iconKey as keyof typeof iconByKey] ?? Users;
+            return (
+              <div key={stat.label} className="text-center">
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                  <Icon className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-3xl font-bold text-primary-600 mb-2">{stat.number}</h3>
-                <p className="text-gray-700 font-medium">{stat.label}</p>
-              </motion.div>
+                <p className="text-2xl font-bold text-[#256B4B] sm:text-3xl">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {stat.label}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Current Projects */}
+      <section id="present-projects" className="scroll-mt-24 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+            {content.currentIntro?.title ?? "Current Projects"}
+          </h2>
+          <p className="mt-2 text-muted-foreground">
+            {content.currentIntro?.body ??
+              "Active work now moving through planning, funding, delivery, or reporting."}
+          </p>
+          <Separator className="my-8" />
+          <div className="grid gap-6 lg:grid-cols-2">
+            {currentProjects.map((project) => (
+              <Card
+                key={project.slug}
+                className="card-interactive border-t-4 border-primary bg-[#EAF6EF]/45"
+              >
+                <CardHeader>
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <CardTitle className="text-xl">{project.title}</CardTitle>
+                      <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar className="h-3.5 w-3.5" />
+                          {project.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <DollarSign className="h-3.5 w-3.5" />
+                          {project.budget}
+                        </span>
+                      </div>
+                    </div>
+                    <Badge className="shrink-0 border-primary/20 bg-primary text-white">
+                      Current
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{project.description}</p>
+                  <Separator className="my-5" />
+                  <h4 className="mb-3 text-sm font-semibold text-[#256B4B]">
+                    What this project is working toward
+                  </h4>
+                  <ul className="space-y-2">
+                    {project.impact.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
+                        <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B] hover:text-[#1F5E43]"
+                  >
+                    View project details
+                  </Link>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* Completed Projects */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+      <section id="project-archive" className="scroll-mt-24 bg-[#FAF6F1] py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+            {content.completedIntro.title}
+          </h2>
+          <p className="mt-2 text-muted-foreground">
+            {content.completedIntro.body}
+          </p>
+          <Link
+            href="/projects/archive"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B] hover:text-[#1F5E43]"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Completed Projects</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Celebrating the successful initiatives that have already made a difference
-            </p>
-          </motion.div>
-
-          {completedProjects.map((project) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-3xl shadow-xl border border-primary-200 overflow-hidden mb-12"
-            >
-              {/* Project Header */}
-              <div className="gradient-primary p-8 text-white">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center mb-4">
-                      <CheckCircle className="w-8 h-8 mr-3" />
-                      <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
-                        Completed
-                      </span>
-                    </div>
-                    <h3 className="text-3xl font-bold mb-4">{project.title}</h3>
-                    <p className="text-xl text-white/90 mb-6">{project.description}</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                      <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-2" />
-                        {project.location}
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        {project.startDate} - {project.endDate}
-                      </div>
-                      <div className="flex items-center">
-                        <Gift className="w-4 h-4 mr-2" />
-                        {project.budget}
+            Open full project archive
+          </Link>
+          <Separator className="my-8" />
+          <div className="space-y-8">
+            {completedProjects.map((project) => (
+              <Card
+                key={project.slug}
+                className="card-interactive border-l-4 border-primary"
+              >
+                <CardHeader>
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <CardTitle className="text-xl">{project.title}</CardTitle>
+                      <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                        <span className="inline-flex items-center gap-1">
+                          <Calendar className="h-3.5 w-3.5" />
+                          {project.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-primary">
+                          <Clock3 className="h-3.5 w-3.5" />
+                          {formatProjectCompletedAgo(project)}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <DollarSign className="h-3.5 w-3.5" />
+                          {project.budget}
+                        </span>
                       </div>
                     </div>
+                    <Badge className="shrink-0 border-primary/20 bg-primary/10 text-primary">
+                      Completed
+                    </Badge>
                   </div>
-                </div>
-              </div>
-
-              {/* Project Details */}
-              <div className="p-8">
-                {/* Project Description */}
-                <div className="mb-8">
-                  <h4 className="text-2xl font-bold text-gray-900 mb-4">Project Overview</h4>
-                  <p className="text-gray-700 leading-relaxed text-lg">{project.longDescription}</p>
-                </div>
-
-                {/* Impact Metrics */}
-                <div className="mb-8">
-                  <h4 className="text-2xl font-bold text-gray-900 mb-6">Impact Achieved</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <div className="bg-primary-50 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-primary-600">{project.impact.students}</div>
-                      <div className="text-sm text-gray-700">Students Helped</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-primary-600">{project.impact.schoolBags}</div>
-                      <div className="text-sm text-gray-700">School Bags</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-primary-600">{project.impact.notebooks}</div>
-                      <div className="text-sm text-gray-700">Notebooks</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-primary-600">{project.impact.textbooks}</div>
-                      <div className="text-sm text-gray-700">Textbooks</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-primary-600">{project.impact.writingMaterials}</div>
-                      <div className="text-sm text-gray-700">Writing Materials</div>
-                    </div>
-                    <div className="bg-primary-50 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-primary-600">{project.impact.communities}</div>
-                      <div className="text-sm text-gray-700">Communities</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Key Outcomes */}
-                <div className="mb-8">
-                  <h4 className="text-2xl font-bold text-gray-900 mb-6">Key Outcomes</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {project.outcomes.map((outcome, idx) => (
-                      <div key={idx} className="flex items-start space-x-3">
-                        <CheckCircle className="w-5 h-5 text-primary-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{outcome}</span>
-                      </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{project.description}</p>
+                  <Separator className="my-5" />
+                  <h4 className="mb-3 text-sm font-semibold text-[#256B4B]">
+                    Impact
+                  </h4>
+                  <ul className="space-y-2">
+                    {project.impact.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        {item}
+                      </li>
                     ))}
-                  </div>
-                </div>
-
-                {/* Testimonials */}
-                <div className="mb-8">
-                  <h4 className="text-2xl font-bold text-gray-900 mb-6">Community Voices</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {project.testimonials.map((testimonial, idx) => (
-                      <div key={idx} className="bg-gradient-to-br from-primary-50 to-white rounded-xl p-6 border border-primary-100">
-                        <blockquote className="text-gray-700 italic mb-4">
-                          &ldquo;{testimonial.quote}&rdquo;
-                        </blockquote>
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 gradient-primary rounded-full flex items-center justify-center text-white font-bold mr-3">
-                            {testimonial.name.split(' ').map(n => n[0]).join('')}
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                            <div className="text-sm text-primary-600">{testimonial.role}</div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Partners */}
-                <div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-4">Project Partners</h4>
-                  <div className="flex flex-wrap gap-3">
-                    {project.partners.map((partner, idx) => (
-                      <span key={idx} className="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">
-                        {partner}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Upcoming Projects */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Future Projects</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Exciting initiatives in development that will expand our impact across Nigeria
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {upcomingProjects.map((project, index) => {
-              const StatusIcon = getStatusIcon(project.status)
-              
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-gradient-to-br from-white to-primary-50 rounded-2xl shadow-lg border border-primary-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <StatusIcon className="w-8 h-8 text-primary-500" />
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusColor(project.status)}`}>
-                        {project.status}
-                      </span>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{project.title}</h3>
-                    <p className="text-gray-700 mb-4 leading-relaxed">{project.description}</p>
-                    
-                    <div className="space-y-3 mb-6">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Expected Launch:</span>
-                        <span className="font-medium text-gray-900">{project.expectedLaunch}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Target Beneficiaries:</span>
-                        <span className="font-medium text-gray-900">{project.targetBeneficiaries}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Estimated Budget:</span>
-                        <span className="font-medium text-gray-900">{project.estimatedBudget}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-2">Key Objectives:</h4>
-                      <ul className="space-y-1">
-                        {project.objectives.slice(0, 2).map((objective, idx) => (
-                          <li key={idx} className="text-sm text-gray-600 flex items-start">
-                            <CheckCircle className="w-4 h-4 text-primary-500 mr-2 mt-0.5 flex-shrink-0" />
-                            {objective}
-                          </li>
-                        ))}
-                        {project.objectives.length > 2 && (
-                          <li className="text-sm text-primary-600 font-medium">
-                            +{project.objectives.length - 2} more objectives
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
+                  </ul>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B] hover:text-[#1F5E43]"
+                  >
+                    View archive record
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-    </div>
-  )
+      {/* Upcoming Projects */}
+      <section id="upcoming-projects" className="scroll-mt-24 bg-[#F5EFE6] py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl px-4">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+            {content.upcomingIntro.title}
+          </h2>
+          <p className="mt-2 text-muted-foreground">
+            {content.upcomingIntro.body}
+          </p>
+          <Separator className="my-8" />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {upcomingProjects.map((project) => (
+              <Card
+                key={project.slug}
+                className="card-interactive border-t-4 border-[#E8A825]"
+              >
+                <CardHeader>
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="text-lg">{project.title}</CardTitle>
+                    <Badge className="shrink-0 border-[#E8A825]/30 bg-[#E8A825]/10 text-[#9A6A12]">
+                      Upcoming
+                    </Badge>
+                  </div>
+                  <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {project.date}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <DollarSign className="h-3.5 w-3.5" />
+                      {project.budget}
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{project.description}</p>
+                  <ul className="mt-4 space-y-1.5">
+                    {project.impact.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
+                        <Heart className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#E8A825]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#9A6A12] hover:text-[#74500F]"
+                  >
+                    View project details
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-gradient-to-br from-[#256B4B] via-[#2F7D5A] to-[#4FA778] py-16 sm:py-20">
+        <div className="mx-auto max-w-2xl px-4 text-center">
+          <h2 className="font-heading text-3xl font-bold tracking-tight text-white">
+            {content.cta.title}
+          </h2>
+          <p className="mt-4 text-lg text-[#EAF6EF]/80">
+            {content.cta.body}
+          </p>
+          <div className="mt-8">
+            <Link
+              href={content.cta.ctas?.[0]?.href ?? "/donate"}
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "bg-[#E8A825] text-[#21352B] hover:bg-[#9A6A12] hover:text-white",
+              )}
+            >
+              {content.cta.ctas?.[0]?.label ?? "Donate Now"}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }

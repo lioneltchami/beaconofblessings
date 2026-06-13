@@ -1,429 +1,278 @@
-'use client'
+import {
+  ArrowRight,
+  Clock,
+  Handshake,
+  Heart,
+  Mail,
+  MapPin,
+  Phone,
+  Share2,
+  Users,
+} from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { ContactForm } from "@/components/contact-form";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/data/site";
+import { getContactPage } from "@/lib/sanity/queries";
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { useForm } from 'react-hook-form'
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Clock, 
-  Send, 
-  Users, 
-  Heart, 
-  HandHeart,
-  Globe,
-  CheckCircle
-} from 'lucide-react'
-import Button from '@/components/ui/Button'
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description: `Get in touch with ${siteConfig.name}. We would love to hear from you about donations, volunteering, partnerships, or general inquiries.`,
+};
 
-interface ContactFormData {
-  name: string
-  email: string
-  phone?: string
-  subject: string
-  message: string
-  interest: string
-}
+const contactInfo = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: siteConfig.email,
+    href: `mailto:${siteConfig.email}`,
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: siteConfig.phone,
+    href: `tel:${siteConfig.phone.replace(/\s/g, "")}`,
+  },
+  {
+    icon: MapPin,
+    label: "Address",
+    value: siteConfig.address,
+  },
+  {
+    icon: Clock,
+    label: "Office Hours",
+    value: siteConfig.officeHours,
+  },
+];
 
-export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>()
+const involvementIcons = {
+  handshake: Handshake,
+  heart: Heart,
+  share: Share2,
+  users: Users,
+} as const;
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: 'Email Us',
-      details: 'info@beaconofblessings.org',
-      description: 'Send us a message and we\'ll respond within 24 hours',
-      action: 'mailto:info@beaconofblessings.org'
-    },
-    {
-      icon: Phone,
-      title: 'Call Us',
-      details: '+234 (0) 123 456 7890',
-      description: 'Speak directly with our Nigeria operations team',
-      action: 'tel:+2341234567890'
-    },
-    {
-      icon: MapPin,
-      title: 'Visit Us',
-      details: 'Lagos, Nigeria',
-      description: 'Our operations are centered in Lagos with community outreach across Nigeria',
-      action: '#'
-    },
-    {
-      icon: Clock,
-      title: 'Office Hours',
-      details: 'Mon - Fri: 9AM - 6PM WAT',
-      description: 'West Africa Time (UTC+1)',
-      action: '#'
-    }
-  ]
-
-  const getInvolvedOptions = [
-    {
-      icon: Heart,
-      title: 'Make a Donation',
-      description: 'Support our educational initiatives with a financial contribution',
-      action: '/donate',
-      color: 'gradient-primary'
-    },
-    {
-      icon: Users,
-      title: 'Volunteer',
-      description: 'Join our team of dedicated volunteers making a difference',
-      action: '#volunteer',
-      color: 'bg-blue-500'
-    },
-    {
-      icon: HandHeart,
-      title: 'Partner with Us',
-      description: 'Corporate partnerships and collaboration opportunities',
-      action: '#partner',
-      color: 'bg-purple-500'
-    },
-    {
-      icon: Globe,
-      title: 'Spread the Word',
-      description: 'Help us reach more communities by sharing our mission',
-      action: '#share',
-      color: 'bg-green-500'
-    }
-  ]
-
-  const interestOptions = [
-    'General Inquiry',
-    'Donation Questions',
-    'Volunteer Opportunities',
-    'Partnership/Collaboration',
-    'Media/Press Inquiry',
-    'Project Information',
-    'Other'
-  ]
-
-  // Suppress hydration warnings for browser extension attributes
-  useEffect(() => {
-    const originalError = console.error
-    console.error = (...args) => {
-      if (args[0]?.includes?.('data-np-intersection-state') || args[0]?.includes?.('hydration')) {
-        return
-      }
-      originalError(...args)
-    }
-    return () => {
-      console.error = originalError
-    }
-  }, [])
-
-  const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true)
-    
-    try {
-      // In a real implementation, this would send the form data to your backend
-      console.log('Contact form submission:', data)
-      
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      setIsSubmitted(true)
-      reset()
-    } catch (error) {
-      console.error('Form submission failed:', error)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+export default async function ContactPage() {
+  const content = await getContactPage();
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary-50 via-white to-primary-100 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero opacity-5"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Get in <span className="text-gradient">Touch</span>
+    <div className="flex flex-col bg-[#FAF6F1]">
+      <section className="relative isolate overflow-hidden bg-[#EAF6EF] py-20 md:py-28">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(circle at 78% 24%, rgba(232,168,37,0.18), transparent 34%), linear-gradient(120deg, rgba(234,246,239,0.96), rgba(250,246,241,0.98) 58%, rgba(238,240,248,0.92))",
+          }}
+        />
+        <div
+          className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#2F7D5A] via-[#E8A825] to-[#2D3A6E]"
+          aria-hidden="true"
+        />
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[1fr_0.75fr] lg:items-end">
+          <div>
+            <p className="inline-flex items-center gap-2 rounded-full border border-[#2F7D5A]/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#256B4B]">
+              <Mail className="h-3.5 w-3.5" />
+              {content.hero.eyebrow}
+            </p>
+            <h1 className="mt-6 max-w-3xl font-heading text-4xl font-bold tracking-tight text-[#21352B] sm:text-6xl">
+              {content.hero.title}
             </h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed mb-8">
-              We&apos;d love to hear from you. Whether you have questions about our work, want to get involved, 
-              or need support, we&apos;re here to help.
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#21352B]/75">
+              {content.hero.body}
             </p>
+          </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto border border-primary-200 shadow-lg">
-              <blockquote className="text-lg text-gray-800 italic mb-3">
-                &ldquo;Two are better than one, because they have a good return for their labor.&rdquo;
-              </blockquote>
-              <cite className="text-primary-600 font-semibold">Ecclesiastes 4:9</cite>
+          <div className="overflow-hidden rounded-lg border border-[#2F7D5A]/10 bg-white/85 shadow-[0_24px_80px_-56px_rgba(33,53,43,0.45)] backdrop-blur">
+            <div className="relative h-64">
+              <Image
+                src={content.responseWindow.image.src}
+                alt={content.responseWindow.image.alt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 32vw, 100vw"
+                className="object-cover"
+              />
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Contact Information */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Contact Information</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Multiple ways to reach us and connect with our team
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-primary-50 to-white rounded-2xl shadow-lg border border-primary-200 p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mb-4">
-                  <info.icon className="w-6 h-6 text-white" />
-                </div>
-                
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{info.title}</h3>
-                <p className="text-primary-600 font-semibold mb-3">{info.details}</p>
-                <p className="text-gray-600 text-sm">{info.description}</p>
-                
-                {info.action !== '#' && (
-                  <a
-                    href={info.action}
-                    className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm mt-3 transition-colors"
-                  >
-                    Connect
-                    <Send className="w-4 h-4 ml-1" />
-                  </a>
-                )}
-              </motion.div>
-            ))}
+            <div className="p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#9A6A12]">
+                {content.responseWindow.label}
+              </p>
+              <p className="mt-3 font-heading text-3xl text-[#256B4B]">
+                {content.responseWindow.value}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {content.responseWindow.description}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Form & Success Message */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {isSubmitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <div className="bg-white rounded-2xl shadow-xl border border-primary-200 p-12">
-                <div className="w-20 h-20 gradient-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle className="w-10 h-10 text-white" />
-                </div>
-                
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Message Sent Successfully!</h2>
-                <p className="text-lg text-gray-600 mb-8">
-                  Thank you for reaching out to us. We&apos;ve received your message and will get back to you 
-                  within 24 hours. We appreciate your interest in Beacon of Blessings Charity Initiative.
-                </p>
-                
-                <Button onClick={() => setIsSubmitted(false)}>
-                  Send Another Message
-                </Button>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="bg-white rounded-2xl shadow-xl border border-primary-200 overflow-hidden">
-                <div className="p-8 border-b border-primary-100">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">Send us a Message</h2>
-                  <p className="text-gray-600">
-                    Fill out the form below and we&apos;ll get back to you as soon as possible.
-                  </p>
-                </div>
+      <section className="py-14 md:py-20">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-[0.8fr_1.2fr]">
+          <aside className="space-y-5">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+                Direct contact
+              </p>
+              <h2 className="mt-2 font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+                Reach the team without friction.
+              </h2>
+              <p className="mt-3 leading-7 text-muted-foreground">
+                Use the form for program questions, donor verification,
+                volunteering, and partnership inquiries.
+              </p>
+            </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="p-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        {...register('name', { required: 'Name is required' })}
-                        className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500"
-                        placeholder="Enter your full name"
-                      />
-                      {errors.name && (
-                        <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
-                      )}
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        {...register('email', {
-                          required: 'Email is required',
-                          pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: 'Please enter a valid email address'
-                          }
-                        })}
-                        className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500"
-                        placeholder="Enter your email"
-                      />
-                      {errors.email && (
-                        <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        {...register('phone')}
-                        className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500"
-                        placeholder="Enter your phone number"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        I&apos;m interested in *
-                      </label>
-                      <select
-                        {...register('interest', { required: 'Please select your interest' })}
-                        className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500"
-                      >
-                        <option value="">Select an option</option>
-                        {interestOptions.map((option, index) => (
-                          <option key={index} value={option}>{option}</option>
-                        ))}
-                      </select>
-                      {errors.interest && (
-                        <p className="mt-2 text-sm text-red-600">{errors.interest.message}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Subject *
-                    </label>
-                    <input
-                      type="text"
-                      {...register('subject', { required: 'Subject is required' })}
-                      className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500"
-                      placeholder="Enter the subject of your message"
-                    />
-                    {errors.subject && (
-                      <p className="mt-2 text-sm text-red-600">{errors.subject.message}</p>
-                    )}
-                  </div>
-
-                  <div className="mb-8">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Message *
-                    </label>
-                    <textarea
-                      rows={6}
-                      {...register('message', { required: 'Message is required' })}
-                      className="w-full px-4 py-3 border border-primary-200 rounded-xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 resize-none"
-                      placeholder="Tell us more about your inquiry..."
-                    />
-                    {errors.message && (
-                      <p className="mt-2 text-sm text-red-600">{errors.message.message}</p>
-                    )}
-                  </div>
-
-                  <div className="text-center">
-                    <Button
-                      type="submit"
-                      size="lg"
-                      icon={Send}
-                      disabled={isSubmitting}
-                      className="px-12"
-                    >
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
-                    </Button>
-                  </div>
-                </form>
-              </div>
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* Get Involved Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Ways to Get Involved</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              There are many ways you can support our mission and make a difference in Nigerian communities
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {getInvolvedOptions.map((option, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group"
-              >
-                <a
-                  href={option.action}
-                  className="block bg-gradient-to-br from-primary-50 to-white rounded-2xl shadow-lg border border-primary-200 p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            <div className="grid gap-3">
+              {contactInfo.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-start gap-4 border border-[#2F7D5A]/10 bg-white/80 p-4 shadow-sm"
                 >
-                  <div className={`w-12 h-12 ${option.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <option.icon className="w-6 h-6 text-white" />
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#EAF6EF] text-primary">
+                    <item.icon className="h-5 w-5" />
                   </div>
-                  
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">{option.title}</h3>
-                  <p className="text-gray-600 text-sm">{option.description}</p>
-                  
-                  <div className="mt-4 text-primary-600 font-medium text-sm group-hover:text-primary-700 transition-colors">
-                    Learn More →
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      {item.label}
+                    </p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="mt-1 block break-words font-semibold text-[#256B4B] hover:text-primary"
+                      >
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="mt-1 font-semibold text-[#256B4B]">
+                        {item.value}
+                      </p>
+                    )}
                   </div>
-                </a>
-              </motion.div>
+                </div>
+              ))}
+            </div>
+
+            <p className="border-l-2 border-[#E8A825] pl-4 text-sm leading-6 text-muted-foreground">
+              For urgent donation or receipt questions, include the Stripe
+              checkout email and approximate donation date.
+            </p>
+          </aside>
+
+          <div>
+            <Card className="border border-[#2F7D5A]/10 bg-white/90 p-0 shadow-[0_24px_80px_-56px_rgba(33,53,43,0.45)]">
+              <CardContent className="p-6 md:p-9">
+                <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+                  Message
+                </p>
+                <h2 className="font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+                  Send Us a Message
+                </h2>
+                <p className="mb-7 mt-2 leading-7 text-muted-foreground">
+                  A concise message helps us answer faster. Tell us the topic,
+                  the outcome you need, and the best way to reach you.
+                </p>
+                <ContactForm />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <Separator />
+
+      <section className="bg-[#F5EFE6] py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="mb-10 max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+              Choose your lane
+            </p>
+            <h2 className="mt-2 font-heading text-3xl font-bold tracking-tight text-[#256B4B]">
+              Four useful ways to move the mission forward.
+            </h2>
+            <p className="mt-3 leading-7 text-muted-foreground">
+              Each path leads to a clear next action, from giving today to
+              starting a partnership conversation.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {content.getInvolved.map((item) => {
+              const Icon =
+                involvementIcons[item.iconKey as keyof typeof involvementIcons] ??
+                Heart;
+
+              return (
+                <Link
+                  key={item.title}
+                  href={item.href ?? "/contact"}
+                  className="group border border-[#2F7D5A]/10 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-[#2F7D5A]/25 hover:shadow-[0_22px_60px_-44px_rgba(33,53,43,0.45)]"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#E8A825]/12 text-[#9A6A12]">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-5 font-heading text-xl font-semibold text-[#256B4B]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 min-h-24 text-sm leading-6 text-muted-foreground">
+                    {item.description}
+                  </p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                    {item.ctaLabel}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="mt-12 grid gap-6 border-t border-[#2F7D5A]/10 pt-8 md:grid-cols-3">
+            {content.trustNotes.map((note) => (
+              <div key={note.title}>
+                <p className="font-heading text-lg font-semibold text-[#256B4B]">
+                  {note.title}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {note.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
+      <section className="bg-[#21352B] px-4 py-14 text-white">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#F5D060]">
+              Prefer to review first?
+            </p>
+            <h2 className="mt-2 font-heading text-3xl font-bold">
+              See impact and transparency before you reach out.
+            </h2>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/impact"
+              className="inline-flex h-11 items-center justify-center rounded-lg border border-white/20 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              View Impact
+            </Link>
+            <Link
+              href="/transparency"
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-[#E8A825] px-5 text-sm font-semibold text-[#21352B] transition-colors hover:bg-[#F5D060]"
+            >
+              Donor Trust
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
-  )
+  );
 }

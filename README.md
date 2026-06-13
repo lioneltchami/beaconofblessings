@@ -1,574 +1,1412 @@
-# Beacon of Blessings Charity Initiative Website
+# Beacon of Blessings Website
 
-A modern, responsive website for the Beacon of Blessings Charity Initiative - a Christian nonprofit organization focused on sharing the love of Jesus Christ through educational support for vulnerable communities in Nigeria.
+Production website for **Beacon of Blessings Charity Initiative**, an education-focused nonprofit serving children and families in Nigeria.
 
-## 🌟 Features
+This repository is a Next.js application with:
 
-### ✅ Complete Website Pages
-- **Homepage** - Hero section with mission, impact stats, and call-to-action
-- **About Page** - Founders profiles, vision, mission, core values, and organizational timeline
-- **Projects Page** - Detailed project showcase including completed and upcoming initiatives
-- **Blog** - Full blog system with listing page and individual post pages (3 sample posts)
-- **Gallery Page** - Photo gallery structure ready for community photos
-- **Donate Page** - Complete donation system with Stripe integration and PDF receipt generation
-- **Contact Page** - Contact forms and information
-- **Privacy Policy** - Comprehensive privacy policy covering data collection, cookies, and donor information
-- **Terms of Service** - Complete terms covering donations, refunds, and website usage
+- A public nonprofit website
+- Sanity CMS content management
+- Static fallback content when Sanity is unavailable
+- Stripe donation checkout
+- Resend-powered email notifications and receipts
+- Public document/resource downloads
+- Project lifecycle logic that automatically moves projects between upcoming, current, and completed based on dates
+- Tests, linting, security headers, and Vercel deployment support
 
-### ✅ Core Functionality
-- **🎨 Modern 2025 Design** - Blue and gold brand colors, gradients, smooth animations
-- **📱 Fully Responsive** - Mobile-first design optimized for all devices
-- **💰 Stripe Payment Integration** - Full Stripe integration with one-time and recurring donations
-- **💳 Secure Payment Processing** - PCI-compliant payment handling via Stripe
-- **🔔 Webhook Support** - Automated payment notifications and receipt generation
-- **🤖 Smart Chatbot** - AI assistant for answering questions about the organization
-- **📜 Bible Integration** - Scripture verses throughout the site reflecting Christian values
-- **⚡ Performance Optimized** - Fast loading, SEO-friendly, accessibility compliant
-- **📄 Legal Compliance** - Complete Privacy Policy and Terms of Service pages
+The site is designed so non-developers can manage as much content as possible through Sanity while the codebase keeps reliable fallbacks and business logic.
 
-### ✅ Technical Excellence
-- **Next.js 16** with TypeScript and Tailwind CSS
-- **WCAG 2.1 Accessibility** - Skip navigation, ARIA attributes, keyboard navigation, screen reader support
-- **Google Analytics 4** - Complete event tracking with custom analytics utilities
-- **Vercel Analytics & Speed Insights** - Real-time performance monitoring
-- **SEO Optimized** - Dynamic sitemap.xml, robots.txt, JSON-LD structured data
-- **Comprehensive Testing** - Jest + React Testing Library with 44+ passing tests
-- **Performance Optimized** - React.memo, code splitting, optimized bundle size
-- **Security Hardened** - CSP headers, rate limiting, XSS protection, HTTPS enforcement
-- **Contentful Ready** - Complete CMS integration structure
-- **PDF Generation** - Automatic donation receipts
-- **Form Handling** - Contact forms with validation
-- **Modern Animations** - Framer Motion for smooth user experience
-- **Clean Code** - ESLint/TypeScript compliant, well-documented
+## Table of Contents
 
-## 🚀 Quick Start
+- [What This Website Does](#what-this-website-does)
+- [Technology Stack](#technology-stack)
+- [Core Architecture](#core-architecture)
+- [Project Structure](#project-structure)
+- [Routes and Pages](#routes-and-pages)
+- [Content System](#content-system)
+- [Sanity CMS](#sanity-cms)
+- [Static Fallback Content](#static-fallback-content)
+- [Project Lifecycle System](#project-lifecycle-system)
+- [Resources and Public Documents](#resources-and-public-documents)
+- [Donations and Stripe](#donations-and-stripe)
+- [Email System](#email-system)
+- [Gallery, Albums, Blog, and Programs](#gallery-albums-blog-and-programs)
+- [Styling and Design System](#styling-and-design-system)
+- [Images and Media](#images-and-media)
+- [Environment Variables](#environment-variables)
+- [Local Development](#local-development)
+- [Testing and Quality Checks](#testing-and-quality-checks)
+- [Deployment](#deployment)
+- [Common Content Tasks](#common-content-tasks)
+- [Common Developer Tasks](#common-developer-tasks)
+- [Troubleshooting](#troubleshooting)
+- [Security and Accessibility Notes](#security-and-accessibility-notes)
+- [Important Files](#important-files)
+- [Future Maintenance Checklist](#future-maintenance-checklist)
 
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+## What This Website Does
 
-### Installation
+The site presents Beacon of Blessings as a legitimate, transparent, donor-ready nonprofit. It explains the mission, shows programs, publishes documents, collects donations, and gives the team a CMS-driven way to keep the site current.
 
-1. **Clone the repository**
-```bash
-git clone <your-repo-url>
-cd beacon-website
+The public visitor experience includes:
+
+- Homepage with mission, donor confidence, program highlights, field imagery, gift examples, and calls to donate or contact.
+- About page with founding story, principles, milestones, and organization goals.
+- Programs pages describing the main work areas and how donations support each program.
+- Impact page summarizing outcomes, metrics, evidence, and proof points.
+- Transparency page with registration facts, board/governance details, reporting cadence, document statuses, and policy links.
+- Projects page showing current, completed, and upcoming projects.
+- Resources page with public documents, registration certificate, reports, policies, and a link to the project timeline.
+- Gallery and album pages for photo-based storytelling.
+- Blog/story pages for updates.
+- Contact form.
+- Donation flow through Stripe Checkout.
+- Privacy and terms pages.
+
+## Technology Stack
+
+| Area | Tool |
+| --- | --- |
+| Framework | Next.js 15 App Router |
+| UI | React 19 |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| UI primitives | Base UI |
+| Icons | Lucide React |
+| CMS | Sanity |
+| Payments | Stripe Checkout |
+| Email | Resend |
+| Hosting | Vercel |
+| Testing | Vitest + Testing Library |
+| Linting | ESLint |
+| Analytics | Vercel Analytics and Speed Insights |
+
+## Core Architecture
+
+The application follows a Sanity-first, static-fallback architecture.
+
+At a high level:
+
+1. Pages call query helpers from `src/lib/sanity/queries.ts`.
+2. Query helpers check whether Sanity is configured.
+3. If Sanity is configured, the app fetches live CMS documents.
+4. If Sanity is not configured, returns empty, errors, or has missing values, the app falls back to static content in `src/data/`.
+5. Page components render the normalized content.
+
+This means the site can keep working even if:
+
+- Sanity credentials are missing locally.
+- Sanity has no document yet for a page.
+- A Sanity document is partially empty.
+- A CMS request fails temporarily.
+
+The fallback data is not temporary placeholder data. It is an intentional safety layer.
+
+## Project Structure
+
+```txt
+.
+|-- src/
+|   |-- app/                 # Next.js App Router pages, layouts, API routes, and server actions
+|   |-- components/          # Reusable UI, forms, layout, gallery, resources
+|   |-- data/                # Static fallback content
+|   `-- lib/                 # Sanity, Stripe, Resend, lifecycle, utilities
+|-- sanity/
+|   `-- schemas/             # Sanity schema definitions
+|-- scripts/
+|   `-- seed-sanity.ts       # Seeds fallback content into Sanity
+|-- public/
+|   `-- documents/           # Public PDF/document assets
+|-- __tests__/               # Unit and page/component tests
+|-- next.config.ts           # Next config, image domains, security headers
+|-- vercel.json              # Vercel function/region config
+|-- package.json             # Scripts and dependencies
+`-- README.md                # This guide
 ```
 
-2. **Install dependencies**
+## Routes and Pages
+
+### Public Pages
+
+| Route | File | Purpose |
+| --- | --- | --- |
+| `/` | `src/app/page.tsx` | Homepage and primary donor-facing story |
+| `/about` | `src/app/about/page.tsx` | Founding story, principles, milestones |
+| `/programs` | `src/app/programs/page.tsx` | Program overview |
+| `/programs/[slug]` | `src/app/programs/[slug]/page.tsx` | Individual program detail pages |
+| `/impact` | `src/app/impact/page.tsx` | Impact report, metrics, outcome pathway |
+| `/transparency` | `src/app/transparency/page.tsx` | Governance, registration, reporting, policies |
+| `/projects` | `src/app/projects/page.tsx` | Current, completed, and upcoming project timeline |
+| `/resources` | `src/app/resources/page.tsx` | Public document library |
+| `/gallery` | `src/app/gallery/page.tsx` | Gallery overview |
+| `/gallery/[slug]` | `src/app/gallery/[slug]/page.tsx` | Album detail pages |
+| `/blog` | `src/app/blog/page.tsx` | Stories/blog index |
+| `/blog/[slug]` | `src/app/blog/[slug]/page.tsx` | Individual story pages |
+| `/contact` | `src/app/contact/page.tsx` | Contact form and involvement paths |
+| `/donate` | `src/app/donate/page.tsx` | Donation page and Stripe checkout form |
+| `/donate/success` | `src/app/donate/success/page.tsx` | Post-checkout success page |
+| `/donate/cancel` | `src/app/donate/cancel/page.tsx` | Cancelled checkout page |
+| `/privacy` | `src/app/privacy/page.tsx` | Privacy policy |
+| `/terms` | `src/app/terms/page.tsx` | Terms page |
+
+### API and Server-Side Logic
+
+| Route/File | Purpose |
+| --- | --- |
+| `src/app/api/webhooks/stripe/route.ts` | Receives Stripe webhook events |
+| `src/app/actions/checkout.ts` | Creates Stripe Checkout sessions |
+| `src/app/actions/contact.ts` | Handles contact form submission |
+| `src/app/actions/emails.ts` | Sends contact notifications, donation notifications, and donation receipts |
+
+## Content System
+
+The content system has three layers:
+
+1. **Sanity CMS documents** for team-editable content.
+2. **Static fallback files** in `src/data/` for reliability.
+3. **Page components** in `src/app/` that render the content.
+
+The most important file for content fetching is:
+
+```txt
+src/lib/sanity/queries.ts
+```
+
+It contains functions like:
+
+- `getHomePage()`
+- `getProgramsPage()`
+- `getAboutPage()`
+- `getImpactPage()`
+- `getTransparencyPage()`
+- `getContactPage()`
+- `getDonatePage()`
+- `getProjectsPage()`
+- `getResourcesPage()`
+- `getPrograms()`
+- `getProjects()`
+- `getResources()`
+- `getAlbums()`
+- `getBlogPosts()`
+
+Most page components do not fetch Sanity directly. They call these helper functions.
+
+## Sanity CMS
+
+Sanity is used for content that the nonprofit team should be able to edit without touching code.
+
+### Sanity Schemas
+
+Schema files live in:
+
+```txt
+sanity/schemas/
+```
+
+Important schemas:
+
+| Schema | File | Purpose |
+| --- | --- | --- |
+| Site config | `sanity/schemas/site-config.ts` | Organization name, legal name, contact info, navigation, social links |
+| Pages | `sanity/schemas/pages.ts` | Editable content for homepage and major static pages |
+| Programs | `sanity/schemas/program.ts` | Program cards and program detail pages |
+| Projects | `sanity/schemas/project.ts` | Project records, dates, lifecycle mode, budgets, impacts |
+| Resources | `sanity/schemas/resource.ts` | Public documents and downloads |
+| Blog posts | `sanity/schemas/blog-post.ts` | Stories/blog content |
+| Albums | `sanity/schemas/album.ts` | Photo albums |
+| Gallery items | `sanity/schemas/gallery-item.ts` | Gallery cards |
+| Founders | `sanity/schemas/founder.ts` | Founder/team content |
+| Impact stats | `sanity/schemas/impact-stat.ts` | Reusable impact statistics |
+| Core values | `sanity/schemas/core-value.ts` | Values shown across the site |
+
+### How Sanity Is Connected
+
+Sanity connection code is in:
+
+```txt
+src/lib/sanity/client.ts
+```
+
+The site considers Sanity configured when `SANITY_PROJECT_ID` exists.
+
+```ts
+export const isSanityConfigured = Boolean(projectId);
+```
+
+If `SANITY_TOKEN` exists, the client uses authenticated requests. If no token is available in production, it uses Sanity CDN reads.
+
+### Seeding Sanity
+
+The script:
+
+```txt
+scripts/seed-sanity.ts
+```
+
+builds Sanity documents from static data and writes them to Sanity.
+
+Commands:
+
+```bash
+npm run sanity:seed -- --dry-run
+npm run sanity:seed
+npm run sanity:seed -- --no-overwrite
+```
+
+What the options mean:
+
+- `--dry-run`: shows what would be created or updated without writing.
+- No flag: creates or replaces all seeded documents.
+- `--no-overwrite`: only creates documents that do not already exist.
+
+Required environment variables for seeding:
+
+```bash
+SANITY_PROJECT_ID=...
+SANITY_DATASET=production
+SANITY_TOKEN=...
+SANITY_API_VERSION=2024-01-01
+```
+
+Do not commit `.env` or any Sanity token.
+
+## Static Fallback Content
+
+Static fallback content lives in:
+
+```txt
+src/data/
+```
+
+Important files:
+
+| File | Purpose |
+| --- | --- |
+| `src/data/site.ts` | Site config, navigation, footer links, social links, core values |
+| `src/data/pages.ts` | Page-level content for homepage, about, contact, donate, resources, etc. |
+| `src/data/programs.ts` | Program fallback data |
+| `src/data/projects.ts` | Project fallback data and helper functions |
+| `src/data/resources.ts` | Public resources/documents fallback data |
+| `src/data/impact.ts` | Transparency, impact report, board/governance fallback data |
+| `src/data/gallery.ts` | Gallery item fallback data |
+| `src/data/albums.ts` | Album fallback data |
+| `src/data/blog-posts.ts` | Blog/story fallback data |
+| `src/data/founders.ts` | Founder fallback data |
+| `src/data/stock-images.ts` | Curated fallback image URLs |
+
+Fallbacks matter because the website should not go blank just because a CMS field is missing.
+
+The query helpers also merge Sanity content with fallback content where appropriate. This allows a partially filled Sanity document to still render safely.
+
+## Project Lifecycle System
+
+Projects now move automatically through lifecycle sections based on dates.
+
+The lifecycle logic lives in:
+
+```txt
+src/lib/project-lifecycle.ts
+```
+
+The project model supports:
+
+```ts
+status: "completed" | "current" | "upcoming";
+lifecycleMode?: "auto" | "manual";
+startDate?: string;
+endDate?: string;
+archiveAfterDate?: string;
+autoArchiveAfterEndDate?: boolean;
+archiveRecord?: ProjectArchiveRecord;
+```
+
+### Automatic Mode
+
+When `lifecycleMode` is `"auto"`:
+
+| Date Condition | Section |
+| --- | --- |
+| Today is before `startDate` | Upcoming Projects |
+| Today is on/after `startDate` and before the archive date | Current Projects |
+| Today is after `archiveAfterDate` | Project Archive |
+| `archiveAfterDate` is empty and today is after `endDate` | Project Archive, when `autoArchiveAfterEndDate` is enabled |
+
+`archiveAfterDate` is the clearest field for editors because it says exactly
+when the project should stop appearing as current. If it is empty, automatic
+projects use `endDate` unless `autoArchiveAfterEndDate` is set to false.
+
+### Manual Mode
+
+When `lifecycleMode` is `"manual"`:
+
+The site uses the `status` field exactly as entered.
+
+Manual mode is useful if:
+
+- A project is paused.
+- A project needs to remain current after its planned end date.
+- A launch date changed but the team does not want the site to move it yet.
+- The team wants editorial control over a special project.
+
+### Relative Completed Dates
+
+Completed projects show relative time through:
+
+```ts
+formatProjectCompletedAgo(project)
+```
+
+Examples:
+
+- `Completed today`
+- `20 months ago`
+- `2 years ago`
+- `10 years ago`
+
+This is why a project completed today will naturally read as older in future years without editing code.
+
+### Archive Pages
+
+Archived projects are available in two places:
+
+```txt
+src/app/projects/archive/page.tsx
+src/app/projects/[slug]/page.tsx
+```
+
+`/projects/archive` is the archive index. `/projects/[slug]` is the project
+detail/archive record page. Completed projects can optionally link to an
+`archiveRecord` with final outcomes, a report URL, and a gallery link.
+
+### Current Project Data
+
+Fallback project examples in `src/data/projects.ts`:
+
+| Project | Start | Archive after | Current Lifecycle on June 13, 2026 |
+| --- | --- | --- | --- |
+| First Project - Educational Supplies Outreach 2024 | 2024-01-01 | 2024-12-31 | Archived |
+| Youth Bible Distribution Outreach | 2026-06-15 | 2026-06-15 | Upcoming |
+| Digital Learning Initiative | 2026-01-01 | 2026-12-31 | Current |
+| Girls' Education Scholarship Program | 2026-09-01 | 2027-07-31 | Upcoming |
+| Community Library Project | 2027-01-01 | 2027-12-31 | Upcoming |
+
+### Important Note
+
+There is no background job mutating project records every night. The lifecycle is computed when the site renders or revalidates, and `.github/workflows/scheduled-refresh.yml` provides a weekly build/refresh check. If `VERCEL_DEPLOY_HOOK_URL` is configured in GitHub Secrets, that scheduled workflow can also trigger a Vercel redeploy.
+
+## Resources and Public Documents
+
+The Resources page is:
+
+```txt
+src/app/resources/page.tsx
+```
+
+The resource list component is:
+
+```txt
+src/components/resource-list.tsx
+```
+
+Fallback resource data is:
+
+```txt
+src/data/resources.ts
+```
+
+### Resource Categories
+
+Resources can be grouped into:
+
+- `registration`
+- `annual-reports`
+- `project-reports`
+- `policies`
+
+The UI lets visitors filter by category.
+
+### Public Certificate
+
+The incorporation certificate PDF is available from:
+
+```txt
+public/documents/beacon-of-blessings-certificate-of-incorporation.pdf
+```
+
+The public website links to this document from the Resources page and transparency-related content.
+
+Current certificate facts used on the site:
+
+- Organization: Beacon of Blessings Charity Initiative
+- Registration number: `8271788`
+- TIN: `32841511-0001`
+- Registration date: February 15, 2025
+- Jurisdiction: Nigeria Corporate Affairs Commission
+
+### Resource URL Safety
+
+`ResourceList` validates resource URLs before rendering download links. It allows:
+
+- Same-site document URLs under `/documents/`
+- Sanity CDN file URLs under `cdn.sanity.io/files/`
+
+This prevents arbitrary or unsafe URLs from being rendered as trusted downloads.
+
+### Resources to Projects Link
+
+The Resources page includes a "Project Timeline" section that links to:
+
+```txt
+/projects
+```
+
+This connects public documents and project history so visitors can move from proof/documents into the project lifecycle view.
+
+## Donations and Stripe
+
+The donation page is:
+
+```txt
+src/app/donate/page.tsx
+```
+
+The donation form component is:
+
+```txt
+src/components/donate-form.tsx
+```
+
+Checkout session creation is handled by:
+
+```txt
+src/app/actions/checkout.ts
+```
+
+Stripe client setup is:
+
+```txt
+src/lib/stripe.ts
+```
+
+### Donation Flow
+
+1. Visitor opens `/donate`.
+2. Visitor chooses one-time or monthly donation.
+3. Visitor selects a preset amount or enters a custom amount.
+4. Optionally, donation can be tied to a program through the `program` query parameter.
+5. Form submits to the `createCheckoutSession` server action.
+6. Server action creates a Stripe Checkout session.
+7. Visitor is redirected to Stripe.
+8. Stripe redirects back to:
+   - `/donate/success`
+   - `/donate/cancel`
+9. Stripe webhooks notify the app about completed payments and recurring invoices.
+10. The app sends donor receipt and internal notification emails through Resend.
+
+### Program-Specific Donations
+
+If the URL includes:
+
+```txt
+/donate?program=school-readiness-kits
+```
+
+the donation form looks up the program and adds its name/slug to Stripe metadata.
+
+This helps connect donation records to program intent.
+
+### Stripe Webhook
+
+The webhook route is:
+
+```txt
+src/app/api/webhooks/stripe/route.ts
+```
+
+It handles:
+
+- `checkout.session.completed`
+- `invoice.paid`
+- `customer.subscription.deleted`
+
+For one-time paid Checkout sessions:
+
+- Sends donor receipt email.
+- Sends internal donation notification email.
+
+For recurring donation invoices:
+
+- Sends recurring donation receipt email.
+- Sends internal donation notification email.
+
+Webhook signature verification uses:
+
+```bash
+STRIPE_WEBHOOK_SECRET
+```
+
+## Email System
+
+Email is powered by Resend.
+
+Client setup is:
+
+```txt
+src/lib/resend.ts
+```
+
+Email formatting helpers are:
+
+```txt
+src/lib/email-format.ts
+```
+
+Email server actions are:
+
+```txt
+src/app/actions/emails.ts
+```
+
+The email system sends:
+
+- Contact form notifications to the organization email.
+- Donation receipts to donors.
+- Donation notifications to the organization email.
+
+Environment variables:
+
+```bash
+RESEND_API_KEY=...
+EMAIL_FROM=Beacon of Blessings <noreply@yourdomain.com>
+ORG_EMAIL=info@blessedbeaconcharity.org
+```
+
+Important behavior:
+
+- Contact form validation happens server-side.
+- Contact form email errors are logged but not exposed in detail to visitors.
+- Donation receipt content escapes user-provided values before placing them into HTML.
+
+## Gallery, Albums, Blog, and Programs
+
+### Programs
+
+Programs are managed through:
+
+- `src/data/programs.ts`
+- `sanity/schemas/program.ts`
+- `src/app/programs/page.tsx`
+- `src/app/programs/[slug]/page.tsx`
+
+Program pages include:
+
+- Title
+- Kicker
+- Summary
+- Location
+- Status
+- Who benefits
+- What happens
+- Gift examples
+- Outcomes
+- Proof points
+- CTA labels
+- Donation CTA
+- Image
+
+### Projects
+
+Projects are managed through:
+
+- `src/data/projects.ts`
+- `sanity/schemas/project.ts`
+- `src/app/projects/page.tsx`
+- `src/lib/project-lifecycle.ts`
+
+Projects are date-aware and can automatically move between lifecycle sections.
+
+### Gallery
+
+Gallery overview uses:
+
+- `src/data/gallery.ts`
+- `sanity/schemas/gallery-item.ts`
+- `src/app/gallery/page.tsx`
+
+Album detail pages use:
+
+- `src/data/albums.ts`
+- `sanity/schemas/album.ts`
+- `src/app/gallery/[slug]/page.tsx`
+- `src/components/album-photo-grid.tsx`
+- `src/components/lightbox.tsx`
+
+### Blog/Stories
+
+Blog/story content uses:
+
+- `src/data/blog-posts.ts`
+- `sanity/schemas/blog-post.ts`
+- `src/app/blog/page.tsx`
+- `src/app/blog/[slug]/page.tsx`
+
+## Styling and Design System
+
+The visual direction is warm, trustworthy, child-development friendly, and nonprofit-oriented.
+
+Core brand palette currently includes:
+
+- Growth green: primary brand color
+- Warm gold: donation/action accent
+- Trust indigo: registration/governance accent
+- Soft cream/off-white backgrounds
+
+Global styles live in:
+
+```txt
+src/app/globals.css
+```
+
+Reusable UI primitives live in:
+
+```txt
+src/components/ui/
+```
+
+Button styling is centralized in:
+
+```txt
+src/components/ui/button-variants.ts
+```
+
+Important pattern:
+
+- Use `Button` for real button behavior.
+- Use `Link` or `<a>` with `buttonVariants()` for navigation/download links.
+
+This avoids Base UI accessibility warnings and keeps correct link semantics.
+
+## Images and Media
+
+Images come from three possible places:
+
+1. Sanity image assets.
+2. External allowed URLs, such as Pexels.
+3. Static URLs in fallback content.
+
+Allowed remote image domains are configured in:
+
+```txt
+next.config.ts
+```
+
+Current allowed hosts:
+
+- `cdn.sanity.io`
+- `images.pexels.com`
+
+If a new image host is used, add it to `remotePatterns` in `next.config.ts`.
+
+For public files like PDFs, use:
+
+```txt
+public/documents/
+```
+
+Files in `public/` are served from the site root. For example:
+
+```txt
+public/documents/example.pdf
+```
+
+is available at:
+
+```txt
+/documents/example.pdf
+```
+
+## Environment Variables
+
+Start from:
+
+```txt
+.env.example
+```
+
+Create a local environment file:
+
+```bash
+cp .env.example .env
+```
+
+or:
+
+```bash
+cp .env.example .env.local
+```
+
+### Site
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://www.blessedbeaconcharity.org
+```
+
+Used for Stripe success/cancel URLs and canonical site behavior.
+
+For local development, it can be:
+
+```bash
+NEXT_PUBLIC_SITE_URL=http://localhost:3001
+```
+
+### Sanity
+
+```bash
+SANITY_PROJECT_ID=your-project-id
+SANITY_DATASET=production
+SANITY_API_VERSION=2024-01-01
+SANITY_TOKEN=your-token
+```
+
+Notes:
+
+- `SANITY_PROJECT_ID` turns on Sanity fetching.
+- `SANITY_TOKEN` is needed for authenticated/private reads and seeding.
+- Without Sanity config, the site uses static fallback data.
+
+### Stripe
+
+```bash
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+```
+
+Notes:
+
+- `STRIPE_SECRET_KEY` is required for Checkout.
+- `STRIPE_WEBHOOK_SECRET` is required for webhook verification.
+- The current donation form uses server-side Checkout creation.
+
+### Resend
+
+```bash
+RESEND_API_KEY=re_...
+EMAIL_FROM=Beacon of Blessings <noreply@yourdomain.com>
+ORG_EMAIL=info@blessedbeaconcharity.org
+```
+
+Notes:
+
+- `ORG_EMAIL` receives contact form and donation notification emails.
+- `EMAIL_FROM` must be a sender address allowed by Resend.
+
+### Analytics
+
+```bash
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
+The app also includes Vercel Analytics and Speed Insights dependencies.
+
+## Local Development
+
+Install dependencies:
+
 ```bash
 npm install
 ```
 
-3. **Set up environment variables**
-```bash
-cp .env.example .env.local
-```
-Edit `.env.local` with your configuration values.
+Run the dev server:
 
-4. **Run the development server**
 ```bash
 npm run dev
 ```
 
-5. **Open your browser**
-Visit [http://localhost:3000](http://localhost:3000)
-
-## 🔧 Configuration
-
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe publishable key for client-side payment forms | **Yes*** |
-| `STRIPE_SECRET_KEY` | Stripe secret key for server-side API calls | **Yes*** |
-| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret for event verification | **Yes*** |
-| `CONTENTFUL_SPACE_ID` | Your Contentful space ID | Optional |
-| `CONTENTFUL_ACCESS_TOKEN` | Contentful delivery API token | Optional |
-| `CONTENTFUL_PREVIEW_TOKEN` | Contentful preview API token | Optional |
-| `NEXT_PUBLIC_EMAIL_SERVICE_ID` | Email service ID for contact forms | Optional |
-| `NEXT_PUBLIC_EMAIL_TEMPLATE_ID` | Email template ID | Optional |
-| `NEXT_PUBLIC_EMAIL_PUBLIC_KEY` | Email service public key | Optional |
-
-**Required for payment processing*. See `.env.local.example` for setup instructions.
-
-#### Stripe Setup
-1. Create a Stripe account at https://stripe.com
-2. Get your API keys from the Stripe Dashboard
-3. Set up a webhook endpoint pointing to `https://yourdomain.com/api/webhooks/stripe`
-4. Copy the webhook signing secret to `STRIPE_WEBHOOK_SECRET`
-
-### Building for Production
+By default, Next.js uses port `3000`. In this working session the site is commonly run on port `3001`:
 
 ```bash
-# Build the application
+PORT=3001 npm run dev
+```
+
+Open:
+
+```txt
+http://localhost:3001
+```
+
+### Important Dev Server Note
+
+After running:
+
+```bash
 npm run build
-
-# Start production server
-npm start
-
-# Run linting
-npm run lint
-
-# Run type checking
-npm run type-check
 ```
 
-## 📁 Project Structure
+the `.next` directory is rewritten for production output. If a dev server is already running, it can sometimes show stale or broken development state.
 
-```
-beacon-website/
-├── src/
-│   ├── app/                           # Next.js App Router pages
-│   │   ├── about/                    # About page
-│   │   ├── api/                      # API Routes
-│   │   │   ├── create-payment-intent/  # One-time donation API
-│   │   │   ├── create-subscription/    # Recurring donation API
-│   │   │   └── webhooks/
-│   │   │       └── stripe/           # Stripe webhook handler
-│   │   ├── contact/                  # Contact page
-│   │   ├── donate/                   # Donation page with Stripe integration
-│   │   ├── gallery/                  # Gallery page
-│   │   ├── privacy/                  # Privacy Policy page
-│   │   ├── projects/                 # Projects page
-│   │   ├── terms/                    # Terms of Service page
-│   │   ├── layout.tsx                # Root layout
-│   │   ├── globals.css               # Global styles with brand colors
-│   │   └── page.tsx                  # Homepage
-│   ├── components/                   # React components
-│   │   ├── layout/                   # Layout components (Header, Footer)
-│   │   ├── sections/                 # Page sections
-│   │   └── ui/                       # UI components (Button, Chatbot)
-│   ├── lib/                          # Utility functions
-│   │   ├── contentful.ts             # Contentful API functions
-│   │   └── pdfGenerator.ts           # PDF receipt generation
-│   └── types/                        # TypeScript type definitions
-│       └── contentful.ts             # Contentful content types
-├── public/                           # Static assets
-├── .env.local.example                # Environment variables template
-├── CONTENTFUL_MIGRATION.md           # Contentful setup guide
-└── README.md                         # This file
-```
+Clean restart:
 
-## 🎨 Brand Guidelines
-
-### Colors
-- **Primary Blue**: #3b82f6 (Tailwind blue-500) - Trust, Education, Stability
-- **Secondary Blue**: #2563eb (Tailwind blue-600) - Depth and Professionalism
-- **Accent Gold**: #f59e0b (Tailwind amber-500) - Warmth, Hope, Divine Blessing
-- **White**: #ffffff - Purity and Clarity
-- **Text**: #1f2937 (Tailwind gray-800) - Readability
-
-### Typography
-- **Primary Font**: System UI Sans Serif (ui-sans-serif, system-ui, -apple-system)
-- **Display Font**: System UI Serif for headings
-- **Monospace**: System UI Monospace
-
-### Design Principles
-- Clean, modern design following 2025 trends
-- Mobile-first responsive approach
-- Accessibility compliance (WCAG 2.1)
-- Blue and gold color scheme representing trust, education, and divine blessing
-- Biblical foundation with integrated scriptures
-- System fonts for optimal performance and cross-platform consistency
-
-## 🚢 Deployment
-
-### Vercel (Recommended)
-1. Push code to GitHub
-2. Connect repository to Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy automatically on push
-
-### Other Platforms
-- **Netlify**: Connect GitHub repo, add build command `npm run build`
-- **AWS/DigitalOcean**: Build locally and upload `out/` folder
-
-## 📚 Content Management
-
-### Static Content (Current)
-All content is currently built into the components and can be edited directly in the code.
-
-### Contentful CMS (Future)
-Complete Contentful integration is ready for when you want to enable content management:
-
-1. Set up Contentful space
-2. Create content models using `CONTENTFUL_MIGRATION.md`
-3. Add environment variables
-4. Migrate static content to Contentful
-5. Update components to fetch from Contentful
-
-See `CONTENTFUL_MIGRATION.md` for detailed setup instructions.
-
-## 🔧 Customization
-
-### Adding New Pages
-1. Create folder in `src/app/`
-2. Add `page.tsx` file
-3. Update navigation in `Header.tsx`
-
-### Modifying Styles
-- Global styles: `src/app/globals.css`
-- Component styles: Tailwind classes
-- Brand colors: CSS custom properties in globals.css
-
-### Adding Features
-- New components: `src/components/`
-- API functions: `src/lib/`
-- Type definitions: `src/types/`
-
-## 🤖 Chatbot
-
-The integrated chatbot can answer questions about:
-- Organization founders and leadership
-- Mission and vision statements
-- Projects and impact
-- Donation information
-- Volunteer opportunities
-- Contact details
-- Biblical foundation and values
-
-To customize chatbot responses, edit the knowledge base in `src/components/ui/Chatbot.tsx`.
-
-## 💳 Donation System
-
-### Features
-- **Payment Methods**: One-time and monthly recurring donations
-- **Flexible Amounts**: Preset amounts ($25, $50, $100, $250, $500, $1000) + custom amounts
-- **Secure Processing**: Full Stripe integration with PCI-compliant payment handling
-- **Donor Management**: Automatic customer creation and management in Stripe
-- **Receipt Generation**: Automated PDF receipts via webhook
-- **Dedication Options**: Honor and memorial dedication support
-- **Email Notifications**: Automated thank-you emails and receipts
-
-### API Endpoints
-
-#### POST `/api/create-payment-intent`
-Creates a one-time donation payment intent.
-
-**Request Body:**
-```json
-{
-  "amount": 5000,              // Amount in cents ($50.00)
-  "currency": "usd",           // Optional, defaults to USD
-  "donorName": "John Doe",
-  "email": "john@example.com",
-  "metadata": {                // Optional
-    "dedication": "In honor of Jane Doe",
-    "dedicationType": "honor"
-  }
-}
-```
-
-**Response:**
-```json
-{
-  "clientSecret": "pi_xxx_secret_xxx",
-  "paymentIntentId": "pi_xxx"
-}
-```
-
-#### POST `/api/create-subscription`
-Creates a monthly recurring donation subscription.
-
-**Request Body:**
-```json
-{
-  "amount": 5000,              // Monthly amount in cents ($50.00)
-  "currency": "usd",           // Optional, defaults to USD
-  "donorName": "John Doe",
-  "email": "john@example.com",
-  "metadata": {                // Optional
-    "dedication": "Supporting education",
-    "dedicationType": "honor"
-  }
-}
-```
-
-**Response:**
-```json
-{
-  "subscriptionId": "sub_xxx",
-  "clientSecret": "pi_xxx_secret_xxx",
-  "customerId": "cus_xxx"
-}
-```
-
-#### POST `/api/webhooks/stripe`
-Handles Stripe webhook events for automated processing.
-
-**Supported Events:**
-- `payment_intent.succeeded` - One-time donation completed
-- `payment_intent.payment_failed` - Payment failed
-- `customer.subscription.created` - New recurring donation
-- `customer.subscription.updated` - Subscription updated
-- `customer.subscription.deleted` - Subscription cancelled
-- `invoice.payment_succeeded` - Recurring payment succeeded
-- `invoice.payment_failed` - Recurring payment failed
-
-### Security
-- Server-side validation for all payment requests
-- Webhook signature verification using STRIPE_WEBHOOK_SECRET
-- Lazy Stripe client initialization to prevent build-time errors
-- Minimum ($1) and maximum ($999,999) donation limits
-- Email and donor name validation
-
-## 📄 Privacy & Legal Pages
-
-### Privacy Policy (`/privacy`)
-Comprehensive privacy policy covering:
-- Information collection and usage (personal data, donation information)
-- Cookie policy and tracking technologies
-- Third-party services (Stripe payment processing)
-- Data security measures
-- User rights (access, correction, deletion)
-- Children's privacy (under 13)
-- International data transfers
-- Contact information for privacy concerns
-- Last updated: November 14, 2025
-
-### Terms of Service (`/terms`)
-Complete terms of service including:
-- Acceptance of terms and conditions
-- Donation policies and payment processing
-- Refund policy (30-day window for valid requests)
-- Website usage guidelines
-- Intellectual property rights
-- Disclaimer of warranties
-- Limitation of liability
-- Indemnification clause
-- Governing law (Nigerian jurisdiction)
-- Changes to terms notification
-- Last updated: November 14, 2025
-
-Both pages are accessible via footer links and follow professional legal standards for nonprofit organizations.
-
-## ♿ Accessibility Features
-
-### WCAG 2.1 Compliance
-- **Skip Navigation**: Keyboard users can skip directly to main content (Tab key on page load)
-- **ARIA Attributes**: Comprehensive ARIA labels, roles, and landmarks throughout
-- **Keyboard Navigation**: Full keyboard accessibility with visible focus indicators
-- **Screen Reader Support**: Semantic HTML and proper ARIA live regions
-- **Focus Management**: Enhanced focus-visible styles with visual feedback
-- **Color Contrast**: WCAG AA compliant color combinations
-
-### Implementation Details
-- Skip-to-content link in root layout (src/components/ui/SkipToContent.tsx)
-- Enhanced Header with `role="banner"`, `aria-label`, `aria-expanded`, `aria-controls`
-- Enhanced Footer with `role="contentinfo"` and labeled navigation regions
-- Screen reader-only class (`.sr-only`) for accessibility text
-- Focus-visible styles with blue outline and shadow for keyboard users
-
-## 📊 Analytics & Monitoring
-
-### Google Analytics 4 Integration
-Comprehensive event tracking with custom utility functions:
-- **Page Views**: Automatic tracking on all route changes
-- **Donation Events**: Tracks donation amount, currency, frequency, and donor name
-- **Form Submissions**: Contact form and other form tracking
-- **Social Media**: Tracks social media link clicks
-- **Custom Events**: Flexible event tracking system
-
-**Implementation:**
-```typescript
-import { trackDonation, trackFormSubmission } from '@/lib/analytics'
-
-// Track donation
-trackDonation({
-  amount: 5000, // cents
-  currency: 'USD',
-  frequency: 'one-time',
-  donorName: 'John Doe'
-})
-
-// Track form submission
-trackFormSubmission('Contact Form')
-```
-
-### Vercel Analytics & Speed Insights
-- **Real-time Analytics**: Visitor tracking and page views on Vercel
-- **Web Vitals**: Automatic monitoring of Core Web Vitals (LCP, FID, CLS)
-- **Speed Insights**: Performance metrics and optimization suggestions
-- **Zero Configuration**: Automatically enabled when deployed to Vercel
-
-## 🔍 SEO Enhancements
-
-### Dynamic Sitemap (sitemap.xml)
-Automatically generated sitemap with:
-- All 8 main pages (Home, About, Projects, Gallery, Donate, Contact, Privacy, Terms)
-- Custom priorities and change frequencies per page
-- Last modified dates
-- Automatic updates when pages change
-
-### Robots.txt
-Configured for optimal search engine crawling:
-- Allows all major search engines
-- Blocks AI scraping bots (GPTBot, ChatGPT-User)
-- Disallows indexing of API routes and admin pages
-- References sitemap.xml location
-
-### JSON-LD Structured Data
-Rich structured data for search engines:
-
-**Organization Schema:**
-- NGO type with full organization details
-- Founder information (Lionel Tchami, Grace Kure)
-- Contact information and address
-- Social media profiles
-- Mission and service area
-
-**Donation Action Schema:**
-- Enables "Donate" rich snippets in search results
-- Links to donation page
-- Describes donation functionality
-
-**Usage:**
-Structured data is automatically included in all pages via root layout.
-
-## 📝 Blog System
-
-### Features
-- **Blog Listing Page** (/blog) - Grid layout with category badges, read time, and tags
-- **Individual Blog Posts** (/blog/[slug]) - Full post content with back navigation
-- **Static Site Generation** - Blog posts pre-rendered for optimal performance
-- **Sample Content** - 3 pre-written blog posts about impact stories and ministry updates
-
-### Blog Post Structure
-Each blog post includes:
-- Title, excerpt, and full content (markdown support)
-- Author, date, category, and tags
-- Estimated read time
-- Responsive design with proper typography
-
-### Content Management
-Blog posts are currently managed in `src/data/blog-posts.ts`. For dynamic content management, integrate with Contentful CMS.
-
-**Sample Posts:**
-1. "Transforming Lives Through Education in Rural Nigeria"
-2. "Faith in Action: Our Community Outreach Programs"
-3. "2024 Year-End Report: A Year of Blessings"
-
-## 🧪 Testing Suite
-
-### Test Coverage
-- **44+ Passing Tests** across utilities and components
-- **Jest** + **React Testing Library** configuration
-- **Test Coverage Goals**: 80% branches, functions, lines, statements
-
-### Test Files
-```
-src/lib/__tests__/analytics.test.ts
-- Comprehensive tests for all analytics tracking functions
-- Edge cases and error handling
-
-src/components/ui/__tests__/SkipToContent.test.tsx
-- Accessibility component testing
-- ARIA attributes and keyboard navigation
-
-src/components/seo/__tests__/StructuredData.test.tsx
-- JSON-LD schema validation
-- Organization and donation structured data
-
-src/components/analytics/__tests__/GoogleAnalytics.test.tsx
-- Component rendering tests
-```
-
-### Running Tests
 ```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run tests with coverage
-npm run test:coverage
-
-# Run tests for CI
-npm run test:ci
+lsof -ti tcp:3001 | xargs -r kill
+rm -rf .next
+PORT=3001 npm run dev
 ```
 
-### Test Configuration
-- **jest.config.ts** - Jest configuration with Next.js integration
-- **jest.setup.ts** - Global test setup, mocks, and environment variables
-- **Coverage thresholds** - 80% minimum for all metrics
+## Testing and Quality Checks
 
-## ⚡ Performance Optimizations
+### Lint
 
-### Code Optimizations
-- **React.memo** - Header and Footer components memoized to prevent unnecessary re-renders
-- **Component Optimization** - Minimized prop changes and efficient rendering
-- **Bundle Optimization** - Tree-shaking and code splitting via Next.js
+```bash
+npm run lint
+```
 
-### Performance Metrics
-- **Lighthouse Score**: 90+ (Performance, Accessibility, Best Practices, SEO)
-- **Core Web Vitals Monitoring**: Vercel Speed Insights integration
-- **First Contentful Paint (FCP)**: <1.5s
-- **Time to Interactive (TTI)**: <3.5s
+Runs ESLint across the project.
 
-### Build Output
-- **17 Static Pages** generated
-- **3 API Routes** (create-payment-intent, create-subscription, webhooks/stripe)
-- **Blog Posts** statically generated via generateStaticParams
+### Tests
 
-## 🔒 Security & Hardening
+```bash
+npm test
+```
 
-### Content Security Policy (CSP)
-Comprehensive CSP headers configured in `next.config.ts`:
-- **default-src**: 'self' only
-- **script-src**: Google Analytics, Vercel Analytics allowed
-- **connect-src**: Google Analytics, Vercel, Stripe APIs allowed
-- **frame-src**: Stripe.js and Stripe Checkout allowed
-- **frame-ancestors**: 'none' (prevents clickjacking)
+Runs Vitest once.
+
+```bash
+npm run test:watch
+```
+
+Runs Vitest in watch mode.
+
+```bash
+npm run test:coverage
+```
+
+Runs coverage.
+
+### Build
+
+```bash
+npm run build
+```
+
+Creates a production Next.js build.
+
+### Recommended Verification Before Deploying
+
+Run:
+
+```bash
+npm run lint
+npm test
+npm run build
+```
+
+Then start or restart the local dev server and manually smoke test:
+
+- `/`
+- `/programs`
+- `/projects`
+- `/resources`
+- `/donate`
+- `/contact`
+- `/transparency`
+
+## Deployment
+
+The app is configured for Vercel.
+
+Important files:
+
+```txt
+vercel.json
+DEPLOYMENT.md
+```
+
+`vercel.json` sets:
+
+- Framework: Next.js
+- Region: `iad1`
+- Stripe webhook max duration: 30 seconds
+
+Deploy through Vercel with the required environment variables set in the Vercel dashboard.
+
+### Production Environment Checklist
+
+Set these in Vercel:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://www.blessedbeaconcharity.org
+SANITY_PROJECT_ID=...
+SANITY_DATASET=production
+SANITY_API_VERSION=2024-01-01
+SANITY_TOKEN=...
+STRIPE_SECRET_KEY=...
+STRIPE_WEBHOOK_SECRET=...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=...
+RESEND_API_KEY=...
+EMAIL_FROM=...
+ORG_EMAIL=...
+```
+
+Then configure Stripe webhook endpoint:
+
+```txt
+https://www.blessedbeaconcharity.org/api/webhooks/stripe
+```
+
+Webhook events to send:
+
+- `checkout.session.completed`
+- `invoice.paid`
+- `customer.subscription.deleted`
+
+## Common Content Tasks
+
+### Update Homepage Text
+
+Preferred:
+
+1. Open Sanity Studio.
+2. Edit the `homePage` document.
+3. Update hero, donor confidence cards, field moments, program intro, gift section, or final CTA.
+4. Publish.
+
+Fallback/code:
+
+```txt
+src/data/pages.ts
+```
+
+### Add a New Program
+
+Preferred:
+
+1. Add a `program` document in Sanity.
+2. Fill slug, title, summary, status, beneficiary details, gift examples, outcomes, proof points, and image.
+3. Set `visible` to true.
+
+Fallback/code:
+
+```txt
+src/data/programs.ts
+```
+
+### Add a New Project
+
+Preferred:
+
+1. Add a `project` document in Sanity.
+2. Fill title and slug.
+3. Set `lifecycleMode`.
+4. Add `startDate`, `endDate`, and `archiveAfterDate`.
+5. Keep `autoArchiveAfterEndDate` enabled unless the team wants the project to remain current after its planned end date.
+6. Fill display date, budget, description, impact points, image, and featured flag.
+
+Use `lifecycleMode: auto` if the project should move automatically.
+
+Use `lifecycleMode: manual` if the team wants to force the status.
+
+For completed projects, create or link an archive record with final outcomes,
+report URL, published date, and optional gallery link.
+
+For projects that need a Term of Reference, use the project
+`termsOfReference` field. Include the project lead, purpose, scope, budget
+range, timeline, responsibilities, deliverables, success measures, and reporting
+requirements. The project detail page renders this publicly so donors and team
+members can see how the work is governed before it becomes an archive record.
+
+Fallback/code:
+
+```txt
+src/data/projects.ts
+```
+
+### Add a Project Report
+
+Preferred:
+
+1. Upload a file to Sanity or place it under `public/documents/`.
+2. Add a `resource` document in Sanity.
+3. Choose category `project-reports`.
+4. Set title, description, file type, file size, date, and file URL/file.
+5. Publish.
+
+Fallback/code:
+
+```txt
+src/data/resources.ts
+```
+
+### Add a Public PDF
+
+For code-hosted PDFs:
+
+1. Place the PDF in:
+
+```txt
+public/documents/
+```
+
+2. Link it as:
+
+```txt
+/documents/file-name.pdf
+```
+
+3. Add or update a resource in Sanity or `src/data/resources.ts`.
+
+### Update Registration Details
+
+Likely places:
+
+- Sanity `siteConfig.registrationStatus`
+- Sanity `resourcesPage.registrationBanner`
+- Sanity `transparencyPage.facts`
+- Sanity `resource` documents for certificate/TIN
+
+Fallback/code:
+
+- `src/data/site.ts`
+- `src/data/pages.ts`
+- `src/data/resources.ts`
+- `src/data/impact.ts`
+
+### Add Gallery Photos
+
+Preferred:
+
+1. Create or update an `album` document in Sanity.
+2. Add photos with image, alt text, title, and description.
+3. Choose a cover image.
+4. Publish.
+
+Fallback/code:
+
+- `src/data/albums.ts`
+- `src/data/gallery.ts`
+
+### Add a Blog/Story Post
+
+Preferred:
+
+1. Add a `blogPost` document in Sanity.
+2. Fill title, slug, excerpt, content, author, date, category, read time, tags, and image.
+3. Publish.
+
+Fallback/code:
+
+```txt
+src/data/blog-posts.ts
+```
+
+## Common Developer Tasks
+
+### Add a New Page
+
+1. Create a route under `src/app/`.
+2. Add fallback content to `src/data/pages.ts` if the page is CMS-managed.
+3. Add a Sanity schema section in `sanity/schemas/pages.ts` if editors should control it.
+4. Add types in `src/lib/sanity/types.ts`.
+5. Add a query helper in `src/lib/sanity/queries.ts`.
+6. Add tests under `__tests__/app/`.
+7. Run lint, tests, and build.
+
+### Add a New Sanity Document Type
+
+1. Add a schema file under `sanity/schemas/`.
+2. Export it from `sanity/schemas/index.ts`.
+3. Add a TypeScript interface in `src/lib/sanity/types.ts`.
+4. Add a GROQ projection and query function in `src/lib/sanity/queries.ts`.
+5. Add fallback data in `src/data/` if needed.
+6. Update `scripts/seed-sanity.ts` if it should be seeded.
+
+### Add a New Document Category
+
+1. Update `ResourceCategory` in `src/data/resources.ts`.
+2. Add it to `resourceCategories`.
+3. Add border color mapping in `src/components/resource-list.tsx`.
+4. Update `sanity/schemas/resource.ts`.
+5. Add or update tests.
+
+### Add a New Project Lifecycle Rule
+
+Edit:
+
+```txt
+src/lib/project-lifecycle.ts
+```
+
+Then add tests in:
+
+```txt
+__tests__/lib/project-lifecycle.test.ts
+```
+
+Do not place lifecycle rules directly inside page components.
+
+## Troubleshooting
+
+### Page Shows Old Content
+
+Possible causes:
+
+- Sanity content is cached for revalidation.
+- Browser has stale dev bundle.
+- Dev server is using production `.next` output after `npm run build`.
+
+Try:
+
+```bash
+rm -rf .next
+PORT=3001 npm run dev
+```
+
+### Sanity Content Is Not Showing
+
+Check:
+
+```bash
+SANITY_PROJECT_ID
+SANITY_DATASET
+SANITY_API_VERSION
+SANITY_TOKEN
+```
+
+If `SANITY_PROJECT_ID` is missing, the site intentionally uses static fallback content.
+
+Also check that the Sanity document IDs match what queries expect:
+
+- `siteConfig`
+- `homePage`
+- `programsPage`
+- `aboutPage`
+- `impactPage`
+- `transparencyPage`
+- `contactPage`
+- `donatePage`
+- `projectsPage`
+- `galleryPage`
+- `resourcesPage`
+
+### Donation Checkout Fails
+
+Check:
+
+- `STRIPE_SECRET_KEY`
+- Donation amount is valid.
+- `NEXT_PUBLIC_SITE_URL` is correct.
+- Stripe account is in the right test/live mode.
+
+### Donation Receipt Email Does Not Send
+
+Check:
+
+- Stripe webhook is configured.
+- `STRIPE_WEBHOOK_SECRET` is correct.
+- `RESEND_API_KEY` is set.
+- `EMAIL_FROM` is verified/allowed in Resend.
+- `ORG_EMAIL` is set.
+- Stripe event is actually reaching `/api/webhooks/stripe`.
+
+### Contact Form Says Success But No Email Arrives
+
+The contact form intentionally does not expose internal email delivery errors to visitors. Check server logs for:
+
+```txt
+[submitContactForm] email failed
+[sendContactNotification]
+```
+
+Then check:
+
+- `RESEND_API_KEY`
+- `EMAIL_FROM`
+- `ORG_EMAIL`
+- Resend domain/sender verification
+
+### Base UI Native Button Warning
+
+If you see:
+
+```txt
+Base UI: A component that acts as a button expected a native <button>
+```
+
+Root cause is usually rendering a `Button` as a `Link` or `<a>`.
+
+Correct pattern:
+
+```tsx
+<Link href="/projects" className={buttonVariants()}>
+  View Projects
+</Link>
+```
+
+Use the `Button` component for actual buttons, not navigation links.
+
+### Image Does Not Render
+
+If the image is remote, check:
+
+```txt
+next.config.ts
+```
+
+The image host must be allowed in `images.remotePatterns`.
+
+### Project Is in the Wrong Section
+
+Check the project fields:
+
+- `lifecycleMode`
+- `status`
+- `startDate`
+- `endDate`
+
+If `lifecycleMode` is `auto`, dates control the section.
+
+If `lifecycleMode` is `manual`, `status` controls the section.
+
+## Security and Accessibility Notes
 
 ### Security Headers
-All responses include:
-- **X-Frame-Options**: DENY (clickjacking protection)
-- **X-Content-Type-Options**: nosniff (MIME sniffing prevention)
-- **X-XSS-Protection**: 1; mode=block (XSS protection)
-- **Referrer-Policy**: strict-origin-when-cross-origin
-- **Permissions-Policy**: Restricts camera, microphone, geolocation
-- **Strict-Transport-Security**: HSTS with 1-year max-age
 
-### Rate Limiting
-API routes protected with rate limiting:
-- **Payment Intent API**: 5 requests per minute per IP
-- **In-memory rate limit store** with automatic cleanup
-- **HTTP 429 responses** when limit exceeded
-- **X-RateLimit headers** for client information
+Security headers are configured in:
 
-**Implementation:**
-```typescript
-import { rateLimit, getClientIp } from '@/lib/rate-limit'
-
-const rateLimitResult = rateLimit(clientIp, {
-  maxRequests: 5,
-  windowMs: 60000
-})
+```txt
+next.config.ts
 ```
 
-### Additional Security Measures
-- **Input Validation**: All API routes validate input (email, amount, donor name)
-- **CSRF Protection**: Form action restricted to 'self' via CSP
-- **Secure Cookies**: SameSite and Secure flags (when deployed with HTTPS)
-- **Environment Variable Protection**: Sensitive keys never exposed to client
+Current headers:
 
-## 📞 Support
+- `X-Frame-Options: DENY`
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+- `Strict-Transport-Security: max-age=31536000; includeSubDomains`
 
-For technical questions about this website:
-1. Check this README
-2. Review code comments
-3. Consult `CONTENTFUL_MIGRATION.md` for CMS setup
+### Stripe Webhook Security
 
-For Beacon of Blessings organizational questions:
-- Email: info@beaconofblessings.org
-- Phone: +234 (0) 123 456 7890
+The webhook verifies Stripe signatures using:
 
-## 📄 License
+```bash
+STRIPE_WEBHOOK_SECRET
+```
 
-This project is built specifically for Beacon of Blessings Charity Initiative. All rights reserved.
+Never process Stripe webhook payloads without signature verification.
 
----
+### Email Safety
 
-Built with ❤️ for the Kingdom of God and the education of Nigerian children.
+Email content escapes user-provided values before inserting them into HTML.
+
+Relevant files:
+
+- `src/app/actions/emails.ts`
+- `src/lib/email-format.ts`
+
+### Resource URL Safety
+
+Resource downloads are restricted to approved URL patterns.
+
+Relevant file:
+
+```txt
+src/components/resource-list.tsx
+```
+
+### Accessibility
+
+Important conventions:
+
+- Use real links for navigation and downloads.
+- Use real buttons for actions.
+- Include alt text for images.
+- Keep form labels connected to inputs.
+- Avoid hiding important text inside decorative-only elements.
+
+## Important Files
+
+### App and Routing
+
+| File | Purpose |
+| --- | --- |
+| `src/app/layout.tsx` | Root layout, metadata, analytics, global layout |
+| `src/app/page.tsx` | Homepage |
+| `src/app/globals.css` | Global CSS and theme tokens |
+| `src/app/error.tsx` | Error boundary UI |
+| `src/app/not-found.tsx` | 404 page |
+| `src/app/loading.tsx` | Loading state |
+| `src/app/opengraph-image.tsx` | Dynamic Open Graph image |
+| `src/app/sitemap.xml` | Sitemap route |
+| `src/app/robots.txt` | Robots route |
+
+### Content and CMS
+
+| File | Purpose |
+| --- | --- |
+| `src/lib/sanity/client.ts` | Sanity client setup |
+| `src/lib/sanity/queries.ts` | All Sanity/fallback fetch functions |
+| `src/lib/sanity/types.ts` | TypeScript types for Sanity content |
+| `src/lib/sanity/image.ts` | Sanity image helper |
+| `sanity/schemas/index.ts` | Exports all Sanity schemas |
+| `scripts/seed-sanity.ts` | Seeds Sanity with fallback data |
+
+### Business Logic
+
+| File | Purpose |
+| --- | --- |
+| `src/lib/project-lifecycle.ts` | Automatic project status/date logic |
+| `src/app/actions/checkout.ts` | Stripe Checkout creation |
+| `src/app/api/webhooks/stripe/route.ts` | Stripe webhook handler |
+| `src/app/actions/contact.ts` | Contact form server action |
+| `src/app/actions/emails.ts` | Email sending actions |
+| `src/lib/stripe.ts` | Stripe client |
+| `src/lib/resend.ts` | Resend client |
+| `src/lib/email-format.ts` | Email formatting and escaping |
+
+### UI Components
+
+| File | Purpose |
+| --- | --- |
+| `src/components/layout/header.tsx` | Desktop header |
+| `src/components/layout/mobile-nav.tsx` | Mobile navigation |
+| `src/components/layout/footer.tsx` | Footer |
+| `src/components/donate-form.tsx` | Donation form |
+| `src/components/contact-form.tsx` | Contact form |
+| `src/components/resource-list.tsx` | Filterable document/resource list |
+| `src/components/gallery-grid.tsx` | Gallery grid |
+| `src/components/album-photo-grid.tsx` | Album photo grid |
+| `src/components/lightbox.tsx` | Image lightbox |
+| `src/components/ui/button.tsx` | Button primitive wrapper |
+| `src/components/ui/button-variants.ts` | Button classes shared by buttons and links |
+
+## Future Maintenance Checklist
+
+Use this checklist before major releases:
+
+- Run `npm run lint`.
+- Run `npm test`.
+- Run `npm run build`.
+- Confirm `/resources` has no console errors.
+- Confirm `/projects` shows Current, Completed, and Upcoming sections correctly.
+- Confirm completed projects show relative dates.
+- Confirm certificate PDF opens.
+- Confirm contact form sends or logs correctly.
+- Confirm donation checkout redirects to Stripe in test mode before switching live mode.
+- Confirm Stripe webhook endpoint is configured in the correct Stripe mode.
+- Confirm Resend sender/domain is verified.
+- Confirm Sanity content has the expected required page documents.
+- Confirm fallback content is still accurate.
+- Confirm Vercel environment variables match production values.
+- Confirm no secrets were committed.
+
+## Related Documentation
+
+Additional project documentation files:
+
+- `SANITY_SETUP.md`
+- `CONTENT_EDITOR_GUIDE.md`
+- `ADMIN_SETUP_GUIDE.md`
+- `DEPLOYMENT.md`
+- `CODEBASE_REVIEW.md`
+
+This README is the main technical and operational overview. The other documents may contain deeper setup or historical review notes.

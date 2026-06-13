@@ -1,303 +1,382 @@
-'use client'
+import {
+  ArrowRight,
+  BadgeCheck,
+  BookOpen,
+  GraduationCap,
+  HandHeart,
+  HeartHandshake,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { homePageContent as staticHomePageContent } from "@/data/pages";
+import { programStockImages } from "@/data/stock-images";
+import { getHomePage, getImpactStats, getPrograms } from "@/lib/sanity/queries";
+import { cn } from "@/lib/utils";
 
-import { motion } from 'framer-motion'
-import { Heart, Users, BookOpen, Star, ArrowRight, Gift, HandHeart, Globe } from 'lucide-react'
-import Button from '@/components/ui/Button'
+const statIcons = [GraduationCap, MapPin, BookOpen, BadgeCheck];
 
-export default function Home() {
-  const stats = [
-    { number: '500+', label: 'Students Helped', icon: Users },
-    { number: '50+', label: 'School Bags Donated', icon: BookOpen },
-    { number: '1', label: 'Project Completed', icon: Star },
-    { number: '100%', label: 'Community Focused', icon: Heart },
-  ]
-
-  const projects = [
-    {
-      title: 'School Supplies Drive 2024',
-      description: 'Our inaugural project provided school bags, books, and supplies to over 500 students in need across Lagos communities.',
-      impact: '500 students equipped for education',
-      status: 'Completed',
-      image: '/images/projects/school-supplies.jpg'
-    }
-  ]
-
-  const founders = [
-    {
-      name: 'Lionel Tchami',
-      role: 'Co-Founder & Director',
-      description: 'Passionate about education and making a difference in vulnerable communities.',
-    },
-    {
-      name: 'Grace Kure',
-      role: 'Co-Founder & Nigeria Operations Lead',
-      description: 'Based in Nigeria, Grace leads our on-ground operations and community engagement.',
-    }
-  ]
+export default async function HomePage() {
+  const [content, impactStats, programs] = await Promise.all([
+    getHomePage(),
+    getImpactStats(),
+    getPrograms(),
+  ]);
+  const staticHeroImages = staticHomePageContent.hero.images ?? [];
+  const primaryHeroImage = content.hero.images?.[0] ?? staticHeroImages[0]!;
+  const secondaryHeroImage = content.hero.images?.[1] ?? staticHeroImages[1]!;
+  const tertiaryHeroImage = content.hero.images?.[2] ?? staticHeroImages[2]!;
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100">
-        <div className="absolute inset-0 gradient-hero opacity-10"></div>
-        <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
-              Beacon of{' '}
-              <span className="text-gradient">Blessings</span>
+    <main>
+      <section className="relative isolate overflow-hidden bg-[#F7EFE6] px-6 py-16 sm:py-20 lg:py-24">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#2F7D5A] via-[#E8A825] to-[#2D3A6E]"
+        />
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
+          <div>
+            <p className="inline-flex items-center gap-2 rounded-full border border-[#2F7D5A]/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#256B4B]">
+              <MapPin className="h-3.5 w-3.5" />
+              {content.hero.eyebrow}
+            </p>
+            <h1 className="mt-6 max-w-4xl font-heading text-5xl leading-[1.02] tracking-tight text-[#21352B] sm:text-6xl lg:text-7xl">
+              {content.hero.title}
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto leading-relaxed">
-              Sharing the love of Jesus Christ through educational support and compassionate care for vulnerable communities in Nigeria
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#5B3A2C]">
+              {content.hero.body}
             </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-12"
-          >
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto border border-primary-200 shadow-lg">
-              <blockquote className="text-lg text-gray-800 italic mb-3">
-                &ldquo;For I was hungry and you gave me something to eat, I was thirsty and you gave me something to drink, I was a stranger and you invited me in.&rdquo;
-              </blockquote>
-              <cite className="text-primary-600 font-semibold">Matthew 25:35</cite>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href={content.hero.ctas?.[0]?.href ?? "/donate"}
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "gap-2 rounded-full bg-[#E8A825] px-8 text-base font-semibold text-[#21352B] hover:bg-[#F5D060]",
+                )}
+              >
+                <HandHeart className="h-5 w-5" />
+                {content.hero.ctas?.[0]?.label ?? "Give Today"}
+              </Link>
+              <Link
+                href={content.hero.ctas?.[1]?.href ?? "/impact"}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "gap-2 rounded-full border-[#2D3A6E] px-8 text-base font-semibold text-[#2D3A6E] hover:bg-[#2D3A6E]/5",
+                )}
+              >
+                {content.hero.ctas?.[1]?.label ?? "See the Impact"}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-          >
-            <Button href="/donate" size="lg" icon={Heart} className="text-lg">
-              Donate Now
-            </Button>
-            <Button href="/projects" variant="outline" size="lg" icon={ArrowRight} iconPosition="right">
-              See Our Impact
-            </Button>
-          </motion.div>
+          <div className="relative">
+            <div className="grid gap-4 sm:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[430px] overflow-hidden rounded-lg bg-[#21352B] shadow-[0_24px_80px_-56px_rgba(44,24,16,0.75)]">
+                <Image
+                  src={primaryHeroImage.src}
+                  alt={primaryHeroImage.alt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 44vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#21352B]/80 via-[#21352B]/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                  <p className="text-sm font-semibold uppercase tracking-widest text-[#F5D060]">
+                    What your gift makes possible
+                  </p>
+                  <p className="mt-3 font-heading text-3xl leading-tight">
+                    A school bag, notebooks, mentoring, fee relief, or shared
+                    learning tools can keep a child participating in class.
+                  </p>
+                </div>
+              </div>
+              <div className="grid gap-4">
+                <div className="relative min-h-[205px] overflow-hidden rounded-lg bg-[#21352B]">
+                  <Image
+                    src={secondaryHeroImage.src}
+                    alt={secondaryHeroImage.alt}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 24vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative min-h-[205px] overflow-hidden rounded-lg bg-[#21352B]">
+                  <Image
+                    src={tertiaryHeroImage.src}
+                    alt={tertiaryHeroImage.alt}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 24vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+            <dl className="mt-4 grid rounded-lg border border-[#2F7D5A]/15 bg-white p-5 shadow-sm sm:grid-cols-4">
+              {impactStats.map((stat, index) => {
+                const Icon = statIcons[index] ?? Sparkles;
+                return (
+                  <div
+                    key={stat.label}
+                    className="border-l-2 border-[#E8A825] pl-3"
+                  >
+                    <Icon className="mb-2 h-4 w-4 text-[#2F7D5A]" />
+                    <dt className="font-heading text-3xl text-[#256B4B]">
+                      {stat.value}
+                    </dt>
+                    <dd className="mt-1 text-xs leading-5 text-[#1F5E43]/70">
+                      {stat.label}
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
+            <p className="mt-3 text-xs leading-5 text-[#1F5E43]/70">
+              {content.representativeImageNote}
+            </p>
+          </div>
         </div>
-
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-primary-400/10 rounded-full blur-xl"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-primary-300/10 rounded-full blur-xl"></div>
-        <div className="absolute top-1/2 right-20 w-16 h-16 bg-primary-500/10 rounded-full blur-xl"></div>
       </section>
 
-      {/* Impact Stats Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Impact</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Together, we&apos;re making a meaningful difference in communities across Nigeria
+      <section className="bg-white px-6 py-16">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-4">
+          <div className="md:col-span-1">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#2D3A6E]">
+              {content.donorConfidence.eyebrow}
             </p>
-          </motion.div>
+            <h2 className="mt-2 font-heading text-3xl text-[#21352B]">
+              {content.donorConfidence.title}
+            </h2>
+          </div>
+          {content.donorConfidence.cards.map((signal) => (
+            <div key={signal.title} className="border-t-4 border-[#E8A825] pt-5">
+              <ShieldCheck className="h-7 w-7 text-[#2D3A6E]" />
+              <h3 className="mt-4 font-heading text-xl text-[#21352B]">
+                {signal.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                {signal.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-8 bg-gradient-to-br from-primary-50 to-white rounded-2xl border border-primary-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+      <section className="bg-[#256B4B] px-6 py-16 text-white md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#E8A825]">
+              {content.fieldMoments.eyebrow}
+            </p>
+            <h2 className="mt-2 font-heading text-4xl tracking-tight">
+              {content.fieldMoments.title}
+            </h2>
+            <p className="mt-5 leading-7 text-white/75">
+              {content.fieldMoments.body}
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {content.fieldMoments.images.map((moment, index) => (
+              <figure
+                key={moment.title}
+                className={cn(
+                  "relative min-h-[230px] overflow-hidden rounded-lg bg-[#1F5E43]",
+                  index === 1 ? "sm:translate-y-8" : "",
+                )}
               >
-                <div className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <stat.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold text-primary-600 mb-2">{stat.number}</h3>
-                <p className="text-gray-700 font-medium">{stat.label}</p>
-              </motion.div>
+                <Image
+                  src={moment.src}
+                  alt={moment.alt}
+                  fill
+                  sizes="(min-width: 1024px) 34vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1F5E43]/80 via-transparent to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-4 text-sm font-semibold">
+                  {moment.title}
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">About Our Mission</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Founded by Lionel Tchami and Grace Kure, Beacon of Blessings Charity Initiative was born from a heart to serve the less privileged and share God&apos;s love through practical action.
+      <section className="bg-[#FAF6F1] px-6 py-16 md:py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#2F7D5A]">
+              {content.programsIntro.eyebrow}
             </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Founders</h3>
-              <div className="space-y-6">
-                {founders.map((founder, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-lg border border-primary-100">
-                    <h4 className="text-lg font-bold text-primary-600 mb-1">{founder.name}</h4>
-                    <p className="text-primary-500 font-medium mb-3">{founder.role}</p>
-                    <p className="text-gray-600">{founder.description}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 shadow-xl border border-primary-200"
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Vision & Mission</h3>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-lg font-semibold text-primary-600 mb-3 flex items-center">
-                    <Globe className="w-5 h-5 mr-2" />
-                    Vision
-                  </h4>
-                  <p className="text-gray-700">
-                    To be a beacon of hope and transformation, illuminating the path to education and opportunity for vulnerable communities across Nigeria.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-primary-600 mb-3 flex items-center">
-                    <HandHeart className="w-5 h-5 mr-2" />
-                    Mission
-                  </h4>
-                  <p className="text-gray-700">
-                    To share the love of Jesus Christ through practical support, focusing on educational resources, school supplies, and compassionate care for those in need.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+            <h2 className="mt-2 font-heading text-4xl tracking-tight text-[#21352B]">
+              {content.programsIntro.title}
+            </h2>
+            <p className="mt-4 leading-7 text-muted-foreground">
+              {content.programsIntro.body}
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* Recent Projects Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Recent Projects</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              See how your support is making a real difference in communities across Nigeria
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-white to-primary-50 rounded-2xl shadow-xl border border-primary-200 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
-                        {project.status}
-                      </span>
-                    </div>
-                    <Gift className="w-8 h-8 text-primary-500" />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {programs.map((program, index) => {
+              const image = programStockImages[index] ?? programStockImages[0];
+              return (
+                <article
+                  key={program.slug}
+                  className="flex min-h-full flex-col overflow-hidden rounded-lg border border-[#2F7D5A]/15 bg-white shadow-sm"
+                >
+                  <div className="relative h-56 bg-[#21352B]">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="(min-width: 1024px) 28vw, 100vw"
+                      className="object-cover"
+                    />
                   </div>
-                  
-                  <p className="text-gray-700 mb-4 leading-relaxed">{project.description}</p>
-                  
-                  <div className="bg-primary-100 rounded-lg p-4 mb-6">
-                    <p className="text-primary-800 font-semibold flex items-center">
-                      <Star className="w-5 h-5 mr-2" />
-                      Impact: {project.impact}
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="w-fit rounded-full bg-[#2F7D5A]/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#256B4B]">
+                      {program.status}
+                    </span>
+                    <h3 className="mt-5 font-heading text-2xl text-[#21352B]">
+                      {program.title}
+                    </h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">
+                      {program.summary}
                     </p>
+                    <Link
+                      href={`/programs/${program.slug}`}
+                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#256B4B] hover:text-[#1F5E43]"
+                    >
+                      {program.ctaLabel}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
                   </div>
+                </article>
+              );
+            })}
+          </div>
 
-                  <Button href="/projects" variant="primary" icon={ArrowRight} iconPosition="right">
-                    Learn More
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
+          <div className="mt-10">
+            <Link
+              href="/programs"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "gap-2 rounded-full border-[#2F7D5A] px-8 text-[#256B4B] hover:bg-[#2F7D5A]/5",
+              )}
+            >
+              View Programs
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-20 gradient-hero text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-6">Join Us in Making a Difference</h2>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Every donation, no matter the size, helps us reach more children and families in need. 
-              Together, we can be the hands and feet of Jesus in our communities.
+      <section className="bg-[#F5EFE6] px-6 py-16 md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#9A6A12]">
+              {content.giftSection.eyebrow}
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button 
-                href="/donate" 
-                variant="secondary" 
-                size="lg" 
-                icon={Heart}
-                className="bg-white text-primary-600 hover:bg-white/90"
-              >
-                Make a Donation
-              </Button>
-              <Button 
-                href="/contact" 
-                variant="outline" 
-                size="lg" 
-                icon={Users}
-                className="border-white text-white hover:bg-white/10"
-              >
-                Get Involved
-              </Button>
+            <h2 className="mt-2 font-heading text-4xl tracking-tight text-[#21352B]">
+              {content.giftSection.title}
+            </h2>
+            <p className="mt-5 leading-7 text-muted-foreground">
+              {content.giftSection.body}
+            </p>
+            <Link
+              href={content.giftSection.cta.href}
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#9A6A12] hover:text-[#8A6517]"
+            >
+              {content.giftSection.cta.label}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid gap-4">
+            <div className="relative min-h-[300px] overflow-hidden rounded-lg bg-[#21352B]">
+              <Image
+                src={content.giftSection.image.src}
+                alt={content.giftSection.image.alt}
+                fill
+                sizes="(min-width: 1024px) 52vw, 100vw"
+                className="object-cover"
+              />
             </div>
-
-            <div className="mt-12 p-6 bg-white/10 backdrop-blur-sm rounded-xl max-w-2xl mx-auto border border-white/20">
-              <blockquote className="text-lg italic mb-3">
-                &ldquo;Whoever is kind to the poor lends to the Lord, and he will reward them for what they have done.&rdquo;
-              </blockquote>
-              <cite className="text-white/80 font-medium">Proverbs 19:17</cite>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {content.giftSection.gifts.map((gift) => (
+                <div
+                  key={gift.amount}
+                  className="rounded-lg border border-[#E8A825]/25 bg-white p-5 shadow-sm"
+                >
+                  <p className="font-heading text-4xl text-[#9A6A12]">
+                    {gift.amount}
+                  </p>
+                  <h3 className="mt-4 font-heading text-lg text-[#21352B]">
+                    {gift.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {gift.description}
+                  </p>
+                </div>
+              ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
-    </div>
-  )
+
+      <section className="bg-[#2D3A6E] px-6 py-16 text-white md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#E8A825]">
+              {content.finalCta.eyebrow}
+            </p>
+            <h2 className="mt-3 font-heading text-4xl tracking-tight sm:text-5xl">
+              {content.finalCta.title}
+            </h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-[0.85fr_1.15fr]">
+            <div className="relative min-h-[280px] overflow-hidden rounded-lg bg-[#256B4B]">
+              <Image
+                src={content.finalCta.image.src}
+                alt={content.finalCta.image.alt}
+                fill
+                sizes="(min-width: 1024px) 24vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="rounded-lg bg-white p-6 text-[#21352B]">
+              <HeartHandshake className="h-8 w-8 text-[#9A6A12]" />
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                {content.finalCta.body}
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href={content.finalCta.ctas[0]?.href ?? "/donate"}
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "gap-2 rounded-full bg-[#E8A825] text-[#21352B] hover:bg-[#F5D060]",
+                  )}
+                >
+                  {content.finalCta.ctas[0]?.label ?? "Give Today"}
+                </Link>
+                <Link
+                  href={content.finalCta.ctas[1]?.href ?? "/contact"}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "lg" }),
+                    "gap-2 rounded-full border-[#2D3A6E] text-[#2D3A6E] hover:bg-[#2D3A6E]/5",
+                  )}
+                >
+                  {content.finalCta.ctas[1]?.label ?? "Partner With Us"}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }

@@ -1,103 +1,92 @@
-/**
- * Sample Blog Posts Data
- * In production, this would come from Contentful CMS or a database
- */
-
-import { BlogPost } from '@/types/blog'
+export interface BlogPost {
+	slug: string;
+	title: string;
+	excerpt: string;
+	content: string;
+	author: string;
+	date: string;
+	category: string;
+	readTime: string;
+	tags: string[];
+}
 
 export const blogPosts: BlogPost[] = [
-  {
-    slug: 'transforming-lives-through-education',
-    title: 'Transforming Lives Through Education in Rural Nigeria',
-    excerpt: 'Discover how our educational initiatives are empowering children in underserved communities across Nigeria.',
-    content: `
-# Transforming Lives Through Education
+	{
+		slug: "transforming-lives-through-education",
+		title: "Transforming Lives Through Education",
+		excerpt:
+			"See how our first educational supplies outreach helped children with school-readiness materials and community care.",
+		content: `Our first educational supplies outreach in 2024 was a transformative experience for both the communities we serve and our organization. We had a simple goal: help children in underserved communities receive practical school-readiness support and experience care from the wider community.
 
-At Beacon of Blessings, we believe that education is the key to breaking the cycle of poverty and creating lasting change in communities. Over the past year, we've witnessed incredible transformations in the lives of children across rural Nigeria.
+The published financial report records N1,372,200 in funds received and N1,372,200 in project expenditure. Those funds covered CAC registration costs, roll-up banner printing, 96 pairs of sandals, 92 school bags, books, stockings, pencils, pens, transportation, and outreach event costs.
 
-## Our Impact
+The outreach also included a community celebration with T-shirts, face caps, bottled water, Maltina, meat pies, canopy, chairs, tables, car rental, DJ support, fuel, and volunteer stipends. The report notes that a N196,564 donation from ADA (Apoti Development Association, Cameroon) helped fully cover project expenditures.
 
-- 500+ students provided with school supplies
-- 15 schools supported with educational materials
-- 50+ scholarships awarded to vulnerable children
+As we look ahead, we are planning our Digital Learning Initiative to bring technology into these same communities, building on the foundation of trust, reporting, and partnership established through this first project.`,
+		author: "Beacon of Blessings Team",
+		date: "2024-10-15",
+		category: "Impact Stories",
+		readTime: "5 min read",
+		tags: ["education", "impact", "Lagos", "school supplies"],
+	},
+	{
+		slug: "together-we-build-hope",
+		title: "Together We Build Hope",
+		excerpt:
+			"A reflection on the power of community partnership in creating sustainable change for Nigeria's children.",
+		content: `At Beacon of Blessings, we believe that sustainable change happens when communities work together. Our approach has always been to partner with — not simply give to — the communities we serve.
 
-## Moving Forward
+This philosophy was put into practice during our first educational supplies outreach, where support was converted into practical school-readiness materials and a community celebration event for children.
 
-As we continue to expand our reach, we remain committed to our mission of sharing the love of Jesus Christ through practical action. Every child deserves access to quality education, and together, we can make that a reality.
-    `,
-    author: 'Lionel Tchami',
-    date: '2024-11-01',
-    category: 'Impact Stories',
-    tags: ['education', 'impact', 'nigeria'],
-    readTime: '5 min read',
-  },
-  {
-    slug: 'faith-in-action-community-outreach',
-    title: 'Faith in Action: Our Community Outreach Programs',
-    excerpt: 'Learn about how we translate our Christian values into tangible support for vulnerable communities.',
-    content: `
-# Faith in Action
+Chief Emeka, a community leader in one of our partner neighborhoods, told us: "What makes Beacon of Blessings different is that they came to us first. They asked what we needed, they listened, and they delivered exactly what our children required."
 
-Our faith calls us to serve those in need, and at Beacon of Blessings, we take this calling seriously. Through our community outreach programs, we're not just providing material support—we're sharing the love and hope of Jesus Christ.
+This community-first approach is at the heart of everything we do. As we plan our upcoming projects — the Digital Learning Initiative and the Girls' Education Scholarship Program — we are once again starting with conversations, not assumptions.
 
-## Programs That Make a Difference
+We invite you to join us in this journey. Whether through a donation, volunteering your time, or simply spreading the word, every act of support strengthens the foundation we are building together.`,
+		author: "Lionel Tchami",
+		date: "2024-11-20",
+		category: "Ministry Updates",
+		readTime: "4 min read",
+		tags: ["community", "partnership", "volunteer"],
+	},
+	{
+		slug: "2024-year-end-report",
+		title: "2024 Year-End Report: A Year of Beginnings",
+		excerpt:
+			"Reflecting on our first year of operations and the impact we have made together.",
+		content: `As we close out 2024, we want to share a transparent look at what Beacon of Blessings accomplished in our founding year.
 
-1. **Educational Support**: School supplies, scholarships, and mentorship
-2. **Food Assistance**: Regular food distributions to families in need
-3. **Health Initiatives**: Basic healthcare and hygiene education
+In our first year, we successfully launched and completed one major project: our first educational supplies outreach. Here is a summary of the published financial report:
 
-## The Power of Community
+Funds Received: N1,372,200
+Total Expenditure: N1,372,200
+School-Readiness Materials: 96 pairs of sandals, 92 school bags, books, stockings, pencils, and pens
+Outreach Support: T-shirts, face caps, bottled water, Maltina, meat pies, canopy, chairs, tables, car rental, DJ and fuel, and volunteer stipends
+Partner Support: ADA (Apoti Development Association, Cameroon) contributed N196,564
 
-None of this would be possible without our incredible community of supporters, volunteers, and partners. Together, we are making a real difference in people's lives.
-    `,
-    author: 'Grace Kure',
-    date: '2024-10-15',
-    category: 'Ministry Updates',
-    tags: ['faith', 'community', 'outreach'],
-    readTime: '4 min read',
-  },
-  {
-    slug: 'year-end-report-2024',
-    title: '2024 Year-End Report: A Year of Blessings',
-    excerpt: 'Reflecting on a transformative year and looking ahead to 2025 with hope and renewed commitment.',
-    content: `
-# 2024: A Year of Blessings
+The project report shows that all recorded funds received were matched by documented project expenditure.
 
-As we approach the end of 2024, we want to share with you the incredible work that God has accomplished through Beacon of Blessings this year.
+Looking ahead to 2025 and beyond, we have three major initiatives planned: the Digital Learning Initiative, the Girls' Education Scholarship Program, and the Community Library Project. Together, these programs represent an investment of over N28M in Nigeria's educational future.
 
-## By the Numbers
+We are grateful for every donor, volunteer, and partner who made our first year possible. Your generosity is the beacon that lights the way for these children.`,
+		author: "Beacon of Blessings Team",
+		date: "2024-12-30",
+		category: "Annual Reports",
+		readTime: "3 min read",
+		tags: ["annual report", "transparency", "impact", "2024"],
+	},
+];
 
-- **Students Impacted**: 750+
-- **Communities Reached**: 25
-- **Volunteers Engaged**: 150+
-- **Total Donations**: $125,000+
-
-## Looking Ahead to 2025
-
-With your continued support, we plan to:
-- Expand our scholarship program
-- Launch new community centers
-- Increase our outreach to remote villages
-- Develop sustainable agriculture programs
-
-Thank you for being part of our mission to bring hope and opportunity to Nigeria's most vulnerable communities.
-    `,
-    author: 'Lionel Tchami & Grace Kure',
-    date: '2024-12-01',
-    category: 'Annual Reports',
-    tags: ['annual-report', 'impact', '2024'],
-    readTime: '7 min read',
-  },
-]
-
-export function getBlogPosts(): BlogPost[] {
-  return blogPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+export function getBlogPosts() {
+	return blogPosts.sort(
+		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+	);
 }
 
-export function getBlogPost(slug: string): BlogPost | undefined {
-  return blogPosts.find((post) => post.slug === slug)
+export function getBlogPost(slug: string) {
+	return blogPosts.find((post) => post.slug === slug);
 }
 
-export function getRecentPosts(limit: number = 3): BlogPost[] {
-  return getBlogPosts().slice(0, limit)
+export function getRecentPosts(limit = 3) {
+	return getBlogPosts().slice(0, limit);
 }

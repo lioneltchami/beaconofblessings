@@ -1,266 +1,239 @@
-'use client'
+import type { Metadata } from "next";
+import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/data/site";
 
-import { motion } from 'framer-motion'
-import { FileText, AlertCircle, CheckCircle, XCircle, Scale, Heart } from 'lucide-react'
+export const metadata: Metadata = {
+	title: "Terms of Service",
+	description: `Terms of Service for ${siteConfig.name}. Please read these terms carefully before using our website.`,
+};
+
+const lastUpdated = "March 2026";
 
 export default function TermsOfServicePage() {
-  const sections = [
-    {
-      icon: CheckCircle,
-      title: 'Acceptance of Terms',
-      content: [
-        'By accessing and using the Beacon of Blessings website (beaconofblessings.org), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to these Terms of Service, please do not use our website.',
-        '',
-        'These terms apply to all visitors, users, and others who access or use our website and services.'
-      ]
-    },
-    {
-      icon: Heart,
-      title: 'Donations and Payments',
-      content: [
-        'Donations to Beacon of Blessings:',
-        '• Are voluntary contributions to support our charitable work',
-        '• Are processed securely through Stripe, a third-party payment processor',
-        '• Are generally non-refundable (see refund policy below)',
-        '• May be tax-deductible in Nigeria (consult your tax advisor)',
-        '',
-        'By making a donation, you represent that:',
-        '• You are authorized to use the payment method provided',
-        '• All information you provide is accurate and complete',
-        '• You understand that your donation will be used to support our charitable activities',
-        '',
-        'We reserve the right to refuse or return any donation at our sole discretion.'
-      ]
-    },
-    {
-      icon: Scale,
-      title: 'Refund Policy',
-      content: [
-        'Donations are generally non-refundable. However, we will consider refund requests in the following circumstances:',
-        '• Technical errors that resulted in duplicate charges',
-        '• Unauthorized transactions (subject to verification)',
-        '• Charges made in error',
-        '',
-        'To request a refund, contact us at info@beaconofblessings.org within 30 days of the donation with:',
-        '• Your transaction ID',
-        '• The date and amount of the donation',
-        '• The reason for your refund request',
-        '',
-        'Refunds, if approved, will be processed within 14 business days to the original payment method.'
-      ]
-    },
-    {
-      icon: FileText,
-      title: 'Use of Website',
-      content: [
-        'You agree to use our website only for lawful purposes and in accordance with these Terms. You agree not to:',
-        '• Use the website in any way that violates any applicable law or regulation',
-        '• Attempt to interfere with the proper functioning of the website',
-        '• Use any robot, spider, or other automatic device to access the website',
-        '• Attempt to gain unauthorized access to any portion of the website',
-        '• Transmit any viruses, malware, or other malicious code',
-        '• Collect or store personal data about other users'
-      ]
-    },
-    {
-      icon: AlertCircle,
-      title: 'Intellectual Property',
-      content: [
-        'All content on this website, including text, graphics, logos, images, and software, is the property of Beacon of Blessings or its content suppliers and is protected by international copyright laws.',
-        '',
-        'You may:',
-        '• View and print pages from the website for personal, non-commercial use',
-        '• Share our content on social media with proper attribution',
-        '',
-        'You may not:',
-        '• Modify, reproduce, or distribute content without our written permission',
-        '• Use our content for commercial purposes',
-        '• Remove any copyright or proprietary notices'
-      ]
-    },
-    {
-      icon: XCircle,
-      title: 'Disclaimer of Warranties',
-      content: [
-        'Our website and services are provided "as is" and "as available" without any warranties of any kind, either express or implied.',
-        '',
-        'We do not warrant that:',
-        '• The website will be uninterrupted or error-free',
-        '• Defects will be corrected',
-        '• The website or servers are free of viruses or harmful components',
-        '• The results of using the website will meet your requirements',
-        '',
-        'You use the website at your own risk.'
-      ]
-    }
-  ]
+	return (
+		<div className="flex flex-col">
+			{/* Hero */}
+			<section className="relative bg-[#256B4B] py-20 md:py-28">
+				<div className="mx-auto max-w-4xl px-4 text-center">
+					<h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
+						Terms of Service
+					</h1>
+					<p className="mt-4 text-[#EAF6EF]/70">Last updated: {lastUpdated}</p>
+				</div>
+			</section>
 
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary-50 via-white to-primary-100 overflow-hidden">
-        <div className="absolute inset-0 gradient-hero opacity-5"></div>
+			{/* Content */}
+			<section className="bg-[#FAF6F1] py-16 md:py-24">
+				<div className="mx-auto max-w-3xl px-4">
+					<div className="prose prose-neutral max-w-none space-y-8 text-foreground">
+						<p className="text-lg text-muted-foreground">
+							Welcome to {siteConfig.name}. By accessing or using our website at{" "}
+							<a
+								href={siteConfig.url}
+								className="font-medium text-primary hover:underline"
+							>
+								{siteConfig.url}
+							</a>
+							, you agree to be bound by these Terms of Service. If you do not
+							agree to these terms, please do not use our website.
+						</p>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <div className="w-20 h-20 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <Scale className="w-10 h-10 text-white" />
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Terms of <span className="text-gradient">Service</span>
-            </h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Please read these terms carefully before using our website and making donations to our organization.
-            </p>
-            <p className="text-sm text-gray-600 mt-4">
-              Last Updated: November 14, 2025
-            </p>
-          </motion.div>
-        </div>
-      </section>
+						<Separator />
 
-      {/* Introduction */}
-      <section className="py-12 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="prose prose-lg max-w-none"
-          >
-            <p className="text-gray-700 text-lg leading-relaxed">
-              Welcome to Beacon of Blessings Charity Initiative. These Terms of Service (&ldquo;Terms&rdquo;) govern your use of
-              our website located at beaconofblessings.org and your relationship with our organization. Please read
-              these Terms carefully before using our website or making a donation.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Acceptance of Terms
+							</h2>
+							<p className="text-muted-foreground">
+								By accessing, browsing, or using this website, you acknowledge
+								that you have read, understood, and agree to be bound by these
+								Terms of Service and our{" "}
+								<a
+									href="/privacy"
+									className="font-medium text-primary hover:underline"
+								>
+									Privacy Policy
+								</a>
+								. These terms apply to all visitors, users, donors, and
+								volunteers who access or use the website.
+							</p>
+						</section>
 
-      {/* Terms Sections */}
-      <section className="py-16 bg-gradient-to-br from-primary-50 to-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
-            {sections.map((section, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl shadow-lg border border-primary-200 p-8"
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                    <section.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">{section.title}</h2>
-                    <div className="space-y-2">
-                      {section.content.map((paragraph, idx) => (
-                        <p key={idx} className="text-gray-700 leading-relaxed">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+						<Separator />
 
-      {/* Additional Sections */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            {/* Limitation of Liability */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Limitation of Liability</h2>
-              <p className="text-gray-700 leading-relaxed mb-3">
-                To the fullest extent permitted by law, Beacon of Blessings shall not be liable for any indirect,
-                incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether
-                incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses.
-              </p>
-              <p className="text-gray-700 leading-relaxed">
-                Our total liability to you for any claim arising out of or relating to these Terms or our services
-                shall not exceed the amount you have paid to us in the past six months.
-              </p>
-            </div>
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Use of Website
+							</h2>
+							<p className="mb-3 text-muted-foreground">
+								You agree to use this website only for lawful purposes and in a
+								manner that does not infringe the rights of, restrict, or
+								inhibit anyone else&apos;s use and enjoyment of the website.
+								Prohibited conduct includes but is not limited to:
+							</p>
+							<ul className="list-inside list-disc space-y-2 text-muted-foreground">
+								<li>
+									Using the website in any way that violates applicable local,
+									national, or international law.
+								</li>
+								<li>
+									Attempting to gain unauthorized access to any part of the
+									website or its related systems.
+								</li>
+								<li>
+									Transmitting any harmful, threatening, abusive, or otherwise
+									objectionable material.
+								</li>
+								<li>
+									Using automated tools to scrape, crawl, or extract data from
+									the website without written permission.
+								</li>
+							</ul>
+						</section>
 
-            {/* Indemnification */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Indemnification</h2>
-              <p className="text-gray-700 leading-relaxed">
-                You agree to indemnify and hold harmless Beacon of Blessings, its directors, officers, employees,
-                and agents from any claims, damages, losses, liabilities, and expenses (including legal fees)
-                arising out of or relating to your use of our website, violation of these Terms, or infringement
-                of any third party rights.
-              </p>
-            </div>
+						<Separator />
 
-            {/* Governing Law */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Governing Law and Jurisdiction</h2>
-              <p className="text-gray-700 leading-relaxed">
-                These Terms shall be governed by and construed in accordance with the laws of Nigeria. Any disputes
-                arising out of or relating to these Terms or our services shall be subject to the exclusive
-                jurisdiction of the courts in Lagos, Nigeria.
-              </p>
-            </div>
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Donations
+							</h2>
+							<p className="mb-3 text-muted-foreground">
+								All donations made through our website are voluntary and
+								processed by secure third-party payment providers. By making a
+								donation, you agree to the following:
+							</p>
+							<ul className="list-inside list-disc space-y-2 text-muted-foreground">
+								<li>
+									Donations are generally non-refundable. If you believe a
+									donation was made in error, please contact us within 7 days at{" "}
+									<a
+										href={`mailto:${siteConfig.email}`}
+										className="font-medium text-primary hover:underline"
+									>
+										{siteConfig.email}
+									</a>{" "}
+									and we will review your request on a case-by-case basis.
+								</li>
+								<li>
+									We reserve the right to allocate donations to the programs and
+									initiatives where they are most needed, unless a specific
+									designation is agreed upon in writing.
+								</li>
+								<li>
+									Donation receipts will be provided for tax purposes where
+									applicable.
+								</li>
+							</ul>
+						</section>
 
-            {/* Changes to Terms */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Changes to These Terms</h2>
-              <p className="text-gray-700 leading-relaxed">
-                We reserve the right to modify these Terms at any time. We will notify you of any changes by
-                posting the new Terms on this page and updating the &ldquo;Last Updated&rdquo; date. Your continued use of
-                our website after such changes constitutes your acceptance of the new Terms.
-              </p>
-            </div>
+						<Separator />
 
-            {/* Severability */}
-            <div className="bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Severability</h2>
-              <p className="text-gray-700 leading-relaxed">
-                If any provision of these Terms is found to be unenforceable or invalid, that provision will be
-                limited or eliminated to the minimum extent necessary so that these Terms will otherwise remain
-                in full force and effect.
-              </p>
-            </div>
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Intellectual Property
+							</h2>
+							<p className="text-muted-foreground">
+								All content on this website, including but not limited to text,
+								images, logos, graphics, videos, and design elements, is the
+								property of {siteConfig.name} or its licensors and is protected
+								by applicable copyright and intellectual property laws. You may
+								not reproduce, distribute, modify, or create derivative works
+								from any content without our prior written consent.
+							</p>
+						</section>
 
-            {/* Contact Information */}
-            <div className="bg-gradient-primary rounded-2xl p-8 text-white">
-              <h2 className="text-2xl font-bold mb-4">Questions About These Terms?</h2>
-              <p className="mb-4 text-white/90">
-                If you have any questions about these Terms of Service, please contact us:
-              </p>
-              <div className="space-y-2 text-white/90">
-                <p><strong>Email:</strong> info@beaconofblessings.org</p>
-                <p><strong>Address:</strong> Lagos, Nigeria</p>
-                <p><strong>Website:</strong> www.beaconofblessings.org</p>
-              </div>
-              <p className="mt-6 text-white/80 text-sm">
-                By using our website and services, you acknowledge that you have read, understood, and agree to be
-                bound by these Terms of Service.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-    </div>
-  )
+						<Separator />
+
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Limitation of Liability
+							</h2>
+							<p className="text-muted-foreground">
+								To the fullest extent permitted by applicable law,{" "}
+								{siteConfig.name}, its directors, officers, volunteers, and
+								partners shall not be liable for any indirect, incidental,
+								special, consequential, or punitive damages arising out of your
+								access to or use of (or inability to access or use) the website.
+								This includes, without limitation, any errors or omissions in
+								content, loss of data, or any other loss or damage of any kind.
+							</p>
+						</section>
+
+						<Separator />
+
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Disclaimer
+							</h2>
+							<p className="text-muted-foreground">
+								The information on this website is provided on an &quot;as
+								is&quot; and &quot;as available&quot; basis without any
+								warranties, express or implied. We do not warrant that the
+								website will be uninterrupted, error-free, or free of viruses or
+								other harmful components. We make no representations about the
+								accuracy or completeness of the content on the website.
+							</p>
+						</section>
+
+						<Separator />
+
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Governing Law
+							</h2>
+							<p className="text-muted-foreground">
+								These Terms of Service shall be governed by and construed in
+								accordance with the laws of the Federal Republic of Nigeria. Any
+								disputes arising from or related to the use of this website
+								shall be subject to the exclusive jurisdiction of the courts of
+								Nigeria.
+							</p>
+						</section>
+
+						<Separator />
+
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Changes to These Terms
+							</h2>
+							<p className="text-muted-foreground">
+								We reserve the right to modify or replace these Terms of Service
+								at any time. Changes will be effective immediately upon posting
+								to this page. Your continued use of the website after any
+								changes constitutes acceptance of the new terms. We encourage
+								you to review these terms periodically.
+							</p>
+						</section>
+
+						<Separator />
+
+						<section>
+							<h2 className="font-heading mb-3 text-2xl font-bold tracking-tight text-[#256B4B]">
+								Contact Us
+							</h2>
+							<p className="text-muted-foreground">
+								If you have any questions about these Terms of Service, please
+								contact us at:
+							</p>
+							<div className="mt-3 rounded-lg border bg-[#EAF6EF] p-4 text-sm">
+								<p className="font-semibold">{siteConfig.name}</p>
+								<p className="text-muted-foreground">
+									Email:{" "}
+									<a
+										href={`mailto:${siteConfig.email}`}
+										className="font-medium text-primary hover:underline"
+									>
+										{siteConfig.email}
+									</a>
+								</p>
+								<p className="text-muted-foreground">
+									Address: {siteConfig.address}
+								</p>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+		</div>
+	);
 }

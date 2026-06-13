@@ -1,221 +1,228 @@
-import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
+import { NextResponse } from "next/server";
+import type Stripe from "stripe";
+import {
+  sendDonationNotification,
+  sendDonationReceipt,
+} from "@/app/actions/emails";
+import { getStripe } from "@/lib/stripe";
 
-// Lazy Stripe initialization helper
-function getStripeClient() {
-  const secretKey = process.env.STRIPE_SECRET_KEY
-  if (!secretKey) {
-    throw new Error('STRIPE_SECRET_KEY is not configured')
-  }
-  return new Stripe(secretKey, {
-    apiVersion: '2025-10-29.clover',
-    typescript: true,
-  })
+export const dynamic = "force-dynamic";
+
+function getSessionDonorEmail(session: Stripe.Checkout.Session) {
+  return (
+    session.customer_details?.email ||
+    session.customer_email ||
+    session.metadata?.donorEmail ||
+    ""
+  );
 }
 
-/**
- * Handle successful payment intent
- */
-async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent) {
-  try {
-    console.log('Payment Intent Succeeded:', paymentIntent.id)
-
-    // Extract donation data from metadata
-    const metadata = paymentIntent.metadata
-
-    // Generate PDF receipt (if email provided)
-    if (paymentIntent.receipt_email && metadata.donorName) {
-      const donationData = {
-        donorName: metadata.donorName,
-        email: paymentIntent.receipt_email,
-        amount: (paymentIntent.amount / 100).toFixed(2),
-        frequency: 'one-time' as const,
-        date: new Date(paymentIntent.created * 1000).toLocaleDateString(),
-        transactionId: paymentIntent.id,
-        dedication: metadata.dedication ? {
-          type: (metadata.dedicationType || 'honor') as 'honor' | 'memory',
-          name: metadata.dedication,
-        } : undefined,
-      }
-
-      // Note: In a real implementation, you would send the PDF via email
-      // For now, we just log that we would generate it
-      console.log('Would generate receipt for:', donationData)
-
-      // You can integrate with an email service here
-      // Example: await sendReceiptEmail(donationData)
-    }
-
-    // Here you could also:
-    // - Save donation to database
-    // - Send thank you email
-    // - Update analytics
-    // - Notify admins
-
-  } catch (error) {
-    console.error('Error handling payment intent succeeded:', error)
-  }
+function getInvoiceMetadata(invoice: Stripe.Invoice) {
+  return invoice.parent?.subscription_details?.metadata ?? {};
 }
 
-/**
- * Handle successful subscription creation or payment
- */
-async function handleSubscriptionSucceeded(stripe: Stripe, subscription: Stripe.Subscription) {
-  try {
-    console.log('Subscription Succeeded:', subscription.id)
-
-    // Get customer details
-    const customer = await stripe.customers.retrieve(subscription.customer as string) as Stripe.Customer
-
-    // Extract donation data
-    const amount = subscription.items.data[0].price.unit_amount || 0
-
-    if (customer.email) {
-      const donationData = {
-        donorName: customer.name || 'Valued Donor',
-        email: customer.email,
-        amount: (amount / 100).toFixed(2),
-        frequency: 'monthly' as const,
-        date: new Date(subscription.created * 1000).toLocaleDateString(),
-        transactionId: subscription.id,
-        dedication: subscription.metadata.dedication ? {
-          type: (subscription.metadata.dedicationType || 'honor') as 'honor' | 'memory',
-          name: subscription.metadata.dedication,
-        } : undefined,
-      }
-
-      console.log('Would generate subscription receipt for:', donationData)
-
-      // Here you would:
-      // - Send welcome email for recurring donation
-      // - Save subscription to database
-      // - Set up recurring receipt emails
-    }
-
-  } catch (error) {
-    console.error('Error handling subscription succeeded:', error)
-  }
+function getInvoiceDonorEmail(invoice: Stripe.Invoice) {
+  const metadata = getInvoiceMetadata(invoice);
+  return invoice.customer_email || metadata.donorEmail || "";
 }
 
-/**
- * Handle failed payment
- */
-async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent) {
-  try {
-    console.log('Payment Failed:', paymentIntent.id)
-
-    // Here you would:
-    // - Notify the donor of the failed payment
-    // - Log the failure for admin review
-    // - Potentially retry or suggest alternative payment methods
-
-  } catch (error) {
-    console.error('Error handling payment failed:', error)
-  }
+function getInvoiceDonorName(invoice: Stripe.Invoice) {
+  const metadata = getInvoiceMetadata(invoice);
+  return metadata.donorName || invoice.customer_name || "Recurring donor";
 }
 
-/**
- * Handle subscription cancellation
- */
-async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
-  try {
-    console.log('Subscription Cancelled:', subscription.id)
+export async function POST(request: Request) {
+  const stripe = getStripe();
 
-    // Here you would:
-    // - Update database to mark subscription as cancelled
-    // - Send cancellation confirmation email
-    // - Update any recurring payment schedules
+  const rawBody = await request.text();
+  const signature = request.headers.get("stripe-signature");
 
-  } catch (error) {
-    console.error('Error handling subscription deleted:', error)
-  }
-}
-
-/**
- * Main webhook handler
- */
-export async function POST(request: NextRequest) {
-  try {
-    // Initialize Stripe client
-    const stripe = getStripeClient()
-
-    // Get webhook secret
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
-    if (!webhookSecret) {
-      return NextResponse.json(
-        { error: 'STRIPE_WEBHOOK_SECRET is not configured' },
-        { status: 500 }
-      )
-    }
-
-    // Get the raw body as text (required for signature verification)
-    const body = await request.text()
-    const signature = request.headers.get('stripe-signature')
-
-    if (!signature) {
-      return NextResponse.json(
-        { error: 'Missing stripe-signature header' },
-        { status: 400 }
-      )
-    }
-
-    // Verify webhook signature
-    let event: Stripe.Event
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
-    } catch (err) {
-      console.error('Webhook signature verification failed:', err)
-      return NextResponse.json(
-        { error: 'Invalid signature' },
-        { status: 400 }
-      )
-    }
-
-    // Handle different event types
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        await handlePaymentIntentSucceeded(event.data.object as Stripe.PaymentIntent)
-        break
-
-      case 'payment_intent.payment_failed':
-        await handlePaymentFailed(event.data.object as Stripe.PaymentIntent)
-        break
-
-      case 'customer.subscription.created':
-      case 'customer.subscription.updated':
-        await handleSubscriptionSucceeded(stripe, event.data.object as Stripe.Subscription)
-        break
-
-      case 'customer.subscription.deleted':
-        await handleSubscriptionDeleted(event.data.object as Stripe.Subscription)
-        break
-
-      case 'invoice.payment_succeeded':
-        console.log('Invoice payment succeeded:', event.data.object.id)
-        // Handle recurring payment success
-        break
-
-      case 'invoice.payment_failed':
-        console.log('Invoice payment failed:', event.data.object.id)
-        // Handle recurring payment failure
-        break
-
-      default:
-        console.log('Unhandled event type:', event.type)
-    }
-
-    // Return success response
-    return NextResponse.json({ received: true })
-
-  } catch (error) {
-    console.error('Error processing webhook:', error)
+  if (!signature) {
     return NextResponse.json(
-      { error: 'Webhook processing failed' },
-      { status: 500 }
-    )
+      { error: "Missing stripe-signature header" },
+      { status: 400 },
+    );
+  }
+
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret) {
+    console.error("[stripe-webhook] STRIPE_WEBHOOK_SECRET is not set");
+    return NextResponse.json(
+      { error: "Webhook secret not configured" },
+      { status: 500 },
+    );
+  }
+
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    console.error("[stripe-webhook] Signature verification failed:", message);
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+  }
+
+  try {
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+
+        if (session.mode === "payment" && session.payment_status === "paid") {
+          const donorName = session.metadata?.donorName ?? "Anonymous";
+          const donorEmail = getSessionDonorEmail(session);
+          const amount = (session.amount_total ?? 0) / 100;
+          const currency = (session.currency ?? "usd").toUpperCase();
+          const donationId = session.id;
+          const date = new Date().toISOString().split("T")[0];
+          const programName = session.metadata?.programName;
+
+          if (donorEmail) {
+            const [receiptResult, notificationResult] = await Promise.all([
+              sendDonationReceipt({
+                donorEmail,
+                donorName,
+                amount,
+                currency,
+                donationId,
+                date,
+                frequency: "one-time",
+                programName,
+              }),
+              sendDonationNotification({
+                donorName,
+                donorEmail,
+                amount,
+                currency,
+                donationId,
+                date,
+                frequency: "one-time",
+                programName,
+              }),
+            ]);
+
+            if (!receiptResult.success) {
+              console.error(
+                "[stripe-webhook] Failed to send donation receipt:",
+                receiptResult.error,
+              );
+            }
+            if (!notificationResult.success) {
+              console.error(
+                "[stripe-webhook] Failed to send donation notification:",
+                notificationResult.error,
+              );
+            }
+          } else {
+            console.warn(
+              "[stripe-webhook] No donor email in session metadata, skipping emails for session:",
+              session.id,
+            );
+          }
+        }
+        break;
+      }
+
+      case "invoice.paid": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const metadata = getInvoiceMetadata(invoice);
+
+        if (metadata.donationType === "donation") {
+          const donorName = getInvoiceDonorName(invoice);
+          const donorEmail = getInvoiceDonorEmail(invoice);
+          const amount = (invoice.amount_paid ?? 0) / 100;
+          const currency = (invoice.currency ?? "usd").toUpperCase();
+          const donationId = invoice.number ?? invoice.id;
+          const programName = metadata.programName;
+          const date = new Date((invoice.created ?? Date.now() / 1000) * 1000)
+            .toISOString()
+            .split("T")[0];
+
+          if (donorEmail) {
+            const [receiptResult, notificationResult] = await Promise.all([
+              sendDonationReceipt({
+                donorEmail,
+                donorName,
+                amount,
+                currency,
+                donationId,
+                date,
+                frequency: "monthly",
+                programName,
+              }),
+              sendDonationNotification({
+                donorName,
+                donorEmail,
+                amount,
+                currency,
+                donationId,
+                date,
+                frequency: "monthly",
+                programName,
+              }),
+            ]);
+
+            if (!receiptResult.success) {
+              console.error(
+                "[stripe-webhook] Failed to send recurring donation receipt:",
+                receiptResult.error,
+              );
+            }
+            if (!notificationResult.success) {
+              console.error(
+                "[stripe-webhook] Failed to send recurring donation notification:",
+                notificationResult.error,
+              );
+            }
+          } else {
+            console.warn(
+              "[stripe-webhook] No donor email for recurring invoice, skipping emails for invoice:",
+              invoice.id,
+            );
+          }
+        } else {
+          const subscriptionRef =
+            invoice.parent?.subscription_details?.subscription ?? "none";
+          console.log(
+            "[stripe-webhook] Invoice paid:",
+            invoice.id,
+            "| Subscription:",
+            typeof subscriptionRef === "string"
+              ? subscriptionRef
+              : subscriptionRef.id,
+            "| Amount:",
+            (invoice.amount_paid ?? 0) / 100,
+            invoice.currency?.toUpperCase(),
+          );
+        }
+        break;
+      }
+
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object as Stripe.Subscription;
+        console.log(
+          "[stripe-webhook] Subscription cancelled:",
+          subscription.id,
+          "| Customer:",
+          subscription.customer,
+          "| Status:",
+          subscription.status,
+        );
+        break;
+      }
+
+      default: {
+        console.log("[stripe-webhook] Unhandled event type:", event.type);
+      }
+    }
+
+    return NextResponse.json({ received: true }, { status: 200 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    console.error("[stripe-webhook] Handler error:", message);
+    return NextResponse.json(
+      { error: "Webhook handler failed" },
+      { status: 500 },
+    );
   }
 }
-
-// Configure the route to accept raw body
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
